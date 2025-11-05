@@ -16,7 +16,7 @@ class ProjectSeeder extends Seeder
         Project::insert([
             [
                 'title' => "Don't Eat Yellow Fish",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.06.39.png',
+                'image' => 'DontEatYellowFish.png',
                 'creator' => 'Pearly',
                 'creator_grade' => '11 th',
                 'date' => '2021-07-01',
@@ -27,7 +27,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Drown",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.40.png',
+                'image' => 'DontDrown.png',
                 'creator' => 'Tina',
                 'creator_grade' => '12 th',
                 'date' => '2022-03-01',
@@ -38,7 +38,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Angry Bird",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.07.45.png',
+                'image' => 'AngryBird.png',
                 'creator' => 'Justin',
                 'creator_grade' => '8 th',
                 'date' => '2021-12-01',
@@ -49,7 +49,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Maze",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.24.png',
+                'image' => 'Maze.png',
                 'creator' => 'Chloe',
                 'creator_grade' => '9 th',
                 'date' => '2021-03-01',
@@ -60,7 +60,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Hungry Dino",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.43.png',
+                'image' => 'HungryDino.png',
                 'creator' => 'Oliver',
                 'creator_grade' => '7 th',
                 'date' => '2021-05-01',
@@ -71,7 +71,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Space Warrior",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.11.png',
+                'image' => 'SpaceWarrior.png',
                 'creator' => 'Owen Darma',
                 'creator_grade' => '11 th',
                 'date' => '2021-11-01',
@@ -82,7 +82,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Eat Yellow Fish",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.06.39.png',
+                'image' => 'DontEatYellowFish.png',
                 'creator' => 'Pearly',
                 'creator_grade' => '11 th',
                 'date' => '2021-07-01',
@@ -93,7 +93,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Drown",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.40.png',
+                'image' => 'DontDrown.png',
                 'creator' => 'Tina',
                 'creator_grade' => '12 th',
                 'date' => '2022-03-01',
@@ -104,7 +104,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Angry Bird",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.07.45.png',
+                'image' => 'AngryBird.png',
                 'creator' => 'Justin',
                 'creator_grade' => '8 th',
                 'date' => '2021-12-01',
@@ -115,7 +115,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Maze",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.24.png',
+                'image' => 'Maze.png',
                 'creator' => 'Chloe',
                 'creator_grade' => '9 th',
                 'date' => '2021-03-01',
@@ -126,7 +126,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Hungry Dino",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.43.png',
+                'image' => 'HungryDino.png',
                 'creator' => 'Oliver',
                 'creator_grade' => '7 th',
                 'date' => '2021-05-01',
@@ -137,7 +137,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Space Warrior",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.11.png',
+                'image' => 'SpaceWarrior.png',
                 'creator' => 'Owen Darma',
                 'creator_grade' => '11 th',
                 'date' => '2021-11-01',
@@ -148,7 +148,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Eat Yellow Fish",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.06.39.png',
+                'image' => 'DontEatYellowFish.png',
                 'creator' => 'Pearly',
                 'creator_grade' => '11 th',
                 'date' => '2021-07-01',
@@ -159,7 +159,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Drown",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.40.png',
+                'image' => 'DontDrown.png',
                 'creator' => 'Tina',
                 'creator_grade' => '12 th',
                 'date' => '2022-03-01',
@@ -170,7 +170,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Angry Bird",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.07.45.png',
+                'image' => 'AngryBird.png',
                 'creator' => 'Justin',
                 'creator_grade' => '8 th',
                 'date' => '2021-12-01',
@@ -181,7 +181,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Maze",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.24.png',
+                'image' => 'Maze.png',
                 'creator' => 'Chloe',
                 'creator_grade' => '9 th',
                 'date' => '2021-03-01',
@@ -192,7 +192,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Hungry Dino",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.43.png',
+                'image' => 'HungryDino.png',
                 'creator' => 'Oliver',
                 'creator_grade' => '7 th',
                 'date' => '2021-05-01',
@@ -203,7 +203,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Space Warrior",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.11.png',
+                'image' => 'SpaceWarrior.png',
                 'creator' => 'Owen Darma',
                 'creator_grade' => '11 th',
                 'date' => '2021-11-01',
@@ -214,7 +214,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Eat Yellow Fish",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.06.39.png',
+                'image' => 'DontEatYellowFish.png',
                 'creator' => 'Pearly',
                 'creator_grade' => '11 th',
                 'date' => '2021-07-01',
@@ -225,7 +225,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Drown",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.40.png',
+                'image' => 'DontDrown.png',
                 'creator' => 'Tina',
                 'creator_grade' => '12 th',
                 'date' => '2022-03-01',
@@ -236,7 +236,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Angry Bird",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.07.45.png',
+                'image' => 'AngryBird.png',
                 'creator' => 'Justin',
                 'creator_grade' => '8 th',
                 'date' => '2021-12-01',
@@ -247,7 +247,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Maze",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.24.png',
+                'image' => 'Maze.png',
                 'creator' => 'Chloe',
                 'creator_grade' => '9 th',
                 'date' => '2021-03-01',
@@ -258,7 +258,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Hungry Dino",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.43.png',
+                'image' => 'HungryDino.png',
                 'creator' => 'Oliver',
                 'creator_grade' => '7 th',
                 'date' => '2021-05-01',
@@ -269,7 +269,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Space Warrior",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.11.png',
+                'image' => 'SpaceWarrior.png',
                 'creator' => 'Owen Darma',
                 'creator_grade' => '11 th',
                 'date' => '2021-11-01',
@@ -280,7 +280,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Eat Yellow Fish",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.06.39.png',
+                'image' => 'DontEatYellowFish.png',
                 'creator' => 'Pearly',
                 'creator_grade' => '11 th',
                 'date' => '2021-07-01',
@@ -291,7 +291,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Drown",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.40.png',
+                'image' => 'DontDrown.png',
                 'creator' => 'Tina',
                 'creator_grade' => '12 th',
                 'date' => '2022-03-01',
@@ -302,7 +302,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Angry Bird",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.07.45.png',
+                'image' => 'AngryBird.png',
                 'creator' => 'Justin',
                 'creator_grade' => '8 th',
                 'date' => '2021-12-01',
@@ -313,7 +313,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Maze",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.24.png',
+                'image' => 'Maze.png',
                 'creator' => 'Chloe',
                 'creator_grade' => '9 th',
                 'date' => '2021-03-01',
@@ -324,7 +324,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Hungry Dino",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.43.png',
+                'image' => 'HungryDino.png',
                 'creator' => 'Oliver',
                 'creator_grade' => '7 th',
                 'date' => '2021-05-01',
@@ -335,7 +335,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Space Warrior",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.11.png',
+                'image' => 'SpaceWarrior.png',
                 'creator' => 'Owen Darma',
                 'creator_grade' => '11 th',
                 'date' => '2021-11-01',
@@ -346,7 +346,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Eat Yellow Fish",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.06.39.png',
+                'image' => 'DontEatYellowFish.png',
                 'creator' => 'Pearly',
                 'creator_grade' => '11 th',
                 'date' => '2021-07-01',
@@ -357,7 +357,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Don't Drown",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.40.png',
+                'image' => 'DontDrown.png',
                 'creator' => 'Tina',
                 'creator_grade' => '12 th',
                 'date' => '2022-03-01',
@@ -368,7 +368,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Angry Bird",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.07.45.png',
+                'image' => 'AngryBird.png',
                 'creator' => 'Justin',
                 'creator_grade' => '8 th',
                 'date' => '2021-12-01',
@@ -379,7 +379,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Maze",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.24.png',
+                'image' => 'Maze.png',
                 'creator' => 'Chloe',
                 'creator_grade' => '9 th',
                 'date' => '2021-03-01',
@@ -390,7 +390,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Hungry Dino",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.43.png',
+                'image' => 'HungryDino.png',
                 'creator' => 'Oliver',
                 'creator_grade' => '7 th',
                 'date' => '2021-05-01',
@@ -401,7 +401,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'title' => "Space Warrior",
-                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.11.png',
+                'image' => 'SpaceWarrior.png',
                 'creator' => 'Owen Darma',
                 'creator_grade' => '11 th',
                 'date' => '2021-11-01',

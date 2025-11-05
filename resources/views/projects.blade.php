@@ -1,6 +1,6 @@
 @extends('layout.default-layout')
 
-@section('title', 'Student Projects – COTHA')
+@section('title', 'Student Projects - COTHA')
 
 @section('main_content')
 <div class="container my-5">
@@ -12,7 +12,7 @@
         @foreach($projects as $project)
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
-                    <img src="{{ $project->image }}" class="img-fluid rounded mb-3" alt="{{ $project->title }}">
+                    <img src="{{ asset('/images/StudentProjects/' . $project->image) }}" class="img-fluid rounded mb-3" alt="{{ $project->title }}">
                     <h4 class="fw-semibold mb-2">{{ $project->title }}</h4>
                     <div class="mb-1 text-secondary">Creator: {{ $project->creator }} ({{ $project->creator_grade }})</div>
                     <div class="mb-2 text-secondary">Date: {{ \Carbon\Carbon::parse($project->date)->format('F Y') }}</div>

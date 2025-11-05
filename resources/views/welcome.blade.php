@@ -1,6 +1,6 @@
 @extends('layout.default-layout')
 
-@section('title', 'COTHA – 1st CHOICE Coding & Technology Learning Center for KIDS')
+@section('title', 'COTHA - 1st CHOICE Coding & Technology Learning Center for KIDS')
 
 @section('main_content')
 <section style="overflow: hidden">
@@ -84,7 +84,7 @@
                 <div class="col-10 col-sm-8 col-md-4 col-lg-3">
                     <div class="card shadow-lg border-0 h-100 mx-auto" style="max-width: 270px; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
                         <div class="ratio ratio-1x1 rounded-top" style="background-color: #ffffff">
-                            <img src="{{ $method->image }}" class="card-img-top object-fit-contain p-3" alt="{{ $method->label }}">
+                            <img src="{{ asset('images/LearningMethods/' . $method->image) }}" class="card-img-top object-fit-contain p-3" alt="{{ $method->label }}">
                         </div>
                         <div class="bg-dark text-white text-center py-4 rounded-bottom">
                             <span class="fs-5 fw-semibold letter-spacing-1">{{ $method->label }}</span>
@@ -128,10 +128,10 @@
                                 @foreach($testimonialChunk as $testimonial)
                                     <div class="col-12 col-md-4 d-flex justify-content-center">
                                         <div class="card border-0 shadow h-100 w-100 d-flex flex-column text-center p-4" style="width: 100%; max-width: 340px;">
-                                            <p class="fst-italic text-dark mb-3 flex-grow-1">
+                                            <p class="fst-italic text-dark mb-3 grow">
                                                 "{{ $testimonial->text }}"
                                             </p>
-                                            <img src="{{ $testimonial->photo }}" alt="{{ $testimonial->name }}" class="rounded-circle border border-3 border-dark mx-auto mb-2" style="width: 90px; height: 90px; object-fit: cover;">
+                                            <img src="{{ asset('images/StudentPictures/' . $testimonial->photo) }}" alt="{{ $testimonial->name }}" class="rounded-circle border-3 border-dark mx-auto mb-2" style="width: 90px; height: 90px; object-fit: cover;">
                                             <div class="fw-bold fs-5 text-dark">{{ $testimonial->name }}</div>
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
                 @foreach($projects as $project)
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
-                            <img src="{{ $project->image }}" class="img-fluid rounded mb-3" alt="{{ $project->title }}">
+                            <img src="{{ asset('images/StudentProjects/' . $project->image) }}" class="img-fluid rounded mb-3" alt="{{ $project->title }}">
                             <h4 class="fw-semibold mb-2">{{ $project->title }}</h4>
                             <div class="mb-1 text-secondary">Creator: {{ $project->creator }} ({{ $project->creator_grade }})</div>
                             <div class="mb-2 text-secondary">Date: {{ \Carbon\Carbon::parse($project->date)->format('F Y') }}</div>

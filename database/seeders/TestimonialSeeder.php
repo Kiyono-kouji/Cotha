@@ -16,7 +16,7 @@ class TestimonialSeeder extends Seeder
         Testimonial::insert([
             [
                 'name' => 'Noah',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-13.41.25.png',
+                'photo' => 'Noah.png',
                 'text' => "Coding is so much fun. And the best part is that I can make my own game with my own rules. It's interesting.",
                 'isFeatured' => true,
                 'active' => true,
@@ -25,7 +25,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'George',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_1771.jpg',
+                'photo' => 'George.jpg',
                 'text' => "George suka coding. George ingin buat game tentang birhtday cake karena George mau ulang tahun.",
                 'isFeatured' => true,
                 'active' => true,
@@ -34,7 +34,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Jovano',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_1775.jpg',
+                'photo' => 'Jovano.jpg',
                 'text' => "I didn't like coding, but as soon i joined Cotha, i found out that coding is actually easy and fun.",
                 'isFeatured' => true,
                 'active' => true,
@@ -43,7 +43,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Ardo',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_32F1307A40D0-1.jpeg',
+                'photo' => 'Ardo.jpeg',
                 'text' => "Buat animasi itu seru dan asyik. Buat coding juga tidak susah.",
                 'isFeatured' => true,
                 'active' => true,
@@ -52,7 +52,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Owen',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_894C594B547B-1.jpeg',
+                'photo' => 'Owen.jpeg',
                 'text' => "Python ternyata tidak susah. Gak sabar belajar buat game pakai Unity juga.",
                 'isFeatured' => true,
                 'active' => true,
@@ -61,7 +61,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Alexander',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_1770.jpg',
+                'photo' => 'Alexander.jpg',
                 'text' => "I love coding. I want to be game developer.",
                 'isFeatured' => true,
                 'active' => true,
@@ -70,7 +70,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Darren',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-13.33.25.png',
+                'photo' => 'Darren.png',
                 'text' => "Coding is fun and i can use my spare time productively",
                 'isFeatured' => false,
                 'active' => true,
@@ -79,7 +79,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Ardo',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_32F1307A40D0-1.jpeg',
+                'photo' => 'Ardo.jpeg',
                 'text' => "Buat animasi itu seru dan asyik. Buat coding juga tidak susah.",
                 'isFeatured' => false,
                 'active' => true,
@@ -88,7 +88,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Ardo',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_32F1307A40D0-1.jpeg',
+                'photo' => 'Ardo.jpeg',
                 'text' => "Buat animasi itu seru dan asyik. Buat coding juga tidak susah.",
                 'isFeatured' => false,
                 'active' => true,
@@ -97,7 +97,7 @@ class TestimonialSeeder extends Seeder
             ],
             [
                 'name' => 'Ardo',
-                'photo' => 'https://cotha.id/wp-content/uploads/2022/06/IMG_32F1307A40D0-1.jpeg',
+                'photo' => 'Ardo.jpeg',
                 'text' => "Buat animasi itu seru dan asyik. Buat coding juga tidak susah.",
                 'isFeatured' => false,
                 'active' => true,

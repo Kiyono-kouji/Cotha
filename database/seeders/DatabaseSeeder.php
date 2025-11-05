@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             MethodSeeder::class,
             TestimonialSeeder::class,
             ProjectSeeder::class,
+            CourseSeeder::class,
+            ClassSeeder::class,
         ]);
     }
 }
