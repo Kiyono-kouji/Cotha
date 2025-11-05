@@ -13,7 +13,7 @@
         >
     </div>
     {{-- Data --}}
-    <div class="container my-5 px-5 px-md-0">
+    <div class="container my-5 px-5 px-md-1">
         <div class="row g-4 justify-content-center">
             <div class="col-12 col-md-4">
                 <div class="card border-2 border-pink shadow-sm h-100 text-center">
@@ -119,7 +119,7 @@
                 </h5>
             </div>
         </div>
-        <div class="position-relative mb-5 px-2 px-md-0" style="max-width: 1200px; margin: 0 auto; min-height: 300px; overflow: hidden">
+        <div class="position-relative mb-5 px-2 px-md-1" style="max-width: 1200px; margin: 0 auto; min-height: 300px; overflow: hidden">
             <div id="testimonialCarousel" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner pb-5">
                     @foreach($testimonials->chunk(3) as $chunkIndex => $testimonialChunk)
@@ -158,7 +158,7 @@
     </div>
     {{-- Projects --}}
     <div class="container-fluid" style="background-color: #e3f6fd;">
-        <div class="container mt-5 pt-4 px-5 pb-5 px-md-0">
+        <div class="container mt-5 pt-4 px-5 pb-5 px-md-1">
             <h2 class="fw-bold text-center mb-2" style="letter-spacing: 1px; color: #4fc3f7;">Student Projects</h2>
             <p class="text-center fs-5 mb-5" style="color: #f48acb;">
                 Explore creative games and apps made by our students during their learning journey at COTHA!

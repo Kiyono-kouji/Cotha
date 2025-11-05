@@ -10,7 +10,7 @@
             <ul class="navbar-nav" style="gap: 24px;">
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('/') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/') }}">
-                        Welcome
+                        Home
                     </a>
                 </li>
                 <li class="nav-item">
