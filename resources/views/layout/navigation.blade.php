@@ -1,26 +1,35 @@
-<nav class="navbar navbar-expand-lg navbar-light shadow-sm py-2 sticky-top" style="background: #80c7e4; border-bottom: 1px solid #e3e6ea;">
+<nav class="navbar navbar-expand-lg" style="background: #80c7e4;">
     <div class="container">
-        {{-- Logo/Brand --}}
-        <a class="navbar-brand fw-bold" href="{{ url('/') }}" style="font-size: 1.5rem; letter-spacing: 1px; color:#ffffff">
+        <a class="navbar-brand fw-bold text-white" href="{{ url('/') }}" style="font-size: 1.5rem; letter-spacing: 1px;">
             COTHA
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav" style="gap: 8px;">
+            <ul class="navbar-nav" style="gap: 24px;">
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold {{ Request::is('/') ? 'active text-primary' : 'text-dark' }}" href="{{ url('/') }}">
+                    <a class="nav-link text-white {{ Request::is('/') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/') }}">
                         Welcome
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold {{ Request::is('program') ? 'active text-primary' : 'text-dark' }}" href="{{ url('/program') }}">
-                        Program
+                    <a class="nav-link text-white {{ Request::is('courses') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/courses') }}">
+                        Courses
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold btn btn-primary text-white px-3 ms-2" style="border-radius: 8px;" href="{{ url('/join') }}">
+                    <a class="nav-link text-white {{ Request::is('testimonials') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/testimonials') }}">
+                        Testimonials
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Request::is('projects') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/projects') }}">
+                        Projects
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Request::is('join') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/join') }}">
                         Join Us
                     </a>
                 </li>

@@ -1,0 +1,85 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Project;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class ProjectSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        Project::insert([
+            [
+                'title' => "Don't Eat Yellow Fish",
+                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.06.39.png',
+                'creator' => 'Pearly',
+                'creator_grade' => '11 th',
+                'date' => '2021-07-01',
+                'isFeatured' => true,
+                'active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => "Don't Drown",
+                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.40.png',
+                'creator' => 'Tina',
+                'creator_grade' => '12 th',
+                'date' => '2022-03-01',
+                'isFeatured' => true,
+                'active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => "Angry Bird",
+                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.07.45.png',
+                'creator' => 'Justin',
+                'creator_grade' => '8 th',
+                'date' => '2021-12-01',
+                'isFeatured' => true,
+                'active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => "Maze",
+                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.24.png',
+                'creator' => 'Chloe',
+                'creator_grade' => '9 th',
+                'date' => '2021-03-01',
+                'isFeatured' => true,
+                'active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => "Hungry Dino",
+                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.08.43.png',
+                'creator' => 'Oliver',
+                'creator_grade' => '7 th',
+                'date' => '2021-05-01',
+                'isFeatured' => true,
+                'active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => "Space Warrior",
+                'image' => 'https://cotha.id/wp-content/uploads/2022/06/Screen-Shot-2022-06-09-at-12.12.11.png',
+                'creator' => 'Owen Darma',
+                'creator_grade' => '11 th',
+                'date' => '2021-11-01',
+                'isFeatured' => true,
+                'active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
+}
