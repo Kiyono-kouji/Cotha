@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminClassController;
 use App\Http\Controllers\Admin\AdminCourseController;
+use App\Http\Controllers\Admin\AdminMethodController;
+use App\Http\Controllers\Admin\AdminProjectController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -32,8 +35,10 @@ Route::view('/about', 'about')->name('about');
 // For admin management (if you have an admin dashboard):
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::resource('projects', ProjectController::class);
     Route::resource('courses', AdminCourseController::class);
+    Route::resource('classes', AdminClassController::class);
+    Route::resource('methods', AdminMethodController::class);
+    Route::resource('projects', AdminProjectController::class);
 });
 
 require __DIR__.'/auth.php';

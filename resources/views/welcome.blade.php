@@ -81,10 +81,10 @@
         </div>
         <div class="row g-4 justify-content-center mx-3 mx-md-5">
             @foreach($methods as $method)
-                <div class="col-10 col-sm-8 col-md-4 col-lg-3">
-                    <div class="card info-card shadow-lg border-0 h-100 mx-auto" style="max-width: 270px; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
+                <div class="col-12 col-md-6 col-lg-4 d-flex">
+                    <div class="card info-card shadow-lg border-0 h-100 mx-auto flex-fill" style="max-width: 340px; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
                         <div class="ratio ratio-1x1 rounded-top overflow-hidden d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
-                            <img src="{{ asset('images/LearningMethods/' . $method->image) }}"
+                            <img src="{{ asset('storage/images/LearningMethods/' . $method->image) }}"
                                  alt="{{ $method->label }}"
                                  style="width: 100%; height: 100%; object-fit: contain; display: block;">
                         </div>
@@ -133,7 +133,7 @@
                                             <p class="fst-italic text-dark mb-3 grow">
                                                 "{{ $testimonial->text }}"
                                             </p>
-                                            <img src="{{ asset('images/StudentPictures/' . $testimonial->photo) }}" alt="{{ $testimonial->name }}" class="rounded-circle border-3 border-dark mx-auto mb-2" style="width: 90px; height: 90px; object-fit: cover;">
+                                            <img src="{{ asset('storage/images/StudentPictures/' . $testimonial->photo) }}" alt="{{ $testimonial->name }}" class="rounded-circle border-3 border-dark mx-auto mb-2" style="width: 90px; height: 90px; object-fit: cover;">
                                             <div class="fw-bold fs-5 text-dark">{{ $testimonial->name }}</div>
                                         </div>
                                     </div>
@@ -169,7 +169,7 @@
                 @foreach($projects as $project)
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
-                            <img src="{{ asset('images/StudentProjects/' . $project->image) }}"
+                            <img src="{{ asset('storage/images/StudentProjects/' . $project->image) }}"
                                  class="img-fluid rounded mb-3 d-block mx-auto"
                                  style="width: 100%; height: 270px; object-fit: cover;"
                                  alt="{{ $project->title }}">

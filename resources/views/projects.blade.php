@@ -12,7 +12,7 @@
         @foreach($projects as $project)
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
-                    <img src="{{ asset('images/StudentProjects/' . $project->image) }}"
+                    <img src="{{ asset('storage/images/StudentProjects/' . $project->image) }}"
                                  class="img-fluid rounded mb-3 d-block mx-auto"
                                  style="width: 100%; height: 270px; object-fit: cover;"
                                  alt="{{ $project->title }}">

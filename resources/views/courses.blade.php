@@ -14,7 +14,7 @@
                 <a href="{{ url('/courses/' . $course->slug) }}" class="text-decoration-none">
                     <div class="card info-card h-100 shadow-sm border-0">
                         @if($course->image)
-                            <img src="{{ asset('images/CourseResources/' . $course->image) }}"
+                            <img src="{{ asset('storage/images/CourseResources/' . $course->image) }}"
                                  class="img-fluid mb-3 d-block mx-auto"
                                  style="width: 100%; max-width: 400px; height: auto; object-fit: contain;"
                                  alt="{{ $course->title }}">

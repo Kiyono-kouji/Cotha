@@ -7,7 +7,7 @@
     <div class="row justify-content-center px-5 px-md-1">
         <div class="col-12 text-center mb-4">
             @if($course->image)
-                <img src="{{ asset('images/CourseResources/' . $course->image) }}"
+                <img src="{{ asset('storage/images/CourseResources/' . $course->image) }}"
                     class="img-fluid mb-3 d-block mx-auto"
                     style="width: 100%; max-width: 600px; height: auto; object-fit: contain;"
                     alt="{{ $course->title }}">
@@ -32,7 +32,7 @@
                 <div class="card h-100 shadow border-0 flex-fill d-flex flex-column">
                     @if($class->image)
                         <div class="d-flex justify-content-center align-items-center mb-3" style="height: 120px;">
-                            <img src="{{ asset('images/ClassesResources/' . $class->image) }}"
+                            <img src="{{ asset('storage/images/ClassesResources/' . $class->image) }}"
                                  alt="{{ $class->title }}"
                                  style="max-width: 100px; max-height: 100px; object-fit: contain;">
                         </div>

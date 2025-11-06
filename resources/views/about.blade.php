@@ -19,7 +19,7 @@
                 Dengan dukungan kurikulum internasional dan pengajar berpengalaman, COTHA bertujuan untuk membekali anak-anak dengan keterampilan teknologi yang relevan di era digital, sekaligus menumbuhkan minat dan kreativitas mereka dalam bidang IT.
             </p>
             <div class="my-5 text-center">
-                <img src="{{ asset('images/AboutResources/EnhanceCT.jpg') }}"
+                <img src="{{ asset('storage/images/AboutResources/EnhanceCT.jpg') }}"
                      alt="Enhance Computational Thinking"
                      class="img-fluid rounded-4 shadow mb-4"
                      style="max-width: 500px; width: 100%; height: auto; object-fit: contain;">
@@ -51,13 +51,13 @@
                     Di kelas coding akan dipelajari konsep pemrograman dari <b>basic</b> hingga <b>advanced</b>. Anak akan diminta untuk menerapkan konsep yang telah dipelajari tersebut dalam proyek yang mereka buat. Dengan kurikulum yang dibuat khusus sesuai minat dan bakat anak, COTHA menawarkan berbagai jenis kelas sesuai usia anak.
                 </p>
                 <div class="mb-4">
-                    <img src="{{ asset('images/AboutResources/ThingsYouLearn.png') }}"
+                    <img src="{{ asset('storage/images/AboutResources/ThingsYouLearn.png') }}"
                          alt="Things You Learn in Coding Class"
                          class="img-fluid rounded-4 shadow d-block mx-auto"
                          style="max-width: 600px; width: 100%; height: auto; object-fit: contain;">
                 </div>
                 <div class="mt-5 mb-4">
-                    <img src="{{ asset('images/AboutResources/CothaCurriculum.png') }}"
+                    <img src="{{ asset('storage/images/AboutResources/CothaCurriculum.png') }}"
                          alt="COTHA Curriculum"
                          class="img-fluid rounded-4 shadow d-block mx-auto"
                          style="max-width: 600px; width: 100%; height: auto; object-fit: contain;">
@@ -81,7 +81,7 @@
                     </li>
                 </ul>
                 <div class="text-center mt-4">
-                    <img src="{{ asset('images/AboutResources/SistemBelajar.png') }}"
+                    <img src="{{ asset('storage/images/AboutResources/SistemBelajar.png') }}"
                         alt="Sistem Belajar di Cotha"
                         class="img-fluid rounded-4 shadow"
                         style="max-width: 600px; width: 100%; height: auto; object-fit: contain;">

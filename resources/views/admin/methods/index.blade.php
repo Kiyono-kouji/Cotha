@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Admin - Manage Courses')
+@section('title', 'Admin - Manage Methods')
 
 @section('main_content')
 <div class="container my-5">
-    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Manage Courses</h1>
+    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Manage Methods</h1>
     <div class="mb-4 text-end">
-        <a href="{{ route('admin.courses.create') }}" class="btn btn-primary rounded-pill" style="background-color: #4fc3f7; border: none;">
-            <i class="bi bi-plus-lg"></i> Add New Course
+        <a href="{{ route('admin.methods.create') }}" class="btn btn-primary rounded-pill" style="background-color: #4fc3f7; border: none;">
+            <i class="bi bi-plus-lg"></i> Add New Method
         </a>
     </div>
     @if(session('success'))
@@ -20,33 +20,33 @@
             <thead class="table-light">
                 <tr>
                     <th>Title</th>
-                    <th>Subtitle</th>
-                    <th>Age Range</th>
+                    <th>Label</th>
+                    <th>Description</th>
                     <th>Active</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($courses as $course)
+                @forelse($methods as $method)
                 <tr>
-                    <td>{{ $course->title }}</td>
-                    <td>{{ $course->subtitle }}</td>
-                    <td>{{ $course->age_range }}</td>
+                    <td>{{ $method->title }}</td>
+                    <td>{{ $method->label }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($method->description, 50) }}</td>
                     <td>
-                        @if($course->active)
+                        @if($method->active)
                             <span class="badge bg-success">Active</span>
                         @else
                             <span class="badge bg-secondary">Inactive</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('admin.courses.edit', $course) }}" class="btn btn-sm btn-warning rounded-pill">
+                        <a href="{{ route('admin.methods.edit', $method) }}" class="btn btn-sm btn-warning rounded-pill">
                             <i class="bi bi-pencil"></i> Edit
                         </a>
-                        <form action="{{ route('admin.courses.destroy', $course) }}" method="POST" class="d-inline">
+                        <form action="{{ route('admin.methods.destroy', $method) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-sm btn-danger rounded-pill" onclick="return confirm('Delete this course?')">
+                            <button class="btn btn-sm btn-danger rounded-pill" onclick="return confirm('Delete this method?')">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
                         </form>
@@ -54,7 +54,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted">No courses found.</td>
+                    <td colspan="5" class="text-center text-muted">No methods found.</td>
                 </tr>
                 @endforelse
             </tbody>
