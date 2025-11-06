@@ -4,10 +4,13 @@
 
 @section('main_content')
 <div class="container my-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center px-5 px-md-1">
         <div class="col-12 text-center mb-4">
             @if($course->image)
-                <img src="{{ $course->image }}" class="img-fluid mb-3" style="max-width: 400px;" alt="{{ $course->title }}">
+                <img src="{{ asset('images/CourseResources/' . $course->image) }}"
+                    class="img-fluid mb-3 d-block mx-auto"
+                    style="width: 100%; max-width: 600px; height: auto; object-fit: contain;"
+                    alt="{{ $course->title }}">
             @endif
             <h2 class="fw-bold" style="color: #4fc3f7;">{{ $course->title }}</h2>
             <div class="mb-2 text-secondary fs-5">
@@ -23,20 +26,29 @@
             </p>
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 justify-content-center px-5 px-md-1">
         @foreach($classes as $class)
             <div class="col d-flex">
-                <div class="card h-100 shadow-sm border-0 flex-fill">
+                <div class="card h-100 shadow border-0 flex-fill d-flex flex-column">
                     @if($class->image)
-                        <img src="{{ $class->image }}" class="card-img-top" alt="{{ $class->title }}" style="object-fit: contain; height: 120px; background: #f6f6f6;">
+                        <div class="d-flex justify-content-center align-items-center mb-3" style="height: 120px;">
+                            <img src="{{ asset('images/ClassesResources/' . $class->image) }}"
+                                 alt="{{ $class->title }}"
+                                 style="max-width: 100px; max-height: 100px; object-fit: contain;">
+                        </div>
                     @endif
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h4 class="fw-semibold mb-2">{{ $class->title }}</h4>
                         <div class="mb-1 text-secondary fw-bold">Level {{ $class->level }}</div>
                         <div class="mb-2 text-dark fw-semibold">Jumlah pertemuan: {{ $class->meeting_info }}</div>
                         <p class="mb-2 text-dark" style="font-size: 0.95rem;">
                             {{ $class->description }}
                         </p>
+                        @if(!empty($class->note))
+                            <div class="mb-2 text-dark">
+                                {{ $class->note }}
+                            </div>
+                        @endif
                         @if($class->requirements)
                             <div class="mb-2">
                                 <b>Kebutuhan perangkat:</b>
@@ -67,8 +79,8 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="d-flex justify-content-center">
-                            <a href="{{ $class->button_link }}" target="_blank" class="btn btn-success px-3 py-2 mt-2" style="background-color: #b3e0f7; color: #234567; border: none;">
+                        <div class="mt-auto d-flex justify-content-center mb-4">
+                            <a href="{{ $class->button_link }}" target="_blank" class="btn btn-success px-3 py-2 mt-2 rounded-pill" style="background-color: #b3e0f7; color: #234567; border: none;">
                                 Register & More Info
                             </a>
                         </div>
@@ -79,7 +91,7 @@
     </div>
     <div class="row mt-5">
         <div class="col-12 text-center">
-            <a href="{{ url('/courses') }}" class="btn btn-outline-primary mt-4">
+            <a href="{{ url('/courses') }}" class="btn btn-outline-primary btn-lg px-5 py-3 mt-4 fw-semibold">
                 Back to Courses
             </a>
         </div>

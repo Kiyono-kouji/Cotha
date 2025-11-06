@@ -17,7 +17,7 @@
         <div class="row g-4 justify-content-center">
             <div class="col-12 col-md-4">
                 <div class="card border-2 border-pink shadow-sm h-100 text-center">
-                    <div class="card-body d-flex flex-column align-items-center">
+                    <div class="card-body d-flex flex-column align-items-center shadow">
                         <div class="mb-2">
                             <i class="bi bi-controller fs-1 text-danger"></i>
                         </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="card border-2 border-pink shadow-sm h-100 text-center">
-                    <div class="card-body d-flex flex-column align-items-center">
+                    <div class="card-body d-flex flex-column align-items-center shadow">
                         <div class="mb-2">
                             <i class="bi bi-globe2 fs-1 text-primary"></i>
                         </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="card border-2 border-pink shadow-sm h-100 text-center">
-                    <div class="card-body d-flex flex-column align-items-center">
+                    <div class="card-body d-flex flex-column align-items-center shadow">
                         <div class="mb-2">
                             <i class="bi bi-lightbulb fs-1 text-warning"></i>
                         </div>
@@ -83,8 +83,10 @@
             @foreach($methods as $method)
                 <div class="col-10 col-sm-8 col-md-4 col-lg-3">
                     <div class="card shadow-lg border-0 h-100 mx-auto" style="max-width: 270px; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
-                        <div class="ratio ratio-1x1 rounded-top" style="background-color: #ffffff">
-                            <img src="{{ asset('images/LearningMethods/' . $method->image) }}" class="card-img-top object-fit-contain p-3" alt="{{ $method->label }}">
+                        <div class="ratio ratio-1x1 rounded-top overflow-hidden d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
+                            <img src="{{ asset('images/LearningMethods/' . $method->image) }}"
+                                 alt="{{ $method->label }}"
+                                 style="width: 100%; height: 100%; object-fit: contain; display: block;">
                         </div>
                         <div class="bg-dark text-white text-center py-4 rounded-bottom">
                             <span class="fs-5 fw-semibold letter-spacing-1">{{ $method->label }}</span>
@@ -151,7 +153,7 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="{{ url('/testimonials') }}" class="btn btn-primary px-4 py-2 fw-semibold" style="background-color: #4fc3f7; border: none;">
+            <a href="{{ url('/testimonials') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4 rounded-pill shadow" style="background-color: #4fc3f7; border: none;">
                 See More Testimonials
             </a>
         </div>
@@ -167,7 +169,10 @@
                 @foreach($projects as $project)
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
-                            <img src="{{ asset('images/StudentProjects/' . $project->image) }}" class="img-fluid rounded mb-3" alt="{{ $project->title }}">
+                            <img src="{{ asset('images/StudentProjects/' . $project->image) }}"
+                                 class="img-fluid rounded mb-3 d-block mx-auto"
+                                 style="width: 100%; height: 270px; object-fit: cover;"
+                                 alt="{{ $project->title }}">
                             <h4 class="fw-semibold mb-2">{{ $project->title }}</h4>
                             <div class="mb-1 text-secondary">Creator: {{ $project->creator }} ({{ $project->creator_grade }})</div>
                             <div class="mb-2 text-secondary">Date: {{ \Carbon\Carbon::parse($project->date)->format('F Y') }}</div>
@@ -176,7 +181,7 @@
                 @endforeach
             </div>
             <div class="text-center mt-4">
-                <a href="{{ url('/projects') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4" style="background-color: #4fc3f7; border: none;">
+                <a href="{{ url('/projects') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4 rounded-pill shadow" style="background-color: #4fc3f7; border: none;">
                     See More Projects
                 </a>
             </div>
