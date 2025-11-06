@@ -1,0 +1,17 @@
+body {
+    overflow-x: hidden;
+}
+.info-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.info-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(79,195,247,0.15), 0 2px 8px rgba(0,0,0,0.08);
+}
+.animated-btn {
+    transition: background-color 0.3s, color 0.3s;
+}
+.animated-btn:hover {
+    background-color: #f48acb !important;
+    color: #fff !important;
+}

@@ -12,3 +12,6 @@ Route::get('/projects', [ProjectController::class, 'index']);
 
 Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/{slug}', [CourseController::class, 'show'])->name('courses.show');
+Route::get('/about', function () {
+    return view('about');
+});

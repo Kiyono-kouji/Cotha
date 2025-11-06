@@ -12,7 +12,7 @@
         @foreach($courses as $course)
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="{{ url('/courses/' . $course->slug) }}" class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0">
+                    <div class="card info-card h-100 shadow-sm border-0">
                         @if($course->image)
                             <img src="{{ asset('images/CourseResources/' . $course->image) }}"
                                  class="img-fluid mb-3 d-block mx-auto"

@@ -82,7 +82,7 @@
         <div class="row g-4 justify-content-center mx-3 mx-md-5">
             @foreach($methods as $method)
                 <div class="col-10 col-sm-8 col-md-4 col-lg-3">
-                    <div class="card shadow-lg border-0 h-100 mx-auto" style="max-width: 270px; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
+                    <div class="card info-card shadow-lg border-0 h-100 mx-auto" style="max-width: 270px; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
                         <div class="ratio ratio-1x1 rounded-top overflow-hidden d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
                             <img src="{{ asset('images/LearningMethods/' . $method->image) }}"
                                  alt="{{ $method->label }}"
@@ -153,7 +153,7 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="{{ url('/testimonials') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4 rounded-pill shadow" style="background-color: #4fc3f7; border: none;">
+            <a href="{{ url('/testimonials') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4 rounded-pill shadow animated-btn" style="background-color: #4fc3f7; border: none;">
                 See More Testimonials
             </a>
         </div>
@@ -181,7 +181,7 @@
                 @endforeach
             </div>
             <div class="text-center mt-4">
-                <a href="{{ url('/projects') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4 rounded-pill shadow" style="background-color: #4fc3f7; border: none;">
+                <a href="{{ url('/projects') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4 rounded-pill shadow animated-btn" style="background-color: #4fc3f7; border: none;">
                     See More Projects
                 </a>
             </div>
@@ -198,7 +198,7 @@
                         <p class="fs-5 mb-4 text-secondary">
                             Discover a wide range of coding courses designed for kids. From game development to web design, find the perfect path for your child's tech journey!
                         </p>
-                        <a href="{{ url('/courses') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold shadow" style="background-color: #4fc3f7; border: none;">
+                        <a href="{{ url('/courses') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold shadow animated-btn" style="background-color: #4fc3f7; border: none;">
                             Browse Courses
                             <i class="bi bi-arrow-right ms-2"></i>
                         </a>

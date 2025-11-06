@@ -29,8 +29,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('join') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/join') }}">
-                        Join Us
+                    <a class="nav-link text-white {{ Request::is('about') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/about') }}">
+                        About
                     </a>
                 </li>
             </ul>
