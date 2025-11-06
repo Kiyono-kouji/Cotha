@@ -33,6 +33,29 @@
                         About
                     </a>
                 </li>
+                @auth
+                    @if(auth()->user()->isAdmin ?? false)
+                        <li class="nav-item">
+                            <a class="nav-link text-white {{ Request::is('admin/dashboard') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/admin/dashboard') }}">
+                                Admin Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white {{ Request::is('admin/projects*') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/admin/projects') }}">
+                                Manage Projects
+                            </a>
+                        </li>
+                    @endif
+                    <li class="nav-item d-flex align-items-center h-100">
+                        <form method="POST" action="{{ route('logout') }}" class="d-flex align-items-center h-100">
+                            @csrf
+                            <button type="submit" class="nav-link btn btn-link text-white fw-normal px-0" style="margin: 0; height: 100%;">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                @else
+                @endauth
             </ul>
         </div>
     </div>

@@ -1,4 +1,4 @@
-@extends('layout.default-layout')
+@extends('layouts.app')
 
 @section('title', 'COTHA - 1st CHOICE Coding & Technology Learning Center for KIDS')
 

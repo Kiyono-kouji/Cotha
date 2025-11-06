@@ -1,4 +1,4 @@
-@extends('layout.default-layout')
+@extends('layouts.app')
 
 @section('title', 'Student Projects - COTHA')
 
