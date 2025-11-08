@@ -40,11 +40,6 @@
                                 Admin Dashboard
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white {{ Request::is('admin/projects*') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/admin/projects') }}">
-                                Manage Projects
-                            </a>
-                        </li>
                     @endif
                     <li class="nav-item d-flex align-items-center h-100">
                         <form method="POST" action="{{ route('logout') }}" class="d-flex align-items-center h-100">

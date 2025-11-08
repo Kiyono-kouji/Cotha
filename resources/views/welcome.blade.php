@@ -129,12 +129,20 @@
                             <div class="row g-4 justify-content-center align-items-stretch">
                                 @foreach($testimonialChunk as $testimonial)
                                     <div class="col-12 col-md-4 d-flex justify-content-center">
-                                        <div class="card border-0 shadow h-100 w-100 d-flex flex-column text-center p-4" style="width: 100%; max-width: 340px;">
-                                            <p class="fst-italic text-dark mb-3 grow">
-                                                "{{ $testimonial->text }}"
-                                            </p>
-                                            <img src="{{ asset('storage/images/StudentPictures/' . $testimonial->photo) }}" alt="{{ $testimonial->name }}" class="rounded-circle border-3 border-dark mx-auto mb-2" style="width: 90px; height: 90px; object-fit: cover;">
-                                            <div class="fw-bold fs-5 text-dark">{{ $testimonial->name }}</div>
+                                        <div class="card border-0 shadow h-100 w-100 d-flex flex-column justify-content-between text-center p-4"
+                                             style="width: 340px; min-height: 340px; max-width: 340px; height: 340px;">
+                                            <div class="d-flex align-items-center justify-content-center" style="min-height: 80px;">
+                                                <p class="fst-italic text-dark mb-3 grow w-100">
+                                                    "{{ \Illuminate\Support\Str::limit($testimonial->text, 120) }}"
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <img src="{{ asset('storage/images/StudentPictures/' . $testimonial->photo) }}"
+                                                     alt="{{ $testimonial->name }}"
+                                                     class="rounded-circle border-3 border-dark mx-auto mb-2"
+                                                     style="width: 90px; height: 90px; object-fit: cover;">
+                                                <div class="fw-bold fs-5 text-dark">{{ $testimonial->name }}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach

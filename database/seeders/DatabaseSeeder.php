@@ -22,6 +22,13 @@ class DatabaseSeeder extends Seeder
             'isAdmin' => true,
         ]);
 
+        User::factory()->create([
+            'name' => 'Admin user',
+            'email' => 'ffpcg6hfqdb@mkzaso.com',
+            'password' => bcrypt('12345678'),
+            'isAdmin' => true,
+        ]);
+
         $this->call([
             MethodSeeder::class,
             TestimonialSeeder::class,

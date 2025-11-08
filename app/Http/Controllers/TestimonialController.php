@@ -12,7 +12,11 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        //
+        $testimonials = Testimonial::where('active', true)
+            ->latest()
+            ->paginate(12);
+
+        return view('testimonials', compact('testimonials'));
     }
 
     /**

@@ -41,6 +41,14 @@
                         </li>
                     @endif
 
+                    @foreach ($projects->getUrlRange(1, $projects->lastPage()) as $page => $url)
+                        @if ($page == $projects->currentPage())
+                            <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                        @endif
+                    @endforeach
+
                     {{-- Next Page Link --}}
                     @if ($projects->hasMorePages())
                         <li class="page-item">
