@@ -12,7 +12,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::where('active', true)->latest()->paginate(9);
+        $projects = Project::where('active', true)->latest()->paginate(12);
         return view('projects', compact('projects'));
     }
 
