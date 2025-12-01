@@ -14,8 +14,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('courses*') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/courses') }}">
-                        Courses
+                    <a class="nav-link text-white {{ Request::is('levels*') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/levels') }}">
+                        Levels
                     </a>
                 </li>
                 <li class="nav-item">

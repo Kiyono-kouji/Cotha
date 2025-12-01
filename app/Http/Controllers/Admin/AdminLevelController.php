@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Level;
 use App\Models\ClassModel;
-use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AdminCourseController extends Controller
+class AdminLevelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $courses = Course::all();
-        return view('admin.courses.index', compact('courses'));
+        $levels = Level::all();
+        return view('admin.levels.index', compact('levels'));
     }
 
     /**
@@ -25,7 +25,7 @@ class AdminCourseController extends Controller
     public function create()
     {
         $allClasses = ClassModel::all();
-        return view('admin.courses.create', compact('allClasses'));
+        return view('admin.levels.create', compact('allClasses'));
     }
 
     /**
@@ -38,27 +38,27 @@ class AdminCourseController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'age_range' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'slug' => 'required|string|max:255|unique:courses,slug',
+            'slug' => 'required|string|max:255|unique:levels,slug',
             'image' => 'nullable|image|max:2048',
+            'active' => 'nullable',
             'classes' => 'nullable|array',
             'classes.*' => 'exists:classes,id',
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/CourseResources', 'public');
+            $path = $request->file('image')->store('images/LevelResources', 'public');
             $validated['image'] = basename($path);
         }
 
         $validated['active'] = $request->boolean('active');
 
-        $course = Course::create($validated);
+        $level = Level::create($validated);
 
-        // Attach selected classes
         if (!empty($validated['classes'])) {
-            $course->classes()->attach($validated['classes']);
+            $level->classes()->attach($validated['classes']);
         }
 
-        return redirect()->route('admin.courses.index')->with('success', 'Course created successfully.');
+        return redirect()->route('admin.levels.index')->with('success', 'Level created successfully.');
     }
 
     /**
@@ -72,63 +72,68 @@ class AdminCourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $course = Course::findOrFail($id);
+        $level = Level::findOrFail($id);
         $allClasses = ClassModel::all();
-        $linkedClasses = $course->classes->pluck('id')->toArray();
-        return view('admin.courses.edit', compact('course', 'allClasses', 'linkedClasses'));
+        $linkedClasses = $level->classes->pluck('id')->toArray();
+        return view('admin.levels.edit', compact('level', 'allClasses', 'linkedClasses'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $course = Course::findOrFail($id);
+        $level = Level::findOrFail($id);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'age_range' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'slug' => 'required|string|max:255|unique:courses,slug,' . $course->id,
+            'slug' => 'required|string|max:255|unique:levels,slug,' . $id,
             'image' => 'nullable|image|max:2048',
+            'active' => 'nullable',
             'classes' => 'nullable|array',
             'classes.*' => 'exists:classes,id',
         ]);
 
         if ($request->hasFile('image')) {
-            if ($course->image) {
-                Storage::disk('public')->delete('images/CourseResources/' . $course->image);
+            if ($level->image) {
+                Storage::disk('public')->delete('images/LevelResources/' . $level->image);
             }
-            $path = $request->file('image')->store('images/CourseResources', 'public');
+            $path = $request->file('image')->store('images/LevelResources', 'public');
             $validated['image'] = basename($path);
         }
 
         $validated['active'] = $request->boolean('active');
 
-        $course->update($validated);
+        $level->update($validated);
 
-        // Sync selected classes
-        $course->classes()->sync($validated['classes'] ?? []);
+        if (isset($validated['classes'])) {
+            $level->classes()->sync($validated['classes']);
+        } else {
+            $level->classes()->detach();
+        }
 
-        return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully.');
+        return redirect()->route('admin.levels.index')->with('success', 'Level updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $course = Course::findOrFail($id);
+        $level = Level::findOrFail($id);
 
-        if ($course->image) {
-            Storage::disk('public')->delete('images/CourseResources/' . $course->image);
+        if ($level->image) {
+            Storage::disk('public')->delete('images/LevelResources/' . $level->image);
         }
 
-        $course->delete();
+        $level->classes()->detach();
+        $level->delete();
 
-        return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully.');
+        return redirect()->route('admin.levels.index')->with('success', 'Level deleted successfully.');
     }
 }

@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             MethodSeeder::class,
             TestimonialSeeder::class,
             ProjectSeeder::class,
-            CourseSeeder::class,
+            LevelSeeder::class,
             ClassSeeder::class,
         ]);
     }

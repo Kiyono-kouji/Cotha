@@ -7,10 +7,10 @@
     <h1 class="fw-bold mb-4 text-center" style="color: #4fc3f7;">Admin Dashboard</h1>
     <div class="row g-4 justify-content-center">
         <div class="col-12 col-md-6 col-lg-4">
-            <a href="{{ route('admin.courses.index') }}" class="card shadow border-0 text-decoration-none text-dark h-100">
+            <a href="{{ route('admin.levels.index') }}" class="card shadow border-0 text-decoration-none text-dark h-100">
                 <div class="card-body text-center py-5">
                     <i class="bi bi-journal-code fs-1 mb-3" style="color: #4fc3f7;"></i>
-                    <h5 class="card-title fw-bold mb-2">Manage Courses</h5>
+                    <h5 class="card-title fw-bold mb-2">Manage Levels</h5>
                     <p class="text-secondary mb-0">Create, edit, and delete courses offered at COTHA.</p>
                 </div>
             </a>

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Admin - Manage Courses')
+@section('title', 'Admin - Manage Levels')
 
 @section('main_content')
 <div class="container my-5">
-    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Manage Courses</h1>
+    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Manage Levels</h1>
     <div class="mb-4 text-end">
-        <a href="{{ route('admin.courses.create') }}" class="btn btn-primary rounded-pill" style="background-color: #4fc3f7; border: none;">
-            <i class="bi bi-plus-lg"></i> Add New Course
+        <a href="{{ route('admin.levels.create') }}" class="btn btn-primary rounded-pill" style="background-color: #4fc3f7; border: none;">
+            <i class="bi bi-plus-lg"></i> Add New Level
         </a>
     </div>
     @if(session('success'))
@@ -27,26 +27,26 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($courses as $course)
+                @forelse($levels as $level)
                 <tr>
-                    <td>{{ $course->title }}</td>
-                    <td>{{ $course->subtitle }}</td>
-                    <td>{{ $course->age_range }}</td>
+                    <td>{{ $level->title }}</td>
+                    <td>{{ $level->subtitle }}</td>
+                    <td>{{ $level->age_range }}</td>
                     <td>
-                        @if($course->active)
+                        @if($level->active)
                             <span class="badge bg-success">Active</span>
                         @else
                             <span class="badge bg-secondary">Inactive</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('admin.courses.edit', $course) }}" class="btn btn-sm btn-warning rounded-pill">
+                        <a href="{{ route('admin.levels.edit', $level) }}" class="btn btn-sm btn-warning rounded-pill">
                             <i class="bi bi-pencil"></i> Edit
                         </a>
-                        <form action="{{ route('admin.courses.destroy', $course) }}" method="POST" class="d-inline">
+                        <form action="{{ route('admin.levels.destroy', $level) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-sm btn-danger rounded-pill" onclick="return confirm('Delete this course?')">
+                            <button class="btn btn-sm btn-danger rounded-pill" onclick="return confirm('Delete this level?')">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
                         </form>
@@ -54,7 +54,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted">No courses found.</td>
+                    <td colspan="5" class="text-center text-muted">No levels found.</td>
                 </tr>
                 @endforelse
             </tbody>

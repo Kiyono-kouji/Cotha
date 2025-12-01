@@ -1,28 +1,28 @@
 @extends('layouts.app')
 
-@section('title', $course->title . ' - COTHA')
+@section('title', $level->title . ' - COTHA')
 
 @section('main_content')
 <div class="container my-5">
     <div class="row justify-content-center px-5 px-md-1">
         <div class="col-12 text-center mb-4">
-            @if($course->image)
-                <img src="{{ asset('storage/images/CourseResources/' . $course->image) }}"
+            @if($level->image)
+                <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
                     class="img-fluid mb-3 d-block mx-auto"
                     style="width: 100%; max-width: 600px; height: auto; object-fit: contain;"
-                    alt="{{ $course->title }}">
+                    alt="{{ $level->title }}">
             @endif
-            <h2 class="fw-bold" style="color: #4fc3f7;">{{ $course->title }}</h2>
+            <h2 class="fw-bold" style="color: #4fc3f7;">{{ $level->title }}</h2>
             <div class="mb-2 text-secondary fs-5">
-                {{ $course->subtitle }}
-                @if($course->age_range)
+                {{ $level->subtitle }}
+                @if($level->age_range)
                     <span class="ms-2 badge rounded-pill" style="background-color: #e3f6fd; color: #234567;">
-                        {{ $course->age_range }}
+                        {{ $level->age_range }}
                     </span>
                 @endif
             </div>
             <p class="text-dark" style="line-height: 1.7;">
-                {{ $course->description }}
+                {{ $level->description }}
             </p>
         </div>
     </div>
@@ -91,7 +91,7 @@
     </div>
     <div class="row mt-5">
         <div class="col-12 text-center">
-            <a href="{{ url('/courses') }}" class="btn btn-primary btn-lg px-5 py-3 mt-4 fw-semibold rounded-pill shadow animated-btn" style="background-color: #b3e0f7; border: none;">
+            <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 mt-4 fw-semibold rounded-pill shadow animated-btn" style="background-color: #b3e0f7; border: none;">
                 <i class="bi bi-arrow-left me-2"></i>
                 Go Back to Courses
             </a>

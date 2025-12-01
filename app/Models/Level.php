@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Level extends Model
 {
     use HasFactory;
 
@@ -21,6 +21,6 @@ class Course extends Model
 
     public function classes()
     {
-        return $this->belongsToMany(ClassModel::class, 'class_course', 'course_id', 'class_id');
+        return $this->belongsToMany(ClassModel::class, 'class_level', 'level_id', 'class_id');
     }
 }

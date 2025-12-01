@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ClassModel;
-use App\Models\Course;
+use App\Models\Level;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -399,10 +399,10 @@ class ClassSeeder extends Seeder
         ]);
 
         // Attach classes to courses
-        $coursevc = Course::where('slug', 'vc')->first();
-        $coursemmt = Course::where('slug', 'mmt')->first();
-        $coursebbc = Course::where('slug', 'bbc')->first();
-        $courserwc = Course::where('slug', 'rwc')->first();
+        $coursevc = Level::where('slug', 'vc')->first();
+        $coursemmt = Level::where('slug', 'mmt')->first();
+        $coursebbc = Level::where('slug', 'bbc')->first();
+        $courserwc = Level::where('slug', 'rwc')->first();
         $coursevc->classes()->attach([$classb01->id, $classb02->id, $classb03->id]);
         $coursemmt->classes()->attach([$classm01->id, $classm02->id, $classm03->id]);
         $coursebbc->classes()->attach([$classb01->id, $classb02->id, $classb03->id, $classb04->id, $classb05->id]);

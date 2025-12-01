@@ -32,6 +32,6 @@ class ClassModel extends Model
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'class_course', 'class_id', 'course_id');
+        return $this->belongsToMany(Level::class, 'class_level', 'class_id', 'level_id');
     }
 }

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
+use App\Models\Level;
 use Illuminate\Http\Request;
 
-class CourseController extends Controller
+class LevelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $courses = Course::where('active', true)->get();
-        return view('courses', compact('courses'));
+        $levels = Level::where('active', true)->get();
+        return view('levels', compact('levels'));
     }
 
     /**
@@ -37,15 +37,15 @@ class CourseController extends Controller
      */
     public function show($slug)
     {
-        $course = Course::where('slug', $slug)->where('active', true)->firstOrFail();
-        $classes = $course->classes()->get();
-        return view('coursedetail', compact('course', 'classes'));
+        $level = Level::where('slug', $slug)->where('active', true)->firstOrFail();
+        $classes = $level->classes()->get();
+        return view('leveldetail', compact('level', 'classes'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit(Level $level)
     {
         //
     }
@@ -53,7 +53,7 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Level $level)
     {
         //
     }
@@ -61,7 +61,7 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy(Level $level)
     {
         //
     }

@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Course;
+use App\Models\Level;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CourseSeeder extends Seeder
+class LevelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Course::insert([
+        Level::insert([
             [
                 'title' => 'Visual Coding',
                 'subtitle' => 'Little Coder',

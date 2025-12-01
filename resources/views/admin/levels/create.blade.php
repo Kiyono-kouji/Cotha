@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Add New Course')
+@section('title', 'Add New Level')
 
 @section('main_content')
 <div class="container my-5">
-    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Add New Course</h1>
-    <form method="POST" action="{{ route('admin.courses.store') }}" enctype="multipart/form-data">
+    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Add New Level</h1>
+    <form method="POST" action="{{ route('admin.levels.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label class="form-label fw-semibold">Title</label>
@@ -45,7 +45,7 @@
             <small class="text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple classes.</small>
         </div>
         <button type="submit" class="btn btn-primary rounded-pill" style="background-color: #4fc3f7; border: none;">Save</button>
-        <a href="{{ route('admin.courses.index') }}" class="btn btn-secondary rounded-pill ms-2">Cancel</a>
+        <a href="{{ route('admin.levels.index') }}" class="btn btn-secondary rounded-pill ms-2">Cancel</a>
     </form>
 </div>
 @if ($errors->any())
