@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('slug');
             $table->boolean('active')->default(true);
+            $table->boolean('isFeatured')->default(false);
             $table->timestamps();
         });
     }

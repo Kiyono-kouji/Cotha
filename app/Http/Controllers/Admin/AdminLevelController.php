@@ -40,6 +40,7 @@ class AdminLevelController extends Controller
             'description' => 'nullable|string',
             'slug' => 'required|string|max:255|unique:levels,slug',
             'image' => 'nullable|image|max:2048',
+            'isFeatured' => 'nullable',
             'active' => 'nullable',
             'classes' => 'nullable|array',
             'classes.*' => 'exists:classes,id',
@@ -50,6 +51,7 @@ class AdminLevelController extends Controller
             $validated['image'] = basename($path);
         }
 
+        $validated['isFeatured'] = $request->boolean('isFeatured');
         $validated['active'] = $request->boolean('active');
 
         $level = Level::create($validated);
@@ -94,6 +96,7 @@ class AdminLevelController extends Controller
             'description' => 'nullable|string',
             'slug' => 'required|string|max:255|unique:levels,slug,' . $id,
             'image' => 'nullable|image|max:2048',
+            'isFeatured' => 'nullable',
             'active' => 'nullable',
             'classes' => 'nullable|array',
             'classes.*' => 'exists:classes,id',
@@ -107,6 +110,7 @@ class AdminLevelController extends Controller
             $validated['image'] = basename($path);
         }
 
+        $validated['isFeatured'] = $request->boolean('isFeatured');
         $validated['active'] = $request->boolean('active');
 
         $level->update($validated);

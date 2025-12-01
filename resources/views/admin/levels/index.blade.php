@@ -23,6 +23,7 @@
                     <th>Subtitle</th>
                     <th>Age Range</th>
                     <th>Active</th>
+                    <th>Featured</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -40,6 +41,13 @@
                         @endif
                     </td>
                     <td>
+                        @if($level->isFeatured)
+                            <span class="badge bg-success">Featured</span>
+                        @else
+                            <span class="badge bg-secondary">No</span>
+                        @endif
+                    </td>
+                    <td>
                         <a href="{{ route('admin.levels.edit', $level) }}" class="btn btn-sm btn-warning rounded-pill">
                             <i class="bi bi-pencil"></i> Edit
                         </a>
@@ -54,7 +62,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted">No levels found.</td>
+                    <td colspan="6" class="text-center text-muted">No levels found.</td>
                 </tr>
                 @endforelse
             </tbody>

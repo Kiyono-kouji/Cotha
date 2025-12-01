@@ -4,6 +4,7 @@
 
 @section('main_content')
 <section style="overflow: hidden">
+    {{-- Banner --}}
     <div class="container-fluid mb-3 d-flex justify-content-center" style="background-color: #9ad2e9;">
         <img 
             src="https://cotha.id/wp-content/uploads/2022/06/banner_cotha-4-scaled.jpg" 
@@ -12,6 +13,54 @@
             alt="Description"
         >
     </div>
+
+    {{-- Levels Section --}}
+    <div class="container-fluid py-5" style="background-color: #ffffff;">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="fw-bold" style="color: #4fc3f7; letter-spacing: 1px;">Our Learning Levels</h2>
+                    <p class="text-secondary fs-5 mb-0">
+                        Choose the perfect learning path for your child's age and interests!
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4 justify-content-center">
+                @foreach($levels as $level)
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <a href="{{ url('/levels/' . $level->slug) }}" class="text-decoration-none">
+                            <div class="card info-card h-100 shadow border-0 text-center">
+                                @if($level->image)
+                                    <div class="d-flex justify-content-center align-items-center p-3" style="background-color: #f8f9fa;">
+                                        <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
+                                             class="img-fluid"
+                                             style="max-height: 150px; object-fit: contain;"
+                                             alt="{{ $level->title }}">
+                                    </div>
+                                @endif
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="fw-bold mb-1" style="color: #4fc3f7;">{{ $level->title }}</h5>
+                                    <p class="text-secondary mb-1" style="font-size: 0.95rem;">{{ $level->subtitle }}</p>
+                                    <span class="badge rounded-pill mb-2" style="background-color: #e3f6fd; color: #234567; width: fit-content; margin: 0 auto;">
+                                        {{ $level->age_range }}
+                                    </span>
+                                    <p class="text-dark small mb-0">
+                                        {{ \Illuminate\Support\Str::limit($level->description, 80) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="text-center mt-4">
+                <a href="{{ url('/levels') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-5 rounded-pill shadow animated-btn" style="background-color: #4fc3f7; border: none;">
+                    View All Levels
+                </a>
+            </div>
+        </div>
+    </div>
+
     {{-- Data --}}
     <div class="container my-5 px-5 px-md-1">
         <div class="row g-4 justify-content-center">
@@ -19,10 +68,10 @@
                 <div class="card border-2 border-pink shadow-sm h-100 text-center">
                     <div class="card-body d-flex flex-column align-items-center shadow">
                         <div class="mb-2">
-                            <i class="bi bi-controller fs-1 text-danger"></i>
+                            <i class="bi bi-controller fs-1" style="color: #4fc3f7;"></i>
                         </div>
-                        <h3 class="fw-bold mb-2 text-danger">9 dari 10</h3>
-                        <hr class="w-25 mx-auto border-danger opacity-75">
+                        <h3 class="fw-bold mb-2" style="color: #4fc3f7;">9 dari 10</h3>
+                        <hr class="w-25 mx-auto opacity-75" style="color: #4fc3f7;">
                         <p class="mb-0 text-dark small">
                             Siswa Cotha Mampu<br>
                             Membuat Game Sendiri<br>
@@ -36,10 +85,10 @@
                 <div class="card border-2 border-pink shadow-sm h-100 text-center">
                     <div class="card-body d-flex flex-column align-items-center shadow">
                         <div class="mb-2">
-                            <i class="bi bi-globe2 fs-1 text-primary"></i>
+                            <i class="bi bi-globe2 fs-1" style="color: #4fc3f7;"></i>
                         </div>
-                        <h3 class="fw-bold mb-2 text-primary">80%</h3>
-                        <hr class="w-25 mx-auto border-primary opacity-75">
+                        <h3 class="fw-bold mb-2" style="color: #4fc3f7;">80%</h3>
+                        <hr class="w-25 mx-auto opacity-75" style="color: #4fc3f7;">
                         <p class="mb-0 text-dark small">
                             Kurikulum Cotha Diadopsi<br>
                             Dari Jerman Dan India<br>
@@ -53,10 +102,10 @@
                 <div class="card border-2 border-pink shadow-sm h-100 text-center">
                     <div class="card-body d-flex flex-column align-items-center shadow">
                         <div class="mb-2">
-                            <i class="bi bi-lightbulb fs-1 text-warning"></i>
+                            <i class="bi bi-lightbulb fs-1" style="color: #4fc3f7;"></i>
                         </div>
-                        <h3 class="fw-bold mb-2 text-warning">100%</h3>
-                        <hr class="w-25 mx-auto border-warning opacity-75">
+                        <h3 class="fw-bold mb-2" style="color: #4fc3f7;">100%</h3>
+                        <hr class="w-25 mx-auto opacity-75" style="color: #4fc3f7;">
                         <p class="mb-0 text-dark small">
                             Materi Cotha Dirancang<br>
                             Untuk Meningkatkan<br>
@@ -69,6 +118,7 @@
             </div>
         </div>
     </div>
+
     {{-- Learning Methods --}}
     <div class="container-fluid my-5 mt-4 py-4 rounded-4" style="background-color: #e3f6fd;">
         <div class="row">
@@ -111,6 +161,7 @@
             @endforeach
         </div>
     </div>
+
     {{-- Testimonies --}}
     <div class="container my-5 pb-5" style="min-height: 420px; overflow: hidden">
         <div class="row align-items-end mb-5">
@@ -166,6 +217,7 @@
             </a>
         </div>
     </div>
+
     {{-- Projects --}}
     <div class="container-fluid" style="background-color: #e3f6fd;">
         <div class="container mt-5 pt-4 px-5 pb-5 px-md-1">
@@ -195,6 +247,7 @@
             </div>
         </div>
     </div>
+
     {{-- Courses & Contact Section --}}
     <div class="container-fluid py-5" style="background-color: #ffffff;">
         <div class="container">
@@ -202,12 +255,12 @@
                 <!-- Courses Section -->
                 <div class="col-12 col-lg-6">
                     <div class="pe-lg-4">
-                        <h2 class="fw-bold mb-3 text-dark" style="font-size: 2.5rem;">Explore Our Courses</h2>
+                        <h2 class="fw-bold mb-3 text-dark" style="font-size: 2.5rem;">Explore Our Levels</h2>
                         <p class="fs-5 mb-4 text-secondary">
                             Discover a wide range of coding courses designed for kids. From game development to web design, find the perfect path for your child's tech journey!
                         </p>
-                        <a href="{{ url('/courses') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold shadow animated-btn" style="background-color: #4fc3f7; border: none;">
-                            Browse Courses
+                        <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold shadow animated-btn" style="background-color: #4fc3f7; border: none;">
+                            Browse Levels
                             <i class="bi bi-arrow-right ms-2"></i>
                         </a>
                     </div>

@@ -35,6 +35,10 @@
             <input type="checkbox" name="active" class="form-check-input" id="active" {{ old('active', true) ? 'checked' : '' }}>
             <label class="form-check-label" for="active">Active</label>
         </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="isFeatured" class="form-check-input" id="isFeatured" {{ old('isFeatured', true) ? 'checked' : '' }}>
+            <label class="form-check-label" for="isFeatured">Featured</label>
+        </div>
         <div class="mb-3">
             <label class="form-label fw-semibold">Link Classes</label>
             <select name="classes[]" class="form-select" multiple>

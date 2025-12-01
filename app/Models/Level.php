@@ -17,6 +17,7 @@ class Level extends Model
         'description',
         'slug',
         'active',
+        'isFeatured'
     ];
 
     public function classes()
