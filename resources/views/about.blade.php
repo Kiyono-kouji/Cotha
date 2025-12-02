@@ -88,8 +88,8 @@
                 </div>
             </div>
             <div class="text-center mt-4">
-                <a href="{{ url('/courses') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold rounded-pill shadow animated-btn" style="background-color: #4fc3f7; border: none;">
-                    Explore Our Courses
+                <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold rounded-pill shadow shake" style="background-color: #4fc3f7; border: none;">
+                    Explore Our Level
                     <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>

@@ -91,9 +91,9 @@
     </div>
     <div class="row mt-5">
         <div class="col-12 text-center">
-            <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 mt-4 fw-semibold rounded-pill shadow animated-btn" style="background-color: #b3e0f7; border: none;">
+            <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 mt-4 fw-semibold rounded-pill shadow shake" style="background-color: #b3e0f7; border: none;">
                 <i class="bi bi-arrow-left me-2"></i>
-                Go Back to Courses
+                Go Back to Levels
             </a>
         </div>
     </div>
