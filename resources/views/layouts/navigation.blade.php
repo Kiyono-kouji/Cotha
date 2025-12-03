@@ -29,6 +29,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white {{ Request::is('albums*') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/albums') }}">
+                        Albums
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('about') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/about') }}">
                         About
                     </a>
