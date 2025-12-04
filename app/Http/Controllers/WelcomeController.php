@@ -7,7 +7,7 @@ use App\Models\Method;
 use App\Models\Project;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client; // <— add
+use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
 class WelcomeController extends Controller
@@ -42,10 +42,15 @@ class WelcomeController extends Controller
                     $creator = trim(($p['user']['name'] ?? $p['creator'] ?? ''));
                     $key = Str::lower($title).'|'.Str::lower($creator);
 
-                    // For HOME: only apply local isFeatured override
+                    // Check local overrides
                     if (isset($overrides[$key])) {
+                        // If locally inactive => hide from both home and projects
+                        if (!$overrides[$key]->active) {
+                            continue;
+                        }
+                        // If locally unfeatured => hide from home only
                         if (!$overrides[$key]->isFeatured) {
-                            continue; // unfeatured locally => hide on home
+                            continue;
                         }
                     }
 

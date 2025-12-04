@@ -32,7 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MethodSeeder::class,
             TestimonialSeeder::class,
-            ProjectSeeder::class,
             LevelSeeder::class,
             ClassSeeder::class,
         ]);

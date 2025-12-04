@@ -2,7 +2,14 @@
 @section('title', 'Add New Album')
 @section('main_content')
 <div class="container my-5">
-    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Add New Album</h1>
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3">
+        <h1 class="fw-bold mb-2 mb-md-0" style="color: #4fc3f7;">Add New Album</h1>
+        <a href="{{ route('admin.partners.create') }}" class="btn btn-primary rounded-pill"
+           style="background-color: #4fc3f7; border: none;">
+            <i class="bi bi-plus-lg"></i> Add New Partner
+        </a>
+    </div>
+
     <div class="card shadow border-0 rounded-4 p-4">
         <form method="POST" action="{{ route('admin.albums.store') }}" enctype="multipart/form-data" id="albumForm">
             @csrf

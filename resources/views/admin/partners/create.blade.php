@@ -2,7 +2,9 @@
 @section('title', 'Add New Partner')
 @section('main_content')
 <div class="container my-5">
-    <h1 class="fw-bold mb-4" style="color: #4fc3f7;">Add New Partner</h1>
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3">
+        <h1 class="fw-bold mb-2 mb-md-0" style="color: #4fc3f7;">Add New Partner</h1>
+    </div>
     <div class="card shadow border-0 rounded-4 p-4">
         <form method="POST" action="{{ route('admin.partners.store') }}" enctype="multipart/form-data">
             @csrf

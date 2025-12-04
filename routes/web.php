@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminMediaController;
 use App\Http\Controllers\Admin\AdminMethodController;
 use App\Http\Controllers\Admin\AdminPartnerController;
 use App\Http\Controllers\Admin\AdminProjectController;
+use App\Http\Controllers\Admin\AdminRegistrationController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProjectController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicRegistrationController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/levels', [LevelController::class, 'index']);
@@ -36,6 +38,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('albums', AdminAlbumController::class);
     Route::resource('media', AdminMediaController::class);
     Route::resource('partners', AdminPartnerController::class);
+    Route::resource('registrations', AdminRegistrationController::class)->only(['index', 'show', 'destroy']);
 });
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -44,5 +47,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::patch('projects/{project}/toggle-featured', [AdminProjectController::class, 'toggleFeatured'])->name('projects.toggleFeatured');
     Route::patch('projects/{project}/toggle-active', [AdminProjectController::class, 'toggleActive'])->name('projects.toggleActive');
 });
+
+Route::post('/register-class', [PublicRegistrationController::class, 'store'])
+    ->name('public.register-class');
 
 require __DIR__.'/auth.php';
