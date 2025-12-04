@@ -1,17 +1,220 @@
 body {
     overflow-x: hidden;
 }
-.info-card {
-    transition: transform 0.2s, box-shadow 0.2s;
+
+/* Card tilt effect */
+.tilt-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.info-card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 8px 32px rgba(79,195,247,0.15), 0 2px 8px rgba(0,0,0,0.08);
+.tilt-card:hover {
+    transform: perspective(1000px) rotateY(5deg) rotateX(5deg);
+    box-shadow: 0 12px 40px rgba(79, 195, 247, 0.25), 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-.animated-btn {
-    transition: background-color 0.3s, color 0.3s;
+
+/* Shake Animation (for buttons on hover) */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
 }
-.animated-btn:hover {
+.shake {
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.shake:hover {
+    animation: shake 0.5s ease-in-out;
     background-color: #f48acb !important;
     color: #fff !important;
+}
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.fade-in {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+/* Slide In Left Animation */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+}
+
+/* Slide In Right Animation */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+}
+
+/* Scale In Animation */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(79, 195, 247, 0.4);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(79, 195, 247, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(79, 195, 247, 0);
+    }
+}
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Glow Animation */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(79, 195, 247, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(79, 195, 247, 0.8), 0 0 30px rgba(79, 195, 247, 0.6);
+    }
+}
+.glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Staggered Animation Delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+
+/* Initially hidden for animation */
+.animate-on-load {
+    opacity: 0;
+}
+
+/* Stats counter animation */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.count-up {
+    animation: countUp 0.8s ease-out forwards;
+}
+
+/* Icon spin on hover */
+.icon-spin:hover i {
+    transition: transform 0.5s ease;
+    transform: rotate(360deg);
+}
+
+/* Gradient text animation */
+@keyframes gradientText {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.gradient-text {
+    background: linear-gradient(90deg, #4fc3f7, #f48acb, #80c7e4, #4fc3f7);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientText 4s ease infinite;
+}
+
+/* Underline animation for links */
+.animated-underline {
+    position: relative;
+    display: inline-block;
+}
+.animated-underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -2px;
+    left: 0;
+    background-color: #4fc3f7;
+    transition: width 0.3s ease;
+}
+.animated-underline:hover::after {
+    width: 100%;
+}
+
+/* Method Card Footer Hover Effect */
+.tilt-card .rounded-bottom {
+    transition: background-color 0.3s ease;
+}
+.tilt-card:hover .rounded-bottom {
+    background-color: #4fc3f7 !important;
 }
