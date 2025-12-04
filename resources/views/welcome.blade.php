@@ -226,19 +226,40 @@
                 Explore creative games and apps made by our students during their learning journey at COTHA!
             </p>
             <div class="row g-5 justify-content-center">
-                @foreach($projects as $project)
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
-                            <img src="{{ asset('storage/images/StudentProjects/' . $project->image) }}"
-                                 class="img-fluid rounded mb-3 d-block mx-auto"
-                                 style="width: 100%; height: 270px; object-fit: cover;"
-                                 alt="{{ $project->title }}">
-                            <h4 class="fw-semibold mb-2">{{ $project->title }}</h4>
-                            <div class="mb-1 text-secondary">Creator: {{ $project->creator }} ({{ $project->creator_grade }})</div>
-                            <div class="mb-2 text-secondary">Date: {{ \Carbon\Carbon::parse($project->date)->format('F Y') }}</div>
+                @if(!empty($apiProjects) && count($apiProjects) > 0)
+                    @foreach($apiProjects as $project)
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
+                                <img src="{{ $project['thumbnail'] ?? 'default.png' }}"
+                                     class="img-fluid rounded mb-3 d-block mx-auto"
+                                     style="width: 100%; height: 270px; object-fit: cover;"
+                                     alt="{{ $project['title'] ?? 'Untitled' }}">
+                                <h4 class="fw-semibold mb-2">{{ $project['title'] ?? 'Untitled' }}</h4>
+                                <div class="mb-1 text-secondary">
+                                    Creator: {{ $project['user']['name'] ?? 'Unknown' }}
+                                </div>
+                                <div class="mb-2 text-secondary">
+                                    Date: {{ isset($project['created_at']) ? \Carbon\Carbon::parse($project['created_at'])->format('F Y') : '-' }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @else
+                    {{-- Fallback to local DB featured+active projects --}}
+                    @foreach($projects as $project)
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
+                                <img src="{{ asset('storage/images/StudentProjects/' . $project->image) }}"
+                                     class="img-fluid rounded mb-3 d-block mx-auto"
+                                     style="width: 100%; height: 270px; object-fit: cover;"
+                                     alt="{{ $project->title }}">
+                                <h4 class="fw-semibold mb-2">{{ $project->title }}</h4>
+                                <div class="mb-1 text-secondary">Creator: {{ $project->creator }} ({{ $project->creator_grade }})</div>
+                                <div class="mb-2 text-secondary">Date: {{ \Carbon\Carbon::parse($project->date)->format('F Y') }}</div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
             <div class="text-center mt-4">
                 <a href="{{ url('/projects') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-4 rounded-pill shadow animated-btn" style="background-color: #4fc3f7; border: none;">

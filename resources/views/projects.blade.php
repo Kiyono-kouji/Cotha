@@ -12,13 +12,18 @@
         @foreach($projects as $project)
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="bg-white rounded-3 shadow p-3 h-100 d-flex flex-column">
-                    <img src="{{ asset('storage/images/StudentProjects/' . $project->image) }}"
-                                 class="img-fluid rounded mb-3 d-block mx-auto"
-                                 style="width: 100%; height: 270px; object-fit: cover;"
-                                 alt="{{ $project->title }}">
-                    <h4 class="fw-semibold mb-2">{{ $project->title }}</h4>
-                    <div class="mb-1 text-secondary">Creator: {{ $project->creator }} ({{ $project->creator_grade }})</div>
-                    <div class="mb-2 text-secondary">Date: {{ \Carbon\Carbon::parse($project->date)->format('F Y') }}</div>
+                    <img src="{{ $project['thumbnail'] ?? 'default.png' }}"
+                         class="img-fluid rounded mb-3 d-block mx-auto"
+                         style="width: 100%; height: 270px; object-fit: cover;"
+                         alt="{{ $project['title'] ?? 'Untitled' }}">
+                    <h4 class="fw-semibold mb-2">{{ $project['title'] ?? 'Untitled' }}</h4>
+                    <div class="mb-1 text-secondary">
+                        Creator: {{ $project['user']['name'] ?? 'Unknown' }}
+                    </div>
+                    <div class="mb-2 text-secondary">
+                        Date: {{ isset($project['created_at']) ? \Carbon\Carbon::parse($project['created_at'])->format('F Y') : '-' }}
+                    </div>
+                    <a href="{{ $project['url'] }}" target="_blank" class="btn btn-primary mt-auto">Play Project</a>
                 </div>
             </div>
         @endforeach
@@ -41,11 +46,49 @@
                         </li>
                     @endif
 
-                    @foreach ($projects->getUrlRange(1, $projects->lastPage()) as $page => $url)
-                        @if ($page == $projects->currentPage())
-                            <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+                    @php
+                        $current = $projects->currentPage();
+                        $last = $projects->lastPage();
+                        $window = 2; // how many pages to show on each side of current
+                        $pages = [];
+
+                        // Always include first and last
+                        $pages[] = 1;
+                        for ($i = $current - $window; $i <= $current + $window; $i++) {
+                            if ($i > 1 && $i < $last) {
+                                $pages[] = $i;
+                            }
+                        }
+                        if ($last > 1) {
+                            $pages[] = $last;
+                        }
+
+                        // Unique and sorted
+                        $pages = array_values(array_unique($pages));
+                        sort($pages);
+
+                        // Build display with ellipses
+                        $display = [];
+                        $prev = null;
+                        foreach ($pages as $p) {
+                            if ($prev !== null && $p > $prev + 1) {
+                                $display[] = '...';
+                            }
+                            $display[] = $p;
+                            $prev = $p;
+                        }
+                    @endphp
+
+                    @foreach ($display as $item)
+                        @if ($item === '...')
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
                         @else
-                            <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                            @php $url = $projects->url($item); @endphp
+                            @if ($item == $current)
+                                <li class="page-item active"><span class="page-link">{{ $item }}</span></li>
+                            @else
+                                <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $item }}</a></li>
+                            @endif
                         @endif
                     @endforeach
 

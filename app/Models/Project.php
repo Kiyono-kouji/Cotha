@@ -13,7 +13,6 @@ class Project extends Model
         'title',
         'image',
         'creator',
-        'creator_grade',
         'date',
         'isFeatured',
         'active',

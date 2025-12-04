@@ -80,13 +80,123 @@
                             </div>
                         @endif
                         <div class="mt-auto d-flex justify-content-center mb-4">
-                            <a href="{{ $class->button_link }}" target="_blank" class="btn btn-success px-3 py-2 mt-2 rounded-pill" style="background-color: #b3e0f7; color: #234567; border: none;">
+                            <button
+                                type="button"
+                                class="btn px-3 py-2 mt-2 rounded-pill"
+                                style="background-color: #4fc3f7; border: none; color: #ffffff;"
+                                data-bs-toggle="modal"
+                                data-bs-target="#registerModal{{ $class->id }}"
+
+                            >
                                 Register & More Info
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Registration Modal -->
+            <div class="modal fade" id="registerModal{{ $class->id }}" tabindex="-1" aria-labelledby="registerModalLabel{{ $class->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="border: none;">
+                        <div class="modal-header" style="background-color: #4fc3f7; color: #ffffff; border: none;">
+                            <h5 class="modal-title" id="registerModalLabel{{ $class->id }}">Register: {{ $class->title }} ({{ $class->level }})</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="background-color: #e3f6fd;">
+                            <form onsubmit="return submitRegistration{{ $class->id }}(event)">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Nama Anak</label>
+                                    <input type="text" class="form-control" id="regName{{ $class->id }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Tanggal Lahir</label>
+                                    <input type="date" class="form-control" id="regDob{{ $class->id }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Sekolah</label>
+                                    <input type="text" class="form-control" id="regSchool{{ $class->id }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Kota</label>
+                                    <input type="text" class="form-control" id="regCity{{ $class->id }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Nomor telepon</label>
+                                    <input type="tel" class="form-control" id="regWa{{ $class->id }}" placeholder="+6281234332110" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Bahasa</label>
+                                    <select class="form-select" id="regLang{{ $class->id }}" required>
+                                        <option value="Bahasa">Bahasa</option>
+                                        <option value="English">English</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Sudah pernah belajar coding?</label>
+                                    <select class="form-select" id="regEver{{ $class->id }}" required>
+                                        <option value="Belum pernah">Belum pernah</option>
+                                        <option value="Pernah sedikit">Pernah sedikit</option>
+                                        <option value="Sudah cukup">Sudah cukup</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" style="color:#234567;">Catatan / Question</label>
+                                    <textarea class="form-control" id="regNote{{ $class->id }}" rows="3" placeholder="Pertanyaan atau catatan tambahan"></textarea>
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn rounded-pill" style="background-color: #4fc3f7; border: none; color: #ffffff;">
+                                        Register via WhatsApp
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function submitRegistration{{ $class->id }}(e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('regName{{ $class->id }}').value.trim();
+                    const dob = document.getElementById('regDob{{ $class->id }}').value;
+                    const school = document.getElementById('regSchool{{ $class->id }}').value.trim();
+                    const city = document.getElementById('regCity{{ $class->id }}').value.trim();
+                    const wa = document.getElementById('regWa{{ $class->id }}').value.trim();
+                    const lang = document.getElementById('regLang{{ $class->id }}').value;
+                    const ever = document.getElementById('regEver{{ $class->id }}').value;
+                    const note = document.getElementById('regNote{{ $class->id }}').value.trim();
+
+                    // Build message
+                    const lines = [
+                        'Hi COTHA,',
+                        '',
+                        `Saya ingin daftar kelas: {{ $class->title }} ({{ $class->level }})`,
+                        `Nama Anak: ${name}`,
+                        `Tanggal Lahir: ${dob}`,
+                        `Sekolah: ${school}`,
+                        `Kota: ${city}`,
+                        `WA: ${wa}`,
+                        `Bahasa: ${lang}`,
+                        `Sudah pernah belajar coding?: ${ever}`,
+                        note ? `Catatan/Question: ${note}` : null
+                    ].filter(Boolean);
+
+                    const text = encodeURIComponent(lines.join('\n'));
+
+                    // Target WhatsApp link (uses the same number already used in button_link)
+                    // If you want to use a single centralized phone, set it below:
+                    const phone = '+6281234332110';
+
+                    const url = `https://api.whatsapp.com/send/?phone=${encodeURIComponent(phone)}&text=${text}&app_absent=0`;
+
+                    window.open(url, '_blank');
+
+                    return false;
+                }
+            </script>
         @endforeach
     </div>
     <div class="row mt-5">

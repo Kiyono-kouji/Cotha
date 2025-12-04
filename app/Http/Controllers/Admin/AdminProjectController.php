@@ -14,7 +14,11 @@ class AdminProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        // Newest by project date first, then by created_at
+        $projects = \App\Models\Project::orderBy('date', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -105,18 +109,40 @@ class AdminProjectController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Toggle the featured status of a project.
+     */
+    public function toggleFeatured(string $id)
+    {
+        $project = Project::findOrFail($id);
+        $project->isFeatured = ! $project->isFeatured;
+        $project->save();
+
+        return redirect()->route('admin.projects.index')->with('success', 'Featured status updated.');
+    }
+
+    /**
+     * Toggle the active status of a project.
+     */
+    public function toggleActive(string $id)
+    {
+        $project = Project::findOrFail($id);
+        $project->active = ! $project->active;
+        $project->save();
+
+        return redirect()->route('admin.projects.index')->with('success', 'Active status updated.');
+    }
+
+    /**
+     * Hide instead of delete: set active=false, keep all info intact.
      */
     public function destroy(string $id)
     {
         $project = Project::findOrFail($id);
 
-        if ($project->image) {
-            Storage::disk('public')->delete('images/StudentProjects/' . $project->image);
-        }
+        // Do NOT delete image or record; just hide
+        $project->active = false;
+        $project->save();
 
-        $project->delete();
-
-        return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
+        return redirect()->route('admin.projects.index')->with('success', 'Project hidden (inactive).');
     }
 }

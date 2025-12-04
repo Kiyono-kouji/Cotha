@@ -7,6 +7,8 @@ use App\Models\Method;
 use App\Models\Project;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client; // <— add
+use Illuminate\Support\Str;
 
 class WelcomeController extends Controller
 {
@@ -14,8 +16,58 @@ class WelcomeController extends Controller
     {
         $methods = Method::where('active', true)->get();
         $testimonials = Testimonial::where('isFeatured', true)->where('active', true)->latest()->take(6)->get();
-        $projects = Project::where('isFeatured', true)->where('active', true)->latest()->take(6)->get();
         $levels = Level::where('active', true)->where('isFeatured', true)->get();
-        return view('welcome', compact('methods', 'testimonials', 'projects', 'levels'));
+
+        $apiProjects = [];
+        $apiKey = env('API_KEY');
+
+        // Local overrides keyed by normalized title+creator
+        $overrides = \App\Models\Project::get()->keyBy(function ($p) {
+            return Str::lower(trim($p->title)).'|'.Str::lower(trim($p->creator));
+        });
+
+        if ($apiKey) {
+            try {
+                $client = new \GuzzleHttp\Client(['timeout' => 6]);
+                $resp = $client->get("https://comfypace.com/api/student-projects?api_key={$apiKey}");
+                $payload = json_decode($resp->getBody(), true);
+                $items = $payload['data'] ?? [];
+
+                $filtered = [];
+                foreach ($items as $p) {
+                    $active = $p['active'] ?? $p['is_active'] ?? $p['isActive'] ?? true;
+                    $featured = $p['is_featured'] ?? $p['featured'] ?? $p['isFeatured'] ?? true;
+
+                    $title = trim($p['title'] ?? '');
+                    $creator = trim(($p['user']['name'] ?? $p['creator'] ?? ''));
+                    $key = Str::lower($title).'|'.Str::lower($creator);
+
+                    // For HOME: only apply local isFeatured override
+                    if (isset($overrides[$key])) {
+                        if (!$overrides[$key]->isFeatured) {
+                            continue; // unfeatured locally => hide on home
+                        }
+                    }
+
+                    if ($active && $featured) {
+                        $filtered[] = $p;
+                    }
+                }
+
+                $apiProjects = array_slice($filtered, 0, 6);
+            } catch (\Throwable $e) {
+                // fallback below
+            }
+        }
+
+        // Fallback: local featured+active
+        $projects = \App\Models\Project::where('isFeatured', true)
+            ->where('active', true)
+            ->orderBy('date', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
+
+        return view('welcome', compact('methods', 'testimonials', 'levels', 'projects', 'apiProjects'));
     }
 }
