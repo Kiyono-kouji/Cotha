@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminClassController;
 use App\Http\Controllers\Admin\AdminLevelController;
 use App\Http\Controllers\Admin\AdminMediaController;
 use App\Http\Controllers\Admin\AdminMethodController;
+use App\Http\Controllers\Admin\AdminPartnerController;
 use App\Http\Controllers\Admin\AdminProjectController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\AdminController;
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('testimonials', AdminTestimonialController::class);
     Route::resource('albums', AdminAlbumController::class);
     Route::resource('media', AdminMediaController::class);
+    Route::resource('partners', AdminPartnerController::class);
 });
 
 require __DIR__.'/auth.php';

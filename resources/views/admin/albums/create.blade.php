@@ -14,6 +14,15 @@
                 <label class="form-label fw-semibold">Description</label>
                 <textarea name="description" class="form-control" rows="3">{{ old('description') }}</textarea>
             </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Partners</label>
+                <select name="partners[]" class="form-select" multiple>
+                    @foreach($allPartners as $partner)
+                        <option value="{{ $partner->id }}">{{ $partner->name }}</option>
+                    @endforeach
+                </select>
+                <small class="text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple partners.</small>
+            </div>
             <hr>
             <h5 class="fw-bold mb-3">Add Media</h5>
             <div id="media-fields">

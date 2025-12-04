@@ -60,6 +60,15 @@
                 </div>
             </a>
         </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <a href="{{ route('admin.partners.index') }}" class="card shadow border-0 text-decoration-none text-dark h-100">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-people fs-1 mb-3" style="color: #80c7e4;"></i>
+                    <h5 class="card-title fw-bold mb-2">Manage Partners</h5>
+                    <p class="text-secondary mb-0">Add, edit, and organize partner logos and connections.</p>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 @endsection

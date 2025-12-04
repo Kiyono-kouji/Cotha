@@ -14,6 +14,18 @@
             <label class="form-label fw-semibold">Description</label>
             <textarea name="description" class="form-control" rows="3">{{ old('description', $album->description) }}</textarea>
         </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Partners</label>
+            <select name="partners[]" class="form-select" multiple>
+                @foreach($allPartners as $partner)
+                    <option value="{{ $partner->id }}"
+                        {{ in_array($partner->id, old('partners', $album->partners->pluck('id')->toArray())) ? 'selected' : '' }}>
+                        {{ $partner->name }}
+                    </option>
+                @endforeach
+            </select>
+            <small class="text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple partners.</small>
+        </div>
         <button type="submit" class="btn btn-success shake">Update</button>
         <a href="{{ route('admin.albums.index') }}" class="btn btn-secondary ms-2">Cancel</a>
     </form>

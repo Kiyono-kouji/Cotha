@@ -40,12 +40,18 @@ class AdminMediaController extends Controller
             'caption' => 'nullable|string|max:255',
         ]);
 
-        $path = $request->file('file')->store('albums', 'public');
-        $validated['file'] = $path;
+        $album_id = $validated['album_id']; // Store album_id first
+
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('Albums', 'public');
+            $validated['file'] = $path;
+        } else {
+            return redirect()->route('admin.albums.show', $album_id)->with('error', 'File upload failed!');
+        }
 
         Media::create($validated);
 
-        return redirect()->route('admin.albums.show', $validated['album_id'])->with('success', 'Media added!');
+        return redirect()->route('admin.albums.show', $album_id)->with('success', 'Media added!');
     }
 
     /**
@@ -76,7 +82,7 @@ class AdminMediaController extends Controller
         ]);
         if ($request->hasFile('file')) {
             Storage::disk('public')->delete($media->file);
-            $path = $request->file('file')->store('albums', 'public');
+            $path = $request->file('file')->store('Albums', 'public');
             $media->file = $path;
         }
         $media->caption = $validated['caption'];

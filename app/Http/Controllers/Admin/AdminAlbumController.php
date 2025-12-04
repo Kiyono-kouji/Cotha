@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Album;
+use App\Models\Partner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminAlbumController extends Controller
 {
@@ -22,7 +24,8 @@ class AdminAlbumController extends Controller
      */
     public function create()
     {
-        return view('admin.albums.create');
+        $allPartners = \App\Models\Partner::all();
+        return view('admin.albums.create', compact('allPartners'));
     }
 
     /**
@@ -46,7 +49,7 @@ class AdminAlbumController extends Controller
         if ($request->has('media')) {
             foreach ($request->media as $mediaInput) {
                 if (isset($mediaInput['file'])) {
-                    $path = $mediaInput['file']->store('albums', 'public');
+                    $path = $mediaInput['file']->store('Albums', 'public'); // changed to 'Albums'
                     $album->media()->create([
                         'type' => $mediaInput['type'],
                         'file' => $path,
@@ -54,6 +57,10 @@ class AdminAlbumController extends Controller
                     ]);
                 }
             }
+        }
+
+        if (!empty($request->partners)) {
+            $album->partners()->sync($request->partners);
         }
 
         return redirect()->route('admin.albums.show', $album->id)->with('success', 'Album and media created!');
@@ -64,7 +71,7 @@ class AdminAlbumController extends Controller
      */
     public function show($id)
     {
-        $album = Album::with('media')->findOrFail($id);
+        $album = Album::with(['media', 'partners'])->findOrFail($id);
         return view('admin.albums.show', compact('album'));
     }
 
@@ -74,7 +81,8 @@ class AdminAlbumController extends Controller
     public function edit($id)
     {
         $album = Album::findOrFail($id);
-        return view('admin.albums.edit', compact('album'));
+        $allPartners = Partner::all();
+        return view('admin.albums.edit', compact('album', 'allPartners'));
     }
 
     /**
@@ -88,6 +96,11 @@ class AdminAlbumController extends Controller
             'description' => 'nullable|string',
         ]);
         $album->update($validated);
+
+        if (!empty($request->partners)) {
+            $album->partners()->sync($request->partners);
+        }
+
         return redirect()->route('admin.albums.index')->with('success', 'Album updated!');
     }
 
@@ -97,7 +110,15 @@ class AdminAlbumController extends Controller
     public function destroy($id)
     {
         $album = Album::findOrFail($id);
+        $album->partners()->detach(); // Remove links, do not delete partners
+
+        // Delete all media files associated with this album
+        foreach ($album->media as $media) {
+            Storage::disk('public')->delete($media->file);
+        }
+
         $album->delete();
-        return redirect()->route('admin.albums.index')->with('success', 'Album deleted!');
+
+        return redirect()->route('admin.albums.index')->with('success', 'Album and all associated media deleted!');
     }
 }

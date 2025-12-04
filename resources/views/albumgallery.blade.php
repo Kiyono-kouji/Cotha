@@ -27,5 +27,21 @@
             </div>
         @endforeach
     </div>
+
+    @if($album->partners->count())
+        <div class="mb-4">
+            <h5 class="fw-bold text-center mb-3">Partners:</h5>
+            <div class="d-flex flex-wrap justify-content-center gap-4">
+                @foreach($album->partners as $partner)
+                    <div class="text-center">
+                        @if($partner->logo)
+                            <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" style="height: 90px; max-width: 160px; object-fit: contain;">
+                        @endif
+                        <div class="fw-semibold mt-2" style="font-size: 1.15rem;">{{ $partner->name }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
 </div>
 @endsection

@@ -15,4 +15,9 @@ class Album extends Model
     {
         return $this->hasMany(Media::class);
     }
+    
+    public function partners()
+    {
+        return $this->belongsToMany(Partner::class, 'album_partner');
+    }
 }
