@@ -22,13 +22,13 @@ class WelcomeController extends Controller
         $apiKey = env('API_KEY');
 
         // Local overrides keyed by normalized title+creator
-        $overrides = \App\Models\Project::get()->keyBy(function ($p) {
+        $overrides = Project::get()->keyBy(function ($p) {
             return Str::lower(trim($p->title)).'|'.Str::lower(trim($p->creator));
         });
 
         if ($apiKey) {
             try {
-                $client = new \GuzzleHttp\Client(['timeout' => 6]);
+                $client = new Client(['timeout' => 6, 'verify' => false]);
                 $resp = $client->get("https://comfypace.com/api/student-projects?api_key={$apiKey}");
                 $payload = json_decode($resp->getBody(), true);
                 $items = $payload['data'] ?? [];
@@ -66,7 +66,7 @@ class WelcomeController extends Controller
         }
 
         // Fallback: local featured+active
-        $projects = \App\Models\Project::where('isFeatured', true)
+        $projects = Project::where('isFeatured', true)
             ->where('active', true)
             ->orderBy('date', 'desc')
             ->orderBy('created_at', 'desc')

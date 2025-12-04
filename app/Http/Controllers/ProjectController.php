@@ -17,7 +17,7 @@ class ProjectController extends Controller
         $page = $request->input('page', 1);
         $perPage = 12;
 
-        $client = new Client();
+        $client = new Client(['timeout' => 6, 'verify' => false]);
         $apiUrl = "https://comfypace.com/api/student-projects?api_key={$apiKey}";
 
         try {
@@ -27,7 +27,7 @@ class ProjectController extends Controller
             $all = $data['data'] ?? [];
 
             // Local overrides keyed by normalized title+creator
-            $overrides = \App\Models\Project::get()->keyBy(function ($p) {
+            $overrides = Project::get()->keyBy(function ($p) {
                 return Str::lower(trim($p->title)).'|'.Str::lower(trim($p->creator));
             });
 
