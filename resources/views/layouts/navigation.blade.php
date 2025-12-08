@@ -1,15 +1,16 @@
-<nav class="navbar navbar-expand-lg" style="background: #3082e5;">
+{{-- filepath: resources/views/layouts/navigation.blade.php --}}
+<nav class="navbar navbar-expand-lg" style="background: #3082e5; min-height: 90px;">
     <div class="container">
-        <a class="navbar-brand fw-bold text-white d-flex align-items-center" href="{{ url('/') }}">
-            <div style="background: #fff; border-radius: 12px; padding: 4px 12px 4px 4px; display: flex; align-items: center; justify-content: center; height: 48px;">
-                <img src="{{ asset('images/cotha_logo.PNG') }}" alt="COTHA Logo" style="height: 60px;">
+        <a class="navbar-brand fw-bold text-white d-flex align-items-center py-0" href="{{ url('/') }}" style="height: 80px;">
+            <div style="background: #fff; border-radius: 48px; padding: 8px 20px 8px 20px; display: flex; align-items: center; justify-content: center; height: 80px; margin-right: 32px;">
+                <img src="{{ asset('images/cotha_logo.PNG') }}" alt="COTHA Logo" style="height: 48px; width: auto; display: block;">
             </div>
         </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav" style="gap: 24px;">
+            <ul class="navbar-nav align-items-center" style="gap: 24px;">
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('/') ? 'fw-bold' : 'fw-normal' }}" href="{{ url('/') }}">
                         Home

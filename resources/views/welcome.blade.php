@@ -12,7 +12,7 @@
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center">
                 {{-- Left Content --}}
-                <div class="col-12 col-lg-6 text-white mb-4 mb-lg-0 fade-in">
+                <div class="col-12 col-lg-6 text-white mb-4 mb-lg-0 fade-in pt-5">
                     <h1 class="fw-bold mb-3" style="font-size: 3rem; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
                         Belajar Coding Jadi Seru!
                     </h1>
@@ -35,63 +35,62 @@
             </div>
         </div>
         
-        <!-- {{-- Decorative Waves at Bottom --}}
+        <!-- Decorative Waves at Bottom -->
         <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" style="display: block;">
                 <path fill="#ffffff" d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
             </svg>
-        </div> -->
+        </div>
     </div>
 
-    {{-- Level Cards Section with Colorful Icons --}}
-    <div class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold mb-3" style="color: #2C3E50; font-size: 2.5rem;">Level yang Tersedia</h2>
-            <p class="text-secondary fs-5">Pilih level yang sesuai dengan usia dan minat anak!</p>
-        </div>
-        
-        <div class="row g-4 justify-content-center">
-            @foreach($levels as $index => $level)
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <a href="{{ url('/levels/' . $level->slug) }}" class="text-decoration-none">
-                        <div class="card border-0 shadow-lg h-100 tilt-card fade-in-up delay-{{ ($index % 4) + 1 }}" 
-                             style="background: white; border-radius: 20px; transition: transform 0.3s;">
-                            {{-- Colorful Icon Circle --}}
-                            <div class="d-flex justify-content-center pt-4">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center pulse" 
-                                     style="width: 100px; height: 100px; background: {{ ['#FF6B9D', '#FFB74D', '#9C27B0', '#4CAF50'][$index % 4] }};">
-                                    @if($level->image)
-                                        <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
-                                             class="img-fluid"
-                                             style="max-width: 70px; max-height: 70px; object-fit: contain;"
-                                             alt="{{ $level->title }}">
-                                    @else
-                                        <i class="bi bi-code-slash fs-1 text-white"></i>
-                                    @endif
+    {{-- Floating Level Cards Section --}}
+    <div class="container" style="margin-top: -120px; z-index: 2; position: relative;">
+        <div class="bg-white rounded-4 shadow-lg p-4 p-md-5" style="max-width: 1200px; margin: 0 auto;">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3" style="color: #2C3E50; font-size: 2.5rem;">Level yang Tersedia</h2>
+                <p class="text-secondary fs-5">Pilih level yang sesuai dengan usia dan minat anak!</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                @foreach($levels as $index => $level)
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <a href="{{ url('/levels/' . $level->slug) }}" class="text-decoration-none">
+                            <div class="card border-0 shadow-lg h-100 tilt-card fade-in-up delay-{{ ($index % 4) + 1 }}" 
+                                 style="background: white; border-radius: 20px; transition: transform 0.3s;">
+                                {{-- Colorful Icon Circle --}}
+                                <div class="d-flex justify-content-center pt-4">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center pulse" 
+                                         style="width: 100px; height: 100px; background: {{ ['#FF6B9D', '#FFB74D', '#9C27B0', '#4CAF50'][$index % 4] }};">
+                                        @if($level->image)
+                                            <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
+                                                 class="img-fluid"
+                                                 style="max-width: 70px; max-height: 70px; object-fit: contain;"
+                                                 alt="{{ $level->title }}">
+                                        @else
+                                            <i class="bi bi-code-slash fs-1 text-white"></i>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body text-center px-3">
+                                    <h5 class="fw-bold mb-2" style="color: #2C3E50;">{{ $level->title }}</h5>
+                                    <p class="text-secondary small mb-2">{{ $level->subtitle }}</p>
+                                    <span class="badge rounded-pill px-3 py-2 mb-2" style="background-color: #E3F2FD; color: #1976D2; font-size: 0.9rem;">
+                                        {{ $level->age_range }}
+                                    </span>
+                                    <p class="text-muted small mb-0" style="font-size: 0.85rem;">
+                                        {{ \Illuminate\Support\Str::limit($level->description, 60) }}
+                                    </p>
                                 </div>
                             </div>
-                            
-                            <div class="card-body text-center px-3">
-                                <h5 class="fw-bold mb-2" style="color: #2C3E50;">{{ $level->title }}</h5>
-                                <p class="text-secondary small mb-2">{{ $level->subtitle }}</p>
-                                <span class="badge rounded-pill px-3 py-2 mb-2" style="background-color: #E3F2FD; color: #1976D2; font-size: 0.9rem;">
-                                    {{ $level->age_range }}
-                                </span>
-                                <p class="text-muted small mb-0" style="font-size: 0.85rem;">
-                                    {{ \Illuminate\Support\Str::limit($level->description, 60) }}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
-        
-        <div class="text-center mt-5">
-            <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-pill shadow shake" 
-               style="background: linear-gradient(135deg, #FF6B9D 0%, #FF85A2 100%); border: none; color: white;">
-                Lihat Semua Level
-            </a>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="text-center mt-5">
+                <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-pill shadow shake" 
+                   style="background: linear-gradient(135deg, #FF6B9D 0%, #FF85A2 100%); border: none; color: white;">
+                    Lihat Semua Level
+                </a>
+            </div>
         </div>
     </div>
 
