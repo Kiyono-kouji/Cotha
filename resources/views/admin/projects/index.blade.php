@@ -42,7 +42,7 @@
                     <td>{{ $project->creator }}</td>
                     <td>{{ $project->date ? \Carbon\Carbon::parse($project->date)->format('d M Y') : '-' }}</td>
                     <td>
-                        @if($project->isFeatured)
+                        @if($project->is_featured)
                             <span class="badge bg-success">Featured</span>
                         @else
                             <span class="badge bg-secondary">No</span>
@@ -60,7 +60,7 @@
                             @csrf
                             @method('PATCH')
                             <button class="btn btn-sm btn-info rounded-pill">
-                                <i class="bi bi-star"></i> {{ $project->isFeatured ? 'Unfeature' : 'Feature' }}
+                                <i class="bi bi-star"></i> {{ $project->is_featured ? 'Unfeature' : 'Feature' }}
                             </button>
                         </form>
 

@@ -35,8 +35,8 @@
             <small class="text-muted">Leave blank to keep current image.</small>
         </div>
         <div class="mb-3 form-check">
-            <input type="checkbox" name="isFeatured" class="form-check-input" id="isFeatured" {{ old('isFeatured', $project->isFeatured) ? 'checked' : '' }}>
-            <label class="form-check-label" for="isFeatured">Featured</label>
+            <input type="checkbox" name="is_featured" class="form-check-input" id="is_featured" {{ old('is_featured', $project->is_featured) ? 'checked' : '' }}>
+            <label class="form-check-label" for="is_featured">Featured</label>
         </div>
         <div class="mb-3 form-check">
             <input type="checkbox" name="active" class="form-check-input" id="active" {{ old('active', $project->active) ? 'checked' : '' }}>

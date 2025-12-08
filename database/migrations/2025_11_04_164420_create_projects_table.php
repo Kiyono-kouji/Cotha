@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary();   // same ID as API
             $table->string('title');
-            $table->string('image')->nullable();
-            $table->string('creator');
-            $table->string('creator_grade')->nullable();
-            $table->date('date')->nullable();
-            $table->boolean('isFeatured')->default(false);
-            $table->boolean('active')->default(false);
-            $table->timestamps();
+            $table->string('creator')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('url')->nullable();
+            $table->boolean('is_featured')->default(true);
+            $table->boolean('active')->default(true);
+            $table->timestamp('project_date')->nullable(); // API created_at
+            $table->timestamps(); 
         });
     }
 

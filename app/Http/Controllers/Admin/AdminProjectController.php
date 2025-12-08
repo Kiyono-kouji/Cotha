@@ -14,8 +14,7 @@ class AdminProjectController extends Controller
      */
     public function index()
     {
-        // Newest by project date first, then by created_at
-        $projects = \App\Models\Project::orderBy('date', 'desc')
+        $projects = Project::orderBy('project_date', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -41,7 +40,7 @@ class AdminProjectController extends Controller
             'creator' => 'required|string|max:255',
             'creator_grade' => 'nullable|string|max:255',
             'date' => 'nullable|date',
-            'isFeatured' => 'nullable',
+            'is_featured' => 'nullable',
             'active' => 'nullable',
         ]);
 
@@ -50,7 +49,7 @@ class AdminProjectController extends Controller
             $validated['image'] = basename($path);
         }
 
-        $validated['isFeatured'] = $request->boolean('isFeatured');
+        $validated['is_featured'] = $request->boolean('is_featured');
         $validated['active'] = $request->boolean('active');
 
         Project::create($validated);
@@ -88,7 +87,7 @@ class AdminProjectController extends Controller
             'creator' => 'required|string|max:255',
             'creator_grade' => 'nullable|string|max:255',
             'date' => 'nullable|date',
-            'isFeatured' => 'nullable',
+            'is_featured' => 'nullable',
             'active' => 'nullable',
         ]);
 
@@ -100,7 +99,7 @@ class AdminProjectController extends Controller
             $validated['image'] = basename($path);
         }
 
-        $validated['isFeatured'] = $request->boolean('isFeatured');
+        $validated['is_featured'] = $request->boolean('is_featured');
         $validated['active'] = $request->boolean('active');
 
         $project->update($validated);
@@ -114,7 +113,7 @@ class AdminProjectController extends Controller
     public function toggleFeatured(string $id)
     {
         $project = Project::findOrFail($id);
-        $project->isFeatured = ! $project->isFeatured;
+        $project->is_featured = ! $project->is_featured;
         $project->save();
 
         return redirect()->route('admin.projects.index')->with('success', 'Featured status updated.');
