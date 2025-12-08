@@ -17,7 +17,7 @@ class ProjectSyncService
                 return Str::lower(trim($p->title)).'|'.Str::lower(trim($p->creator));
             });
 
-            $client = new Client(['timeout' => 6]);
+            $client = new Client(['timeout' => 6, 'verify' => false]);
             $resp = $client->get("https://comfypace.com/api/student-projects?api_key={$apiKey}");
             $payload = json_decode($resp->getBody(), true);
             $items = $payload['data'] ?? [];
