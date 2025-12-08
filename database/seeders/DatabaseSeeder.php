@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MethodSeeder::class,
             TestimonialSeeder::class,
+            EventSeeder::class,
             LevelSeeder::class,
             ClassSeeder::class,
         ]);

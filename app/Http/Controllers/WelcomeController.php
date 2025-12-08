@@ -6,9 +6,8 @@ use App\Models\Level;
 use App\Models\Method;
 use App\Models\Project;
 use App\Models\Testimonial;
+use App\Services\ProjectSyncService;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use Illuminate\Support\Str;
 
 class WelcomeController extends Controller
 {
@@ -18,57 +17,35 @@ class WelcomeController extends Controller
         $testimonials = Testimonial::where('isFeatured', true)->where('active', true)->latest()->take(6)->get();
         $levels = Level::where('active', true)->where('isFeatured', true)->get();
 
-        $apiProjects = [];
         $apiKey = env('API_KEY');
 
-        // Local overrides keyed by normalized title+creator
-        $overrides = \App\Models\Project::get()->keyBy(function ($p) {
-            return Str::lower(trim($p->title)).'|'.Str::lower(trim($p->creator));
-        });
-
+        // Auto-sync if needed
         if ($apiKey) {
-            try {
-                $client = new \GuzzleHttp\Client(['timeout' => 6]);
-                $resp = $client->get("https://comfypace.com/api/student-projects?api_key={$apiKey}");
-                $payload = json_decode($resp->getBody(), true);
-                $items = $payload['data'] ?? [];
-
-                $filtered = [];
-                foreach ($items as $p) {
-                    $active = $p['active'] ?? $p['is_active'] ?? $p['isActive'] ?? true;
-                    $featured = $p['is_featured'] ?? $p['featured'] ?? $p['isFeatured'] ?? true;
-
-                    $title = trim($p['title'] ?? '');
-                    $creator = trim(($p['user']['name'] ?? $p['creator'] ?? ''));
-                    $key = Str::lower($title).'|'.Str::lower($creator);
-
-                    // Check local overrides
-                    if (isset($overrides[$key])) {
-                        // If locally inactive => hide from both home and projects
-                        if (!$overrides[$key]->active) {
-                            continue;
-                        }
-                        // If locally unfeatured => hide from home only
-                        if (!$overrides[$key]->isFeatured) {
-                            continue;
-                        }
-                    }
-
-                    if ($active && $featured) {
-                        $filtered[] = $p;
-                    }
-                }
-
-                $apiProjects = array_slice($filtered, 0, 6);
-            } catch (\Throwable $e) {
-                // fallback below
+            $syncService = new ProjectSyncService();
+            if ($syncService->shouldSync()) {
+                $syncService->sync($apiKey);
             }
         }
 
-        // Fallback: local featured+active
-        $projects = \App\Models\Project::where('isFeatured', true)
+        // Read from DB
+        $apiProjects = Project::where('active', true)
+            ->where('is_featured', true)
+            ->orderByDesc('project_date')
+            ->take(6)
+            ->get()
+            ->map(fn ($p) => [
+                'id' => $p->id,
+                'title' => $p->title,
+                'user' => ['name' => $p->creator],
+                'thumbnail' => $p->thumbnail,
+                'url' => $p->url,
+                'created_at' => optional($p->project_date)->toIso8601String(),
+            ])
+            ->toArray();
+
+        $projects = Project::where('is_featured', true)
             ->where('active', true)
-            ->orderBy('date', 'desc')
+            ->orderBy('project_date', 'desc')
             ->orderBy('created_at', 'desc')
             ->take(6)
             ->get();

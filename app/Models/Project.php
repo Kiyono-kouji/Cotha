@@ -7,14 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    use HasFactory;
+    protected $table = 'projects';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'int';
 
     protected $fillable = [
-        'title',
-        'image',
-        'creator',
-        'date',
-        'isFeatured',
-        'active',
+        'id','title','creator','thumbnail','url','is_featured','active','project_date',
+    ];
+
+    protected $casts = [
+        'is_featured' => 'boolean',
+        'active' => 'boolean',
+        'project_date' => 'datetime',
     ];
 }

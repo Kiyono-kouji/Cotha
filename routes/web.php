@@ -17,6 +17,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicRegistrationController;
+use App\Http\Controllers\EventController; 
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/levels', [LevelController::class, 'index']);
@@ -27,6 +28,7 @@ Route::get('/testimonials', [TestimonialController::class, 'index']);
 Route::view('/about', 'about')->name('about');
 Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
 Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
+Route::get('/events', [EventController::class, 'index'])->name('events.index'); 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -51,4 +53,5 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 Route::post('/register-class', [PublicRegistrationController::class, 'store'])
     ->name('public.register-class');
 
+    
 require __DIR__.'/auth.php';
