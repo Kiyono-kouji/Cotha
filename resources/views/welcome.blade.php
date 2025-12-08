@@ -4,125 +4,142 @@
 
 @section('main_content')
 <section style="overflow: hidden">
-    {{-- Banner Section --}}
-    <div class="container-fluid d-flex justify-content-center py-4" style="background: linear-gradient(180deg, #80c7e4 0%, #9ad2e9 100%);">
-        <img 
-            src="https://cotha.id/wp-content/uploads/2022/06/banner_cotha-4-scaled.jpg" 
-            class="img-fluid w-100 rounded-4 shadow fade-in" 
-            style="max-width: 900px;" 
-            alt="COTHA Banner"
-        >
-    </div>
-
-    {{-- Gradient Transition: Banner to Levels --}}
-    <div style="height: 60px; background: linear-gradient(180deg, #9ad2e9 0%, #e3f6fd 100%);"></div>
-
-    {{-- Levels Section --}}
-    <div class="container-fluid py-5" style="background-color: #e3f6fd;">
-        <div class="container">
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <h2 class="fw-bold gradient-text" style="letter-spacing: 1px;">Our Learning Levels</h2>
-                    <p class="text-dark fs-5 mb-0 fade-in-up">
-                        Choose the perfect learning path for your child's age and interests!
+    {{-- Hero Section with Banner Image Background --}}
+    <div class="container-fluid py-5 position-relative" style="background: url('{{ asset('images/WelcomePage/MainBanner.jpg') }}') center center / cover no-repeat; min-height: 500px;">
+        {{-- Overlay for better text readability --}}
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(74, 144, 226, 0.15);"></div>
+        
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="row align-items-center">
+                {{-- Left Content --}}
+                <div class="col-12 col-lg-6 text-white mb-4 mb-lg-0 fade-in">
+                    <h1 class="fw-bold mb-3" style="font-size: 3rem; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                        Belajar Coding Jadi Seru!
+                    </h1>
+                    <p class="fs-4 mb-4" style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+                        Yuk, belajar ngoding lewat game seru dari nol!
                     </p>
-                </div>
-            </div>
-            <div class="row g-4 justify-content-center">
-                @foreach($levels as $index => $level)
-                    <div class="col-12 col-md-6 col-lg-3">
-                        <a href="{{ url('/levels/' . $level->slug) }}" class="text-decoration-none">
-                            <div class="card tilt-card h-100 shadow border-0 text-center fade-in-up delay-{{ ($index % 4) + 1 }}" style="background: #ffffff;">
-                                @if($level->image)
-                                    <div class="d-flex justify-content-center align-items-center p-3" style="background-color: #ffffff; border-radius: 0.5rem 0.5rem 0 0;">
-                                        <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
-                                             class="img-fluid float"
-                                             style="max-height: 150px; object-fit: contain;"
-                                             alt="{{ $level->title }}">
-                                    </div>
-                                @endif
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="fw-bold mb-1" style="color: #234567;">{{ $level->title }}</h5>
-                                    <p class="text-secondary mb-1" style="font-size: 0.95rem;">{{ $level->subtitle }}</p>
-                                    <span class="badge rounded-pill mb-2 pulse" style="background-color: #4fc3f7; color: #ffffff; width: fit-content; margin: 0 auto;">
-                                        {{ $level->age_range }}
-                                    </span>
-                                    <p class="text-dark small mb-0">
-                                        {{ \Illuminate\Support\Str::limit($level->description, 80) }}
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                        @auth
+                            @if(auth()->user()->isAdmin)
+                                <a href="{{ url('/admin/dashboard') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-pill shadow" style="background-color: #FF6B9D; border: none; color: white;">
+                                    Admin Dashboard
+                                </a>
+                            @endif
+                        @endauth
+                        <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-pill shadow shake" style="background-color: #FF85A2; border: none; color: white;">
+                            Pelajari Lebih Lanjut
                         </a>
                     </div>
-                @endforeach
-            </div>
-            <div class="text-center mt-4">
-                <a href="{{ url('/levels') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-5 rounded-pill shadow shake" style="background-color: #4fc3f7; border: none;">
-                    View All Levels
-                </a>
+                </div>
             </div>
         </div>
+        
+        <!-- {{-- Decorative Waves at Bottom --}}
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" style="display: block;">
+                <path fill="#ffffff" d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+            </svg>
+        </div> -->
     </div>
 
-    {{-- Gradient Transition: Levels to Stats --}}
-    <div style="height: 60px; background: linear-gradient(180deg, #e3f6fd 0%, #ffffff 100%);"></div>
+    {{-- Level Cards Section with Colorful Icons --}}
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold mb-3" style="color: #2C3E50; font-size: 2.5rem;">Level yang Tersedia</h2>
+            <p class="text-secondary fs-5">Pilih level yang sesuai dengan usia dan minat anak!</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            @foreach($levels as $index => $level)
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <a href="{{ url('/levels/' . $level->slug) }}" class="text-decoration-none">
+                        <div class="card border-0 shadow-lg h-100 tilt-card fade-in-up delay-{{ ($index % 4) + 1 }}" 
+                             style="background: white; border-radius: 20px; transition: transform 0.3s;">
+                            {{-- Colorful Icon Circle --}}
+                            <div class="d-flex justify-content-center pt-4">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center pulse" 
+                                     style="width: 100px; height: 100px; background: {{ ['#FF6B9D', '#FFB74D', '#9C27B0', '#4CAF50'][$index % 4] }};">
+                                    @if($level->image)
+                                        <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
+                                             class="img-fluid"
+                                             style="max-width: 70px; max-height: 70px; object-fit: contain;"
+                                             alt="{{ $level->title }}">
+                                    @else
+                                        <i class="bi bi-code-slash fs-1 text-white"></i>
+                                    @endif
+                                </div>
+                            </div>
+                            
+                            <div class="card-body text-center px-3">
+                                <h5 class="fw-bold mb-2" style="color: #2C3E50;">{{ $level->title }}</h5>
+                                <p class="text-secondary small mb-2">{{ $level->subtitle }}</p>
+                                <span class="badge rounded-pill px-3 py-2 mb-2" style="background-color: #E3F2FD; color: #1976D2; font-size: 0.9rem;">
+                                    {{ $level->age_range }}
+                                </span>
+                                <p class="text-muted small mb-0" style="font-size: 0.85rem;">
+                                    {{ \Illuminate\Support\Str::limit($level->description, 60) }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-pill shadow shake" 
+               style="background: linear-gradient(135deg, #FF6B9D 0%, #FF85A2 100%); border: none; color: white;">
+                Lihat Semua Level
+            </a>
+        </div>
+    </div>
 
     {{-- Stats Section --}}
-    <div class="container-fluid py-5" style="background-color: #ffffff;">
+    <div class="container-fluid py-5" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);">
         <div class="container">
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <h2 class="fw-bold gradient-text" style="letter-spacing: 1px;">Why Choose COTHA?</h2>
-                    <p class="text-secondary fs-5 mb-0 fade-in-up">
-                        Here's what makes us different
-                    </p>
-                </div>
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3" style="color: #2C3E50; font-size: 2.5rem;">Kenapa Pilih COTHA?</h2>
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-12 col-md-4">
-                    <div class="card border-0 shadow h-100 text-center tilt-card icon-spin scale-in delay-1" style="background: linear-gradient(135deg, #e3f6fd 0%, #ffffff 100%);">
-                        <div class="card-body d-flex flex-column align-items-center py-5">
-                            <div class="mb-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background-color: #4fc3f7;">
+                    <div class="card border-0 shadow-lg h-100 text-center tilt-card" style="border-radius: 20px; background: white;">
+                        <div class="card-body py-5">
+                            <div class="mb-3 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px; background-color: #FF6B9D;">
                                 <i class="bi bi-controller fs-1 text-white"></i>
                             </div>
-                            <h3 class="fw-bold mb-2 count-up" style="color: #234567;">9 dari 10</h3>
-                            <p class="mb-0 text-dark">
-                                Siswa Cotha Mampu<br>
-                                Membuat Game Sendiri<br>
-                                Setelah 1-2x Pertemuan<br>
-                                Coding Class
+                            <h3 class="fw-bold mb-2" style="color: #2C3E50;">9 dari 10</h3>
+                            <p class="text-secondary">
+                                Siswa Cotha Mampu Membuat Game Sendiri Setelah 1-2x Pertemuan
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <div class="card border-0 shadow h-100 text-center tilt-card icon-spin scale-in delay-2" style="background: linear-gradient(135deg, #e3f6fd 0%, #ffffff 100%);">
-                        <div class="card-body d-flex flex-column align-items-center py-5">
-                            <div class="mb-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background-color: #f48acb;">
+                    <div class="card border-0 shadow-lg h-100 text-center tilt-card" style="border-radius: 20px; background: white;">
+                        <div class="card-body py-5">
+                            <div class="mb-3 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px; background-color: #FFB74D;">
                                 <i class="bi bi-globe2 fs-1 text-white"></i>
                             </div>
-                            <h3 class="fw-bold mb-2 count-up" style="color: #234567;">80%</h3>
-                            <p class="mb-0 text-dark">
-                                Kurikulum Cotha Diadopsi<br>
-                                Dari Jerman Dan India<br>
-                                Dengan Sistem Pembelajaran<br>
-                                Project Based Learning
+                            <h3 class="fw-bold mb-2" style="color: #2C3E50;">80%</h3>
+                            <p class="text-secondary">
+                                Kurikulum Diadopsi Dari Jerman Dan India
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <div class="card border-0 shadow h-100 text-center tilt-card icon-spin scale-in delay-3" style="background: linear-gradient(135deg, #e3f6fd 0%, #ffffff 100%);">
-                        <div class="card-body d-flex flex-column align-items-center py-5">
-                            <div class="mb-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background-color: #80c7e4;">
+                    <div class="card border-0 shadow-lg h-100 text-center tilt-card" style="border-radius: 20px; background: white;">
+                        <div class="card-body py-5">
+                            <div class="mb-3 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px; background-color: #9C27B0;">
                                 <i class="bi bi-lightbulb fs-1 text-white"></i>
                             </div>
-                            <h3 class="fw-bold mb-2 count-up" style="color: #234567;">100%</h3>
-                            <p class="mb-0 text-dark">
-                                Materi Dirancang Untuk<br>
-                                Meningkatkan Kemampuan<br>
-                                Computational Thinking &<br>
-                                Kreativitas
+                            <h3 class="fw-bold mb-2" style="color: #2C3E50;">100%</h3>
+                            <p class="text-secondary">
+                                Meningkatkan Computational Thinking & Kreativitas
                             </p>
                         </div>
                     </div>
@@ -131,240 +148,46 @@
         </div>
     </div>
 
-    {{-- Gradient Transition: Stats to Methods --}}
-    <div style="height: 60px; background: linear-gradient(180deg, #ffffff 0%, #e3f6fd 100%);"></div>
-
-    {{-- Learning Methods Section --}}
-    <div class="container-fluid py-5" style="background-color: #e3f6fd;">
-        <div class="container">
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <h2 class="fw-bold gradient-text" style="letter-spacing: 1px;">COTHA Learning Methods</h2>
-                    <p class="text-dark fs-5 mb-0 fade-in-up">
-                        Click the method cards below to see more information about each method.
-                    </p>
-                </div>
-            </div>
-            <div class="row g-4 justify-content-center">
-                @foreach($methods as $index => $method)
-                    <div class="col-12 col-md-6 col-lg-4 d-flex">
-                        <div class="card tilt-card shadow border-0 h-100 mx-auto flex-fill fade-in-up delay-{{ ($index % 3) + 1 }}" style="max-width: 340px; cursor:pointer; background: #ffffff;" data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
-                            <div class="ratio ratio-1x1 rounded-top overflow-hidden d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
+    {{-- Methods Section --}}
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold mb-3" style="color: #2C3E50; font-size: 2.5rem;">Metode Pembelajaran COTHA</h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @foreach($methods as $index => $method)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-lg h-100 tilt-card" 
+                         style="border-radius: 20px; cursor: pointer; background: white;"
+                         data-bs-toggle="modal" data-bs-target="#methodModal{{ $method->id }}">
+                        <div class="p-4 text-center">
+                            @if($method->image)
                                 <img src="{{ asset('storage/images/LearningMethods/' . $method->image) }}"
-                                     alt="{{ $method->label }}"
-                                     class="float"
-                                     style="width: 100%; height: 100%; object-fit: contain; display: block;">
-                            </div>
-                            <div class="text-center py-4 rounded-bottom" style="background-color: #234567;">
-                                <span class="fs-5 fw-semibold text-white">{{ $method->label }}</span>
-                            </div>
+                                     class="img-fluid mb-3 rounded"
+                                     style="max-height: 200px; object-fit: contain;"
+                                     alt="{{ $method->label }}">
+                            @endif
+                            <h5 class="fw-bold" style="color: #2C3E50;">{{ $method->label }}</h5>
                         </div>
-                    </div>
-
-                    {{-- Method Modal --}}
-                    <div class="modal fade" id="methodModal{{ $method->id }}" tabindex="-1" aria-labelledby="methodModalLabel{{ $method->id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content border-0 shadow scale-in">
-                                <div class="modal-header" style="background-color: #4fc3f7;">
-                                    <h5 class="modal-title fw-bold text-white" id="methodModalLabel{{ $method->id }}">{{ $method->label }}: {{ $method->title }}</h5>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body" style="text-align: justify;">
-                                    {{ $method->description }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
-    {{-- Gradient Transition: Methods to Testimonials --}}
-    <div style="height: 60px; background: linear-gradient(180deg, #e3f6fd 0%, #ffffff 100%);"></div>
-
-    {{-- Testimonials Section --}}
-    <div class="container-fluid py-5" style="background-color: #ffffff;">
-        <div class="container">
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <h2 class="fw-bold gradient-text" style="font-size: 2.5rem;">What Students Say</h2>
-                    <p class="fs-5 fade-in-up" style="color: #234567;">
-                        Our goal is to enhance student's technology skill in a fun way
-                    </p>
-                </div>
-            </div>
-            <div class="position-relative px-2 px-md-1" style="max-width: 1200px; margin: 0 auto;">
-                <div id="testimonialCarousel" class="carousel slide" data-bs-ride="false">
-                    <div class="carousel-inner pb-4">
-                        @foreach($testimonials->chunk(3) as $chunkIndex => $testimonialChunk)
-                            <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
-                                <div class="row g-4 justify-content-center align-items-stretch">
-                                    @foreach($testimonialChunk as $index => $testimonial)
-                                        <div class="col-12 col-md-4 d-flex justify-content-center">
-                                            <div class="card border-0 shadow h-100 w-100 d-flex flex-column justify-content-between text-center p-4 tilt-card"
-                                                 style="width: 340px; min-height: 340px; max-width: 340px; height: 340px; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
-                                                <div class="d-flex align-items-center justify-content-center flex-grow-1">
-                                                    <p class="fst-italic text-dark mb-0">
-                                                        "{{ \Illuminate\Support\Str::limit($testimonial->text, 120) }}"
-                                                    </p>
-                                                </div>
-                                                <div class="mt-3">
-                                                    <img src="{{ asset('storage/images/StudentPictures/' . $testimonial->photo) }}"
-                                                         alt="{{ $testimonial->name }}"
-                                                         class="rounded-circle mx-auto mb-2 shadow glow"
-                                                         style="width: 90px; height: 90px; object-fit: cover; border: 3px solid #4fc3f7;">
-                                                    <div class="fw-bold fs-5" style="color: #234567;">{{ $testimonial->name }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <button class="carousel-control-prev d-none d-md-flex" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" style="width: 50px;">
-                        <span class="rounded-circle d-flex align-items-center justify-content-center pulse" style="width: 40px; height: 40px; background-color: #4fc3f7;">
-                            <i class="bi bi-chevron-left text-white"></i>
-                        </span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next d-none d-md-flex" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" style="width: 50px;">
-                        <span class="rounded-circle d-flex align-items-center justify-content-center pulse" style="width: 40px; height: 40px; background-color: #4fc3f7;">
-                            <i class="bi bi-chevron-right text-white"></i>
-                        </span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <a href="{{ url('/testimonials') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-5 rounded-pill shadow shake" style="background-color: #f48acb; border: none;">
-                    See More Testimonials
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    {{-- Gradient Transition: Testimonials to Projects --}}
-    <div style="height: 60px; background: linear-gradient(180deg, #ffffff 0%, #e3f6fd 100%);"></div>
-
-    {{-- Projects Section --}}
-    <div class="container-fluid py-5" style="background-color: #e3f6fd;">
-        <div class="container">
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <h2 class="fw-bold gradient-text" style="letter-spacing: 1px;">Student Projects</h2>
-                    <p class="fs-5 fade-in-up" style="color: #f48acb;">
-                        Explore creative games and apps made by our students during their learning journey at COTHA!
-                    </p>
-                </div>
-            </div>
-            <div class="row g-4 justify-content-center">
-                @if(!empty($apiProjects) && count($apiProjects) > 0)
-                    @foreach($apiProjects as $index => $project)
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="card border-0 shadow h-100 tilt-card fade-in-up delay-{{ ($index % 3) + 1 }}" style="background: #ffffff;">
-                                <img src="{{ $project['thumbnail'] ?? 'default.png' }}"
-                                     class="card-img-top"
-                                     style="height: 250px; object-fit: cover;"
-                                     alt="{{ $project['title'] ?? 'Untitled' }}">
-                                <div class="card-body">
-                                    <h5 class="fw-bold mb-2" style="color: #234567;">{{ $project['title'] ?? 'Untitled' }}</h5>
-                                    <p class="text-secondary mb-1">
-                                        <i class="bi bi-person-fill me-1"></i> {{ $project['user']['name'] ?? 'Unknown' }}
-                                    </p>
-                                    <p class="text-secondary mb-0">
-                                        <i class="bi bi-calendar-fill me-1"></i>
-                                        {{ isset($project['created_at']) ? \Carbon\Carbon::parse($project['created_at'])->format('F Y') : '-' }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    {{-- Fallback to local DB featured+active projects --}}
-                    @foreach($projects as $index => $project)
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="card border-0 shadow h-100 tilt-card fade-in-up delay-{{ ($index % 3) + 1 }}" style="background: #ffffff;">
-                                <img src="{{ asset('storage/images/StudentProjects/' . $project->image) }}"
-                                     class="card-img-top"
-                                     style="height: 250px; object-fit: cover;"
-                                     alt="{{ $project->title }}">
-                                <div class="card-body">
-                                    <h5 class="fw-bold mb-2" style="color: #234567;">{{ $project->title }}</h5>
-                                    <p class="text-secondary mb-1">
-                                        <i class="bi bi-person-fill me-1"></i> {{ $project->creator }} {{ $project->creator_grade ? '(' . $project->creator_grade . ')' : '' }}
-                                    </p>
-                                    <p class="text-secondary mb-0">
-                                        <i class="bi bi-calendar-fill me-1"></i>
-                                        {{ $project->date ? \Carbon\Carbon::parse($project->date)->format('F Y') : '-' }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
-            <div class="text-center mt-4">
-                <a href="{{ url('/projects') }}" class="btn btn-primary px-5 py-3 fw-semibold fs-5 rounded-pill shadow shake glow" style="background-color: #4fc3f7; border: none;">
-                    See More Projects
-                </a>
-            </div>
-        </div>
-    </div>
-
-    {{-- Gradient Transition: Projects to Contact --}}
-    <div style="height: 60px; background: linear-gradient(180deg, #e3f6fd 0%, #ffffff 100%);"></div>
-
-    {{-- Contact Section --}}
-    <div class="container-fluid py-5" style="background-color: #ffffff;">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                {{-- CTA Section --}}
-                <div class="col-12 col-lg-6 slide-in-left">
-                    <div class="pe-lg-4">
-                        <h2 class="fw-bold mb-3 gradient-text" style="font-size: 2.5rem;">Explore Our Levels</h2>
-                        <p class="fs-5 mb-4 text-secondary">
-                            Discover a wide range of coding courses designed for kids. From game development to web design, find the perfect path for your child's tech journey!
-                        </p>
-                        <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold shadow shake glow" style="background-color: #4fc3f7; border: none; color: white;">
-                            Browse Levels
-                            <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
                     </div>
                 </div>
                 
-                {{-- Contact Card --}}
-                <div class="col-12 col-lg-6 slide-in-right">
-                    <div class="card border-0 shadow-lg h-100 tilt-card" style="background: linear-gradient(135deg, #e3f6fd 0%, #ffffff 100%);">
-                        <div class="card-body p-5">
-                            <h3 class="fw-bold mb-3" style="color: #234567;">Get In Touch</h3>
-                            <p class="text-secondary mb-4">
-                                Have questions or want to learn more about our programs? We're here to help!
-                            </p>
-                            <div class="d-flex flex-column gap-3">
-                                <a href="mailto:hello@cotha.id" class="btn btn-lg d-flex align-items-center justify-content-center gap-2 shadow-sm shake" style="background-color: #4fc3f7; border: none; color: white;">
-                                    <i class="bi bi-envelope-fill"></i>
-                                    Email Us
-                                </a>
-                                <a href="https://www.instagram.com/cotha_id/" target="_blank"
-                                   class="btn btn-lg d-flex align-items-center justify-content-center gap-2 shadow-sm shake"
-                                   style="background: linear-gradient(45deg, #F58529, #FEDA77, #DD2A7B, #8134AF, #515BD4); border: none; color: white;">
-                                    <i class="bi bi-instagram"></i>
-                                    Instagram
-                                </a>
-                                <a href="https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0ASaya+ingin+bertanya+tentang&app_absent=0" target="_blank" 
-                                   class="btn btn-lg d-flex align-items-center justify-content-center gap-2 shadow-sm shake" 
-                                   style="background-color: #25D366; border: none; color: white;">
-                                    <i class="bi bi-whatsapp"></i>
-                                    WhatsApp
-                                </a>
+                {{-- Modal --}}
+                <div class="modal fade" id="methodModal{{ $method->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow" style="border-radius: 20px;">
+                            <div class="modal-header" style="background: linear-gradient(135deg, #FF6B9D 0%, #FF85A2 100%); border-radius: 20px 20px 0 0;">
+                                <h5 class="modal-title fw-bold text-white">{{ $method->label }}: {{ $method->title }}</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-4">
+                                {{ $method->description }}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
+    
 </section>
 @endsection

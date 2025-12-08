@@ -1,7 +1,9 @@
-<nav class="navbar navbar-expand-lg" style="background: #80c7e4;">
+<nav class="navbar navbar-expand-lg" style="background: #3082e5;">
     <div class="container">
         <a class="navbar-brand fw-bold text-white d-flex align-items-center" href="{{ url('/') }}">
-            <img src="{{ asset('images/cotha_logo.PNG') }}" alt="COTHA Logo" style="height: 40px; margin-right: 12px;">
+            <div style="background: #fff; border-radius: 12px; padding: 4px 12px 4px 4px; display: flex; align-items: center; justify-content: center; height: 48px;">
+                <img src="{{ asset('images/cotha_logo.PNG') }}" alt="COTHA Logo" style="height: 60px;">
+            </div>
         </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
