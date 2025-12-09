@@ -19,6 +19,14 @@
             <label class="form-label fw-semibold">Testimonial Text</label>
             <textarea name="text" class="form-control" rows="4" required>{{ old('text') }}</textarea>
         </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">School</label>
+            <input type="text" name="school" class="form-control" value="{{ old('school') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">City</label>
+            <input type="text" name="city" class="form-control" value="{{ old('city') }}">
+        </div>
         <div class="mb-3 form-check">
             <input type="checkbox" name="isFeatured" class="form-check-input" id="isFeatured" {{ old('isFeatured', true) ? 'checked' : '' }}>
             <label class="form-check-label" for="isFeatured">Featured</label>

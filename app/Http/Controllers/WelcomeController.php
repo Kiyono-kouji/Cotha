@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Level;
 use App\Models\Method;
+use App\Models\Partner;
 use App\Models\Project;
 use App\Models\Testimonial;
 use App\Services\ProjectSyncService;
@@ -16,6 +17,7 @@ class WelcomeController extends Controller
         $methods = Method::where('active', true)->get();
         $testimonials = Testimonial::where('isFeatured', true)->where('active', true)->latest()->take(6)->get();
         $levels = Level::where('active', true)->where('isFeatured', true)->get();
+        $partners = Partner::latest()->get();
 
         $apiKey = env('API_KEY');
 
@@ -33,23 +35,22 @@ class WelcomeController extends Controller
             ->orderByDesc('project_date')
             ->take(6)
             ->get()
-            ->map(fn ($p) => [
+            ->map(fn($p) => (object)[
                 'id' => $p->id,
                 'title' => $p->title,
-                'user' => ['name' => $p->creator],
+                'creator' => $p->creator,
                 'thumbnail' => $p->thumbnail,
                 'url' => $p->url,
-                'created_at' => optional($p->project_date)->toIso8601String(),
-            ])
-            ->toArray();
+                'is_featured' => $p->is_featured,
+                'project_date' => $p->project_date,
+            ]);
 
-        $projects = Project::where('is_featured', true)
-            ->where('active', true)
-            ->orderBy('project_date', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->take(6)
-            ->get();
-
-        return view('welcome', compact('methods', 'testimonials', 'levels', 'projects', 'apiProjects'));
+        return view('welcome', [
+            'methods' => $methods,
+            'testimonials' => $testimonials,
+            'levels' => $levels,
+            'projects' => $apiProjects,
+            'partners' => $partners,
+        ]);
     }
 }

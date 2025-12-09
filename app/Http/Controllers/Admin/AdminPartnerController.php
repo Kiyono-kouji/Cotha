@@ -83,11 +83,17 @@ class AdminPartnerController extends Controller
     public function destroy($id)
     {
         $partner = Partner::findOrFail($id);
+
+        // Detach related albums
         $partner->albums()->detach();
+
+        // Delete logo file if exists
         if ($partner->logo) {
             Storage::disk('public')->delete($partner->logo);
         }
+
         $partner->delete();
+
         return redirect()->route('admin.partners.index')->with('success', 'Partner deleted!');
     }
 }

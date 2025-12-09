@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('image')->nullable();
-            $table->string('label');
             $table->text('description');
             $table->boolean('active')->default(false);
             $table->timestamps();

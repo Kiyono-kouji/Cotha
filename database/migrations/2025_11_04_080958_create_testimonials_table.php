@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('school');
+            $table->string('city');
             $table->string('photo')->nullable();
             $table->text('text');
             $table->boolean('isFeatured')->default(false);

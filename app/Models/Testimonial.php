@@ -13,6 +13,8 @@ class Testimonial extends Model
         'name',
         'photo',
         'text',
+        'school',
+        'city',
         'isFeatured',
         'active',
     ];

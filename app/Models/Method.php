@@ -12,7 +12,6 @@ class Method extends Model
     protected $fillable = [
         'title',
         'image',
-        'label',
         'description',
         'active',
     ];

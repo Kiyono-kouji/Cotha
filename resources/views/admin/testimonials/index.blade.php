@@ -20,6 +20,8 @@
             <thead class="table-light">
                 <tr>
                     <th>Name</th>
+                    <th>School</th>
+                    <th>City</th>
                     <th>Text</th>
                     <th>Photo</th>
                     <th>Featured</th>
@@ -31,6 +33,8 @@
                 @forelse($testimonials as $testimonial)
                 <tr>
                     <td>{{ $testimonial->name }}</td>
+                    <td>{{ $testimonial->school }}</td>
+                    <td>{{ $testimonial->city }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($testimonial->text, 60) }}</td>
                     <td>
                         @if($testimonial->photo)
@@ -66,7 +70,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center text-muted">No testimonials found.</td>
+                    <td colspan="8" class="text-center text-muted">No testimonials found.</td>
                 </tr>
                 @endforelse
             </tbody>

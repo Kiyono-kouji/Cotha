@@ -20,7 +20,6 @@
             <thead class="table-light">
                 <tr>
                     <th>Title</th>
-                    <th>Label</th>
                     <th>Description</th>
                     <th>Active</th>
                     <th>Actions</th>
@@ -30,7 +29,6 @@
                 @forelse($methods as $method)
                 <tr>
                     <td>{{ $method->title }}</td>
-                    <td>{{ $method->label }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($method->description, 50) }}</td>
                     <td>
                         @if($method->active)
@@ -54,7 +52,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted">No methods found.</td>
+                    <td colspan="4" class="text-center text-muted">No methods found.</td>
                 </tr>
                 @endforelse
             </tbody>

@@ -12,10 +12,6 @@
             <input type="text" name="title" class="form-control" required value="{{ old('title') }}">
         </div>
         <div class="mb-3">
-            <label class="form-label fw-semibold">Label</label>
-            <input type="text" name="label" class="form-control" required value="{{ old('label') }}">
-        </div>
-        <div class="mb-3">
             <label class="form-label fw-semibold">Description</label>
             <textarea name="description" class="form-control" rows="4" required>{{ old('description') }}</textarea>
         </div>
