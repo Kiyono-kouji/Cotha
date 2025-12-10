@@ -7,37 +7,6 @@
     {{-- Decorative Animated Wave on Left Side --}}
     <div style="position: fixed; left: 0; top: 10%; height: 80%; width: 100px; z-index: 0; pointer-events: none;">
         <svg viewBox="0 0 100 1000" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-            <defs>
-                <linearGradient id="leftGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#4fc3f7;stop-opacity:0.15" />
-                    <stop offset="50%" style="stop-color:#80c7e4;stop-opacity:0.1" />
-                    <stop offset="100%" style="stop-color:#4fc3f7;stop-opacity:0.15" />
-                </linearGradient>
-            </defs>
-            <path d="M0,0 Q50,100 0,200 T0,400 T0,600 T0,800 T0,1000" 
-                  fill="none" 
-                  stroke="url(#leftGradient)" 
-                  stroke-width="4"
-                  class="wave-line">
-                <animate attributeName="d" 
-                         dur="8s" 
-                         repeatCount="indefinite"
-                         values="M0,0 Q50,100 0,200 T0,400 T0,600 T0,800 T0,1000;
-                                 M0,0 Q30,120 0,220 T0,420 T0,620 T0,820 T0,1000;
-                                 M0,0 Q50,100 0,200 T0,400 T0,600 T0,800 T0,1000"/>
-            </path>
-            <path d="M20,50 Q70,150 20,250 T20,450 T20,650 T20,850 T20,1000" 
-                  fill="none" 
-                  stroke="url(#leftGradient)" 
-                  stroke-width="3"
-                  opacity="0.8">
-                <animate attributeName="d" 
-                         dur="10s" 
-                         repeatCount="indefinite"
-                         values="M20,50 Q70,150 20,250 T20,450 T20,650 T20,850 T20,1000;
-                                 M20,50 Q45,170 20,270 T20,470 T20,670 T20,870 T20,1000;
-                                 M20,50 Q70,150 20,250 T20,450 T20,650 T20,850 T20,1000"/>
-            </path>
             <!-- Animated circles -->
             <circle cx="30" cy="0" r="8" fill="#4fc3f7" opacity="0.3">
                 <animate attributeName="cy" from="0" to="1000" dur="12s" repeatCount="indefinite"/>
@@ -57,36 +26,6 @@
     {{-- Decorative Animated Wave on Right Side --}}
     <div style="position: fixed; right: 0; top: 10%; height: 80%; width: 100px; z-index: 0; pointer-events: none;">
         <svg viewBox="0 0 100 1000" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-            <defs>
-                <linearGradient id="rightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#FF85A2;stop-opacity:0.15" />
-                    <stop offset="50%" style="stop-color:#FFB74D;stop-opacity:0.1" />
-                    <stop offset="100%" style="stop-color:#FF85A2;stop-opacity:0.15" />
-                </linearGradient>
-            </defs>
-            <path d="M100,0 Q50,100 100,200 T100,400 T100,600 T100,800 T100,1000" 
-                  fill="none" 
-                  stroke="url(#rightGradient)" 
-                  stroke-width="4">
-                <animate attributeName="d" 
-                         dur="9s" 
-                         repeatCount="indefinite"
-                         values="M100,0 Q50,100 100,200 T100,400 T100,600 T100,800 T100,1000;
-                                 M100,0 Q70,120 100,220 T100,420 T100,620 T100,820 T100,1000;
-                                 M100,0 Q50,100 100,200 T100,400 T100,600 T100,800 T100,1000"/>
-            </path>
-            <path d="M80,50 Q30,150 80,250 T80,450 T80,650 T80,850 T80,1000" 
-                  fill="none" 
-                  stroke="url(#rightGradient)" 
-                  stroke-width="3"
-                  opacity="0.8">
-                <animate attributeName="d" 
-                         dur="11s" 
-                         repeatCount="indefinite"
-                         values="M80,50 Q30,150 80,250 T80,450 T80,650 T80,850 T80,1000;
-                                 M80,50 Q55,170 80,270 T80,470 T80,670 T80,870 T80,1000;
-                                 M80,50 Q30,150 80,250 T80,450 T80,650 T80,850 T80,1000"/>
-            </path>
             <!-- Animated circles -->
             <circle cx="70" cy="0" r="8" fill="#FF85A2" opacity="0.3">
                 <animate attributeName="cy" from="0" to="1000" dur="13s" repeatCount="indefinite"/>
@@ -103,16 +42,18 @@
         </svg>
     </div>
 
-    {{-- Hero Section with Banner Image Background --}}
-    <div class="container-fluid py-5 position-relative" style="background: url('{{ asset('images/WelcomePage/MainBanner.jpg') }}') center center / cover no-repeat; min-height: 500px;">
-        {{-- Overlay for better text readability --}}
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-        
+    {{-- Hero Section with Absolute Banner Image --}}
+    <div class="container-fluid py-5 position-relative" style="min-height: 550px;">
+        <div style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;">
+            <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
+                 alt="Hero Banner"
+                 style="width: 100%; height: 100%; object-fit: cover; object-position: center center;" />
+        </div>
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center">
                 {{-- Left Content --}}
-                <div class="col-12 col-lg-6 text-white mb-4 mb-lg-0 fade-in pt-5">
-                    <h1 class="fw-bold mb-3" style="font-size: 3rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.15);">
+                <div class="col-12 col-lg-6 text-white mb-4 mb-lg-0 fade-in pt-5 mt-5 ms-lg-5" style="margin-top: 8rem !important;">
+                    <h1 class="fw-bold mb-4" style="font-size: 3rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.15);">
                         A Fun Way to Learn Coding!
                     </h1>
                     <p class="fs-4 mb-4" style="font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.12);">
@@ -126,7 +67,7 @@
                                 </a>
                             @endif
                         @endauth
-                        <a href="https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0ASaya+ingin+daftar+trial,+nama+saya&app_absent=0"
+                        <a href="{{ route('registertrial') }}"
                            class="btn btn-lg px-5 py-3 fw-semibold shadow mb-2 mb-md-0 rounded-4"
                            style="background-color: #FF85A2; border: none; color: white">
                             Register Trial Class
@@ -140,7 +81,6 @@
                 </div>
             </div>
         </div>
-        
         <!-- Decorative Waves at Bottom -->
         <div style="position: absolute; bottom: -1px; left: 0; width: 100%;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" style="display: block;">
@@ -150,7 +90,7 @@
     </div>
 
     {{-- Floating Level Cards Section --}}
-    <div class="container" style="margin-top: -120px; z-index: 2; position: relative;">
+    <div class="container" style="margin-top: -100px; z-index: 2; position: relative;">
         <div class="bg-white rounded-4 shadow p-4 p-md-5" style="max-width: 1200px; margin: 0 auto;">
             <div class="text-center mb-5">
                 <h2 class="fw-bold mb-3" style="color: #2C3E50; font-size: 2.5rem;">Level yang Tersedia</h2>

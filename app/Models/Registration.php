@@ -17,7 +17,6 @@ class Registration extends Model
         'wa',
         'language',
         'coding_experience',
-        'note',
-        'status',
+        'note'
     ];
 }

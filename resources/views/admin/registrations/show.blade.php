@@ -13,8 +13,9 @@
             <dt class="col-sm-3">WhatsApp</dt><dd class="col-sm-9">{{ $registration->wa }}</dd>
             <dt class="col-sm-3">Language</dt><dd class="col-sm-9">{{ $registration->language }}</dd>
             <dt class="col-sm-3">Coding Experience</dt><dd class="col-sm-9">{{ $registration->coding_experience }}</dd>
+            <dt class="col-sm-3">Submitted At</dt>
+            <dd class="col-sm-9">{{ $registration->created_at->format('Y-m-d H:i') }}</dd>
             <dt class="col-sm-3">Note</dt><dd class="col-sm-9">{{ $registration->note }}</dd>
-            <dt class="col-sm-3">Status</dt><dd class="col-sm-9">{{ $registration->status }}</dd>
         </dl>
         <a href="{{ route('admin.registrations.index') }}" class="btn btn-secondary rounded-pill">Back</a>
     </div>

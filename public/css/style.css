@@ -218,3 +218,28 @@ body {
 .tilt-card:hover .rounded-bottom {
     background-color: #4fc3f7 !important;
 }
+
+.card.border-0.shadow-sm {
+    border-left: 6px solid #4fc3f7 !important;
+    border-radius: 18px !important;
+}
+.card-body h3, .card-body h6 {
+    letter-spacing: 1px;
+}
+.card-body h6 i {
+    color: #4fc3f7 !important;
+}
+.nav-tabs .nav-link.active {
+    background-color: #4fc3f7 !important;
+    color: #fff !important;
+    border-radius: 12px 12px 0 0 !important;
+    font-weight: bold;
+}
+.nav-tabs .nav-link {
+    border-radius: 12px 12px 0 0 !important;
+    color: #1976D2 !important;
+    font-weight: 500;
+}
+.nav-tabs {
+    border-bottom: 2px solid #E3F2FD !important;
+}

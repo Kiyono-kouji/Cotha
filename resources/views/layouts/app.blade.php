@@ -10,9 +10,7 @@
     <title>@yield('title')</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <div class="d-flex" style="background: #56a1fb">
-        @include('layouts.navigation')
-    </div>
+    @include('layouts.navigation')
     <main class="flex-grow-1">
         @yield('main_content')
     </main>   

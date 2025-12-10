@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->string('language')->nullable();
             $table->string('coding_experience')->nullable();
             $table->text('note')->nullable();
-            $table->string('status')->default('new');
             $table->timestamps();
         });
     }

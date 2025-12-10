@@ -50,6 +50,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::patch('projects/{project}/toggle-active', [AdminProjectController::class, 'toggleActive'])->name('projects.toggleActive');
 });
 
+Route::get('/register-trial', [PublicRegistrationController::class, 'show'])->name('registertrial');
+
 Route::post('/register-class', [PublicRegistrationController::class, 'store'])
     ->name('public.register-class');
 
