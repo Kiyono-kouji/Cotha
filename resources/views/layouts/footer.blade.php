@@ -1,7 +1,7 @@
 <footer class="mt-auto" style="background-color: #b3e0f7;">
     <div class="container py-5 px-5 px-md-2">
         <div class="row" style="color: #234567;">
-            <!-- About -->
+            <!-- Abouts -->
             <div class="col-12 col-md-4 mb-4 mb-md-0">
                 <h2 class="fw-semibold mb-3" style="font-size: 2rem;">About</h2>
                 <p>
