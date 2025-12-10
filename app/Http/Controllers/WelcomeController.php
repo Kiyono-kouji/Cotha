@@ -43,6 +43,8 @@ class WelcomeController extends Controller
                 'url' => $p->url,
                 'is_featured' => $p->is_featured,
                 'project_date' => $p->project_date,
+                'profile_picture' => $p->profile_picture,
+                'school' => $p->school,
             ]);
 
         return view('welcome', [

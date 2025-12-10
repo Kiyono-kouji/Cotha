@@ -31,7 +31,11 @@ class ProjectController extends Controller
             ->through(fn ($p) => [
                 'id' => $p->id,
                 'title' => $p->title,
-                'user' => ['name' => $p->creator],
+                'user' => [
+                    'name' => $p->creator,
+                    'profile_picture' => $p->profile_picture,
+                    'school' => $p->school,
+                ],
                 'thumbnail' => $p->thumbnail,
                 'url' => $p->url,
                 'created_at' => optional($p->project_date)->toIso8601String(),

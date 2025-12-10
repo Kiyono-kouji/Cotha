@@ -50,6 +50,8 @@ class ProjectSyncService
                     'project_date' => isset($p['created_at']) ? Carbon::parse($p['created_at']) : null,
                     'updated_at' => now(),
                     'created_at' => now(),
+                    'profile_picture' => $p['user']['profile_picture'] ?? ($p['profile_picture'] ?? null),
+                    'school' => $p['user']['school'] ?? ($p['school'] ?? null),
                 ];
             }
 
@@ -57,7 +59,7 @@ class ProjectSyncService
                 Project::upsert(
                     $rows,
                     ['id'],
-                    ['title','creator','thumbnail','url','is_featured','active','project_date','updated_at']
+                    ['title','creator','thumbnail','url','is_featured','active','project_date','updated_at', 'profile_picture', 'school']
                 );
             }
         } catch (\Throwable $e) {

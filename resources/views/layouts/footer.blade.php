@@ -37,7 +37,7 @@
                     </li>
                     <li class="mb-2 d-flex align-items-center gap-2">
                         <i class="bi bi-send-fill fs-5 text-info"></i>
-                        <a href="https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0ASaya+ingin+daftar+trial,+nama+saya&app_absent=0" target="_blank" class="text-decoration-none text-white">Register Trial Class</a>
+                        <a href="{{ route('registertrial') }}" class="text-decoration-none text-white">Register Trial Class</a>
                     </li>
                 </ul>
             </div>

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->boolean('is_featured')->default(true);
             $table->boolean('active')->default(true);
             $table->timestamp('project_date')->nullable(); // API created_at
+            $table->string('profile_picture')->nullable();
+            $table->string('school')->nullable();
             $table->timestamps(); 
         });
     }

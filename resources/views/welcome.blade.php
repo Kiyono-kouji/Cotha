@@ -314,8 +314,8 @@
                         <div class="card border-0 shadow h-100" style="border-radius: 20px; background: white; overflow: hidden;">
                             {{-- Project Thumbnail --}}
                             <div class="position-relative" style="height: 200px; overflow: hidden;">
-                                <img src="{{ $project->thumbnail }}" 
-                                     class="w-100 h-100" 
+                                <img src="{{ $project->thumbnail ?? asset('images/default_project.png') }}"
+                                     class="w-100 h-100"
                                      style="object-fit: cover;"
                                      alt="{{ $project->title }}">
                                 {{-- Featured Badge --}}
@@ -333,14 +333,26 @@
                                 <h5 class="fw-bold mb-2" style="color: #2C3E50;">{{ $project->title }}</h5>
                                 
                                 {{-- Creator Info --}}
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-2" 
-                                         style="width: 32px; height: 32px; background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%);">
-                                        <i class="bi bi-person-fill text-white"></i>
-                                    </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    {{-- Profile Picture --}}
+                                    @if(!empty($project->profile_picture))
+                                        <img src="{{ $project->profile_picture }}"
+                                             alt="{{ $project->creator }}"
+                                             class="rounded-circle me-2"
+                                             style="width: 56px; height: 56px; object-fit: cover; border: 3px solid #e3f2fd;">
+                                    @else
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center me-2"
+                                             style="width: 56px; height: 56px; background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%);">
+                                            <i class="bi bi-person-fill text-white fs-3"></i>
+                                        </div>
+                                    @endif
                                     <div>
-                                        <small class="text-secondary d-block" style="font-size: 0.85rem;">
+                                        <small class="text-secondary d-block" style="font-size: 0.95rem;">
                                             <strong>{{ $project->creator }}</strong>
+                                        </small>
+                                        {{-- School --}}
+                                        <small class="text-muted d-block" style="font-size: 0.85rem;">
+                                            {{ $project->school ?? 'School not listed' }}
                                         </small>
                                     </div>
                                 </div>

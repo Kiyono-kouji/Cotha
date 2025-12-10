@@ -24,7 +24,7 @@
     </div>
 
     {{-- Hero Section with Absolute Banner Image --}}
-    <div class="container-fluid py-5 position-relative" style="min-height: 550px;">
+    <div class="container-fluid py-5 position-relative" style="min-height: 650px;">
         <div style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;">
             <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
                  alt="Hero Banner"
@@ -41,15 +41,15 @@
     </div>
 
     {{-- Form Card Overlay (Negative Margin to Overlap) --}}
-    <div class="container position-relative" style="z-index: 2; margin-top: -150px; margin-bottom: 80px;">
+    <div class="container position-relative" style="z-index: 2; margin-top: -500px; margin-bottom: 80px;">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
+            <div class="col-12 col-md-10 col-lg-9 col-xl-8">
                 <div class="card shadow-lg border-0 rounded-4 p-4" style="background: rgba(255,255,255,0.98);">
                     <form method="POST" action="{{ route('public.register-class') }}">
                         @csrf
                         <h2 class="fw-bold mb-4 text-center" style="color: #4fc3f7;">Register Trial Class</h2>
                         <div class="row g-3">
-                            <div class="col-12">
+                            <div class="col-12 col-md-6">
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">
                                     Choose Class <span class="text-danger">*</span>
                                 </label>
@@ -132,9 +132,9 @@
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">
                                     Notes / Questions
                                 </label>
-                                <textarea name="note" class="form-control rounded-3 border-2" rows="3" placeholder="Any questions or additional notes?" style="border-color: #4fc3f7;"></textarea>
+                                <textarea name="note" class="form-control rounded-3 border-2" rows="2" placeholder="Any questions or additional notes?" style="border-color: #4fc3f7;"></textarea>
                             </div>
-                            <div class="text-center mt-4">
+                            <div class="text-center mt-3">
                                 <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                         style="background-color: #4fc3f7; border: none; color: white;">
                                     Submit Registration
