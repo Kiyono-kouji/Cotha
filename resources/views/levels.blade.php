@@ -55,13 +55,13 @@
     <div class="container py-5 mt-3">
         <div class="row g-4 justify-content-center">
             @foreach($levels as $index => $level)
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="col-12 col-sm-6 col-lg-3">
                     <a href="{{ url('/levels/' . $level->slug) }}" class="text-decoration-none">
                         <div class="card border-0 shadow-lg h-100" 
                              style="background: white; border-radius: 20px; overflow: hidden;">
                             {{-- Image Section --}}
                             @if($level->image)
-                                <div class="d-flex justify-content-center align-items-center p-0" style="min-height: 250px; height: 250px;">
+                                <div class="d-flex justify-content-center align-items-center p-0" style="min-height: 200px; height: 200px;">
                                     <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
                                          class="img-fluid w-100 h-100"
                                          style="object-fit: cover; border-radius: 0;"

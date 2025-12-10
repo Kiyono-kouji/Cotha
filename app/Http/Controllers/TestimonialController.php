@@ -14,7 +14,7 @@ class TestimonialController extends Controller
     {
         $testimonials = Testimonial::where('active', true)
             ->latest()
-            ->paginate(12);
+            ->paginate(9);
 
         return view('testimonials', compact('testimonials'));
     }
