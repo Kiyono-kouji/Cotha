@@ -238,7 +238,7 @@
             </div>
 
             <div class="row g-4 justify-content-center">
-                @foreach($testimonials->take(6) as $index => $testimonial)
+                @forelse($testimonials->take(6) as $index => $testimonial)
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card border-0 shadow h-100" style="border-radius: 20px; background: white;">
                             {{-- Quote icon --}}
@@ -275,7 +275,14 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                <div class="col-12">
+                    <div class="alert alert-info rounded-4 text-center py-5 mb-0" style="border: none; background: transparent;">
+                        <i class="bi bi-chat-left-quote fs-1 text-muted mb-3 d-block"></i>
+                        <p class="text-muted mb-0">No student testimonials available at the moment.</p>
+                    </div>
+                </div>
+                @endforelse
             </div>
 
             {{-- View All Button --}}
