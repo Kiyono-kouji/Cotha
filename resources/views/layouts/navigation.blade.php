@@ -40,11 +40,6 @@
                                 About
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('events.index') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ route('events.index') }}">
-                                Events
-                            </a>
-                        </li>
                         @auth
                             @if(auth()->user()->isAdmin ?? false)
                                 <li class="nav-item">
