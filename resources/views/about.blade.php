@@ -74,10 +74,21 @@
     </div>
 </div>
 
-{{-- Why & What: text left, stacked images right --}}
+{{-- Why & What: images left, text right --}}
 <div class="container py-5 px-3 px-md-1">
     <div class="row align-items-center g-5">
-        <div class="col-12 col-lg-6">
+        <!-- Left: Stacked images -->
+        <div class="col-12 col-lg-6 position-relative d-flex justify-content-center order-2 order-lg-1">
+            <div class="position-absolute" 
+                 style="left: -30px; top: -20px; width: 220px; height: 220px; border-radius: 50px; background: rgba(128,199,228,0.2); z-index: 0;"></div>
+            <div class="bg-white rounded-4 shadow p-3" style="z-index: 1; max-width: 520px; width: 100%;">
+                <img src="{{ asset('images/AboutResources/ThingsYouLearn.png') }}" class="img-fluid rounded-4 d-block mx-auto mb-3" style="width: 100%; height: auto; object-fit: contain;" alt="Things You Learn in Coding Class">
+                <img src="{{ asset('images/AboutResources/CothaCurriculum.png') }}" class="img-fluid rounded-4 d-block mx-auto" style="width: 100%; height: auto; object-fit: contain;" alt="COTHA Curriculum">
+            </div>
+        </div>
+
+        <!-- Right: Combined text content -->
+        <div class="col-12 col-lg-6 order-1 order-lg-2">
             <p class="text-uppercase text-secondary fw-semibold mb-2">About Coding</p>
             <h2 class="fw-bold mb-3" style="font-size: 2.5rem; line-height: 1.2; color: #2C3E50;">
                 Mengapa <span style="color:#4fc3f7;">Coding</span> Efektif?
@@ -95,14 +106,6 @@
                 Konsep dari basic hingga advanced, diterapkan pada proyek seperti game, animasi,
                 aplikasi, dan berbagai karya digital.
             </p>
-        </div>
-        <div class="col-12 col-lg-6 position-relative d-flex justify-content-center">
-            <div class="position-absolute" 
-                 style="right: -30px; top: -20px; width: 220px; height: 220px; border-radius: 50px; background: rgba(128,199,228,0.2); z-index: 0;"></div>
-            <div class="bg-white rounded-4 shadow p-3" style="z-index: 1; max-width: 520px; width: 100%;">
-                <img src="{{ asset('images/AboutResources/ThingsYouLearn.png') }}" class="img-fluid rounded-4 d-block mx-auto mb-3" style="width: 100%; height: auto; object-fit: contain;" alt="Things You Learn in Coding Class">
-                <img src="{{ asset('images/AboutResources/CothaCurriculum.png') }}" class="img-fluid rounded-4 d-block mx-auto" style="width: 100%; height: auto; object-fit: contain;" alt="COTHA Curriculum">
-            </div>
         </div>
     </div>
 </div>
