@@ -86,15 +86,15 @@
                                 @endif
                                 <input type="file" name="image" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" accept="image/*">
                                 <small class="text-muted">Leave blank to keep current image.</small>
-                            </div>
-                            <div class="col-12 col-md-6 d-flex align-items-center gap-4">
-                                <div class="form-check">
-                                    <input type="checkbox" name="active" class="form-check-input" id="active" {{ old('active', $level->active) ? 'checked' : '' }}>
-                                    <label class="form-check-label fw-semibold" for="active">Active</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" name="isFeatured" class="form-check-input" id="isFeatured" {{ old('isFeatured', $level->isFeatured) ? 'checked' : '' }}>
-                                    <label class="form-check-label fw-semibold" for="isFeatured">Featured</label>
+                                <div class="d-flex align-items-center gap-4 mt-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="active" class="form-check-input" id="active" {{ old('active', $level->active) ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-semibold ms-2" for="active">Active</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" name="isFeatured" class="form-check-input" id="isFeatured" {{ old('isFeatured', $level->isFeatured) ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-semibold ms-2" for="isFeatured">Featured</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">

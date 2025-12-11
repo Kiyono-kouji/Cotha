@@ -103,12 +103,12 @@
                         <button type="button" class="btn btn-info rounded-pill mb-3" id="addMediaBtn">
                             <i class="bi bi-plus-lg"></i> Add Another Media
                         </button>
-                        <div class="text-center mt-4">
+                        <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                             <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                     style="background: #4fc3f7; border: none; color: white;">
                                 <i class="bi bi-save me-2"></i>Save Album & Media
                             </button>
-                            <a href="{{ route('admin.albums.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow ms-2"
+                            <a href="{{ route('admin.albums.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                style="background: #FF85A2; border: none; color: white;">
                                 Cancel
                             </a>

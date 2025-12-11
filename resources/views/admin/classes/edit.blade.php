@@ -110,12 +110,12 @@
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">Button Link</label>
                                 <input type="text" name="button_link" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" value="{{ old('button_link', $class->button_link) }}">
                             </div>
-                            <div class="text-center mt-4">
+                            <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                                 <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                         style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); border: none; color: white;">
                                     <i class="bi bi-save me-2"></i>Update Class
                                 </button>
-                                <a href="{{ route('admin.classes.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow ms-2"
+                                <a href="{{ route('admin.classes.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                    style="background: #FF85A2; border: none; color: white;">
                                     Cancel
                                 </a>
