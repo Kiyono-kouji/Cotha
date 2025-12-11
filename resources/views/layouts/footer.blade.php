@@ -28,11 +28,11 @@
                 <h2 class="fw-bold mb-3 text-white" style="font-size: 1.5rem;">Quick Links</h2>
                 <ul class="list-unstyled mb-0" style="font-size: 1rem;">
                     <li class="mb-2 d-flex align-items-center gap-2">
-                        <i class="bi bi-star-fill fs-5 text-warning"></i>
+                        <i class="bi bi-star-fill fs-5 text-info"></i>
                         <a href="{{ url('/') }}" class="text-decoration-none text-white">Home</a>
                     </li>
                     <li class="mb-2 d-flex align-items-center gap-2">
-                        <i class="bi bi-instagram fs-5" style="color: #f48acb;"></i>
+                        <i class="bi bi-instagram fs-5 text-info"></i>
                         <a href="https://instagram.com/cotha_id" target="_blank" class="text-decoration-none text-white">Instagram Cotha</a>
                     </li>
                     <li class="mb-2 d-flex align-items-center gap-2">

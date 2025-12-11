@@ -398,14 +398,23 @@ class ClassSeeder extends Seeder
             'button_link' => 'https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0ASaya+tertarik+daftar+W03,+pertanyaan+saya&app_absent=0',
         ]);
 
-        // Attach classes to courses
-        $coursevc = Level::where('slug', 'vc')->first();
-        $coursemmt = Level::where('slug', 'mmt')->first();
-        $coursebbc = Level::where('slug', 'bbc')->first();
-        $courserwc = Level::where('slug', 'rwc')->first();
-        $coursevc->classes()->attach([$classb01->id, $classb02->id, $classb03->id]);
-        $coursemmt->classes()->attach([$classm01->id, $classm02->id, $classm03->id]);
-        $coursebbc->classes()->attach([$classb01->id, $classb02->id, $classb03->id, $classb04->id, $classb05->id]);
-        $courserwc->classes()->attach([$classr01->id, $classr02->id, $classr0304->id, $classw01->id, $classw02->id, $classw0304->id]);
+        // Attach classes to levels by title instead of slug
+        $coursevc   = Level::where('title', 'Visual Coding')->first();
+        $coursemmt  = Level::where('title', 'Multi Media Tech')->first();
+        $coursebbc  = Level::where('title', 'Block Based Coding')->first();
+        $courserwc  = Level::where('title', 'Real World Coding')->first();
+
+        if ($coursevc) {
+            $coursevc->classes()->attach([$classb01->id, $classb02->id, $classb03->id]);
+        }
+        if ($coursemmt) {
+            $coursemmt->classes()->attach([$classm01->id, $classm02->id, $classm03->id]);
+        }
+        if ($coursebbc) {
+            $coursebbc->classes()->attach([$classb01->id, $classb02->id, $classb03->id, $classb04->id, $classb05->id]);
+        }
+        if ($courserwc) {
+            $courserwc->classes()->attach([$classr01->id, $classr02->id, $classr0304->id, $classw01->id, $classw02->id, $classw0304->id]);
+        }
     }
 }

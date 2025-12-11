@@ -29,9 +29,6 @@
             <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
                  alt="Hero Banner"
                  style="width: 100%; height: 100%; object-fit: cover; object-position: center center;" />
-            <div style="position: absolute; top: 40px; left: 60px; width: 60px; height: 60px; border-radius: 50%; background: #4fc3f7; opacity: 0.12; z-index: 1;"></div>
-            <div style="position: absolute; top: 120px; right: 80px; width: 80px; height: 80px; border-radius: 30%; background: #FF85A2; opacity: 0.10; z-index: 1; transform: rotate(45deg);"></div>
-            <div style="position: absolute; bottom: 30px; left: 120px; width: 50px; height: 50px; border-radius: 50%; background: #FFB74D; opacity: 0.10; z-index: 1;"></div>
         </div>
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center justify-content-center">
@@ -64,7 +61,8 @@
                             <img src="{{ $project['thumbnail'] ?? asset('images/default_project.png') }}"
                                  class="w-100 h-100"
                                  style="object-fit: cover;"
-                                 alt="{{ $project['title'] ?? 'Untitled' }}">
+                                 alt="{{ $project['title'] ?? 'Untitled' }}"
+                                 onerror="this.onerror=null;this.src='{{ asset('images/default_project.png') }}';">
                             {{-- Featured Badge --}}
                             @if(!empty($project['is_featured']))
                                 <div class="position-absolute top-0 end-0 m-2">
@@ -108,7 +106,7 @@
                             {{-- Play Button --}}
                             <a href="{{ $project['url'] }}" 
                                target="_blank" 
-                               class="btn mt-auto rounded-pill" 
+                               class="btn mt-auto rounded-3" 
                                style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); border: none; color: white;">
                                 <i class="bi bi-play-circle me-2"></i>Play Project
                             </a>
@@ -212,6 +210,16 @@
                 </nav>
             </div>
         @endif
+    </div>
+    {{-- Decorative Shapes at Bottom --}}
+    <div style="position: relative; margin-top: 60px;">
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; pointer-events: none; z-index: 0;">
+            <svg width="100%" height="80" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="120" cy="40" r="24" fill="#4fc3f7" opacity="0.12"/>
+                <circle cx="1320" cy="50" r="32" fill="#FF85A2" opacity="0.12"/>
+                <rect x="700" y="20" width="48" height="48" rx="16" fill="#FFB74D" opacity="0.10"/>
+            </svg>
+        </div>
     </div>
 </section>
 @endsection

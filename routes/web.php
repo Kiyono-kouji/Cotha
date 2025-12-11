@@ -21,7 +21,7 @@ use App\Http\Controllers\EventController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/levels', [LevelController::class, 'index']);
-Route::get('/levels/{slug}', [LevelController::class, 'show']);
+Route::get('/levels/{level}', [LevelController::class, 'show']);
 Route::get('/projects', [ProjectController::class, 'getprojects']);
 Route::get('/projects/{project}', [ProjectController::class, 'show']);
 Route::get('/testimonials', [TestimonialController::class, 'index']);

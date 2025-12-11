@@ -27,6 +27,11 @@
                             class="img-fluid w-100 h-100"
                             style="object-fit: cover; max-width: 100%; max-height: 340px; border-radius: 16px;"
                             alt="{{ $level->title }}">
+                    @else
+                        <img src="{{ asset('images/default_project.png') }}"
+                            class="img-fluid w-100 h-100"
+                            style="object-fit: cover; max-width: 100%; max-height: 340px; border-radius: 16px;"
+                            alt="Default Level Image">
                     @endif
                 </div>
                 <div class="col-12 col-md-7">
@@ -113,46 +118,63 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row mt-4 g-3">
+                        <div class="row mt-4 g-4 justify-content-center">
                             @if($class->requirements && count($class->requirements))
-                                <div class="col-12 col-md-4">
-                                    <div class="p-3 rounded-3 border h-100" style="border-color: #e3f2fd;">
-                                        <h6 class="fw-bold mb-2" style="color: #4fc3f7;">
+                                <div class="col-12">
+                                    <div class="card rounded-4 border shadow-lg p-4" style="background: #f8fbfd; border: 2px solid #4fc3f7;">
+                                        <h3 class="fw-bold text-center mb-4" style="color: #4fc3f7; font-size: 2rem;">
                                             <i class="bi bi-laptop me-2"></i>Requirements
-                                        </h6>
-                                        <ul class="mb-0" style="color: #2C3E50; font-size: 1rem;">
+                                        </h3>
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center">
                                             @foreach($class->requirements as $req)
-                                                <li class="mb-1">{{ $req }}</li>
+                                                <div class="col d-flex">
+                                                    <div class="card w-100 h-100 rounded-3 border shadow-sm d-flex align-items-center justify-content-center p-3"
+                                                         style="background: #fff; border: 2px solid #e3f2fd;">
+                                                        <span class="fw-semibold text-dark text-center" style="font-size: 1.15rem;">{{ $req }}</span>
+                                                    </div>
+                                                </div>
                                             @endforeach
-                                        </ul>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
+
                             @if($class->concepts && count($class->concepts))
-                                <div class="col-12 col-md-{{ ($class->requirements && count($class->requirements) && $class->projects && count($class->projects)) ? '4' : ($class->requirements && count($class->requirements) ? '4' : '6') }}">
-                                    <div class="p-3 rounded-3 border h-100" style="border-color: #e3f2fd;">
-                                        <h6 class="fw-bold mb-2" style="color: #4fc3f7;">
+                                <div class="col-12">
+                                    <div class="card rounded-4 border shadow-lg p-4" style="background: #f8fbfd; border: 2px solid #4fc3f7;">
+                                        <h3 class="fw-bold text-center mb-4" style="color: #4fc3f7; font-size: 2rem;">
                                             <i class="bi bi-gear me-2"></i>Concepts
-                                        </h6>
-                                        <ul class="mb-0" style="color: #2C3E50; font-size: 1rem;">
+                                        </h3>
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center">
                                             @foreach($class->concepts as $concept)
-                                                <li class="mb-1">{{ $concept }}</li>
+                                                <div class="col d-flex">
+                                                    <div class="card w-100 h-100 rounded-3 border shadow-sm d-flex align-items-center justify-content-center p-3"
+                                                         style="background: #fff; border: 2px solid #e3f2fd;">
+                                                        <span class="fw-semibold text-dark text-center" style="font-size: 1.15rem;">{{ $concept }}</span>
+                                                    </div>
+                                                </div>
                                             @endforeach
-                                        </ul>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
+
                             @if($class->projects && count($class->projects))
-                                <div class="col-12 col-md-{{ ($class->requirements && count($class->requirements) && $class->concepts && count($class->concepts)) ? '4' : ($class->concepts && count($class->concepts) ? '6' : '12') }}">
-                                    <div class="p-3 rounded-3 border h-100" style="border-color: #e3f2fd;">
-                                        <h6 class="fw-bold mb-2" style="color: #4fc3f7;">
+                                <div class="col-12">
+                                    <div class="card rounded-4 border shadow-lg p-4" style="background: #f8fbfd; border: 2px solid #4fc3f7;">
+                                        <h3 class="fw-bold text-center mb-4" style="color: #4fc3f7; font-size: 2rem;">
                                             <i class="bi bi-controller me-2"></i>Sample Projects
-                                        </h6>
-                                        <ul class="mb-0" style="color: #2C3E50; font-size: 1rem;">
+                                        </h3>
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center">
                                             @foreach($class->projects as $project)
-                                                <li class="mb-1">{{ $project }}</li>
+                                                <div class="col d-flex">
+                                                    <div class="card w-100 h-100 rounded-3 border shadow-sm d-flex align-items-center justify-content-center p-3"
+                                                         style="background: #fff; border: 2px solid #e3f2fd;">
+                                                        <span class="fw-semibold text-dark text-center" style="font-size: 1.15rem;">{{ $project }}</span>
+                                                    </div>
+                                                </div>
                                             @endforeach
-                                        </ul>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
@@ -170,13 +192,13 @@
 
     {{-- Back Button --}}
     <div class="container pb-5">
-        <div class="text-center d-flex justify-content-center gap-3">
-            <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow shake"
+        <div class="text-center d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+            <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow shake w-100 w-md-auto"
                style="background-color: #4fc3f7; border: none; color: white;">
                 <i class="bi bi-arrow-left me-2"></i>
                 Back to Levels
             </a>
-            <a href="{{ route('registertrial') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow shake"
+            <a href="{{ route('registertrial') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow shake w-100 w-md-auto"
                style="background-color: #FF85A2; border: none; color: white;">
                 <i class="bi bi-pencil-square me-2"></i>Register & More Info
             </a>

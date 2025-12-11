@@ -29,9 +29,6 @@
             <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
                  alt="Hero Banner"
                  style="width: 100%; height: 100%; object-fit: cover; object-position: center center;" />
-            <div style="position: absolute; top: 40px; left: 60px; width: 60px; height: 60px; border-radius: 50%; background: #4fc3f7; opacity: 0.12; z-index: 1;"></div>
-            <div style="position: absolute; top: 120px; right: 80px; width: 80px; height: 80px; border-radius: 30%; background: #FF85A2; opacity: 0.10; z-index: 1; transform: rotate(45deg);"></div>
-            <div style="position: absolute; bottom: 30px; left: 120px; width: 50px; height: 50px; border-radius: 50%; background: #FFB74D; opacity: 0.10; z-index: 1;"></div>
         </div>
         <div class="container position-relative" style="z-index: 2;">
             <div class="row align-items-center justify-content-center">
@@ -162,6 +159,16 @@
                 </nav>
             </div>
         @endif
+    </div>
+    {{-- Decorative Shapes at Bottom --}}
+    <div style="position: relative; margin-top: 60px;">
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; pointer-events: none; z-index: 0;">
+            <svg width="100%" height="80" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="120" cy="40" r="24" fill="#4fc3f7" opacity="0.12"/>
+                <circle cx="1320" cy="50" r="32" fill="#FF85A2" opacity="0.12"/>
+                <rect x="700" y="20" width="48" height="48" rx="16" fill="#FFB74D" opacity="0.10"/>
+            </svg>
+        </div>
     </div>
 </section>
 @endsection

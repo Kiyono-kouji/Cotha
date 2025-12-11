@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('age_range')->nullable();
             $table->text('description')->nullable();
-            $table->text('slug');
             $table->boolean('active')->default(true);
             $table->boolean('isFeatured')->default(false);
             $table->timestamps();

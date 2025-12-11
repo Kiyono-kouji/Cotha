@@ -62,7 +62,7 @@
                     <div class="d-flex gap-3 flex-wrap flex-md-row flex-column" style="z-index:2; position:relative; margin-bottom: 6rem;">
                         @auth
                             @if(auth()->user()->isAdmin)
-                                <a href="{{ url('/admin/dashboard') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow mb-2 mb-md-0" style="background-color: #FF6B9D; border: none; color: white;">
+                                <a href="{{ url('/admin/dashboard') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow mb-2 mb-md-0" style="background-color: #FF85A2; border: none; color: white;">
                                     Admin Dashboard
                                 </a>
                             @endif
@@ -106,11 +106,14 @@
                                 <div class="d-flex justify-content-center pt-4">
                                     @if($level->image)
                                         <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
-                                                style="width: 100%; height: 100%; object-fit: contain; background: #fff; display: block; border-radius: 32px"
-                                                class="p-4"
-                                                alt="{{ $level->title }}">
+                                             style="width: 100%; height: 100%; object-fit: contain; background: #fff; display: block; border-radius: 32px"
+                                             class="p-4"
+                                             alt="{{ $level->title }}">
                                     @else
-                                        <i class="bi bi-code-slash fs-1 text-secondary"></i>
+                                        <img src="{{ asset('images/default_project.png') }}"
+                                             style="width: 100%; height: 100%; object-fit: contain; background: #fff; display: block; border-radius: 32px"
+                                             class="p-4"
+                                             alt="Default Level Image">
                                     @endif
                                 </div>
                                 <div class="card-body text-center px-3">
@@ -317,7 +320,8 @@
                                 <img src="{{ $project->thumbnail ?? asset('images/default_project.png') }}"
                                      class="w-100 h-100"
                                      style="object-fit: cover;"
-                                     alt="{{ $project->title }}">
+                                     alt="{{ $project->title ?? 'Untitled' }}"
+                                     onerror="this.onerror=null;this.src='{{ asset('images/default_project.png') }}';">
                                 {{-- Featured Badge --}}
                                 @if($project->is_featured)
                                     <div class="position-absolute top-0 end-0 m-2">
@@ -366,7 +370,7 @@
                                 {{-- Play Button --}}
                                 <a href="{{ $project->url }}" 
                                    target="_blank" 
-                                   class="btn mt-auto rounded-pill" 
+                                   class="btn mt-auto rounded-3" 
                                    style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); border: none; color: white;">
                                     <i class="bi bi-play-circle me-2"></i>Play Project
                                 </a>
@@ -437,7 +441,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
                 <div class="rounded-4 shadow-lg p-5 text-center" style="border: none;">
-                    <h2 class="fw-bold mb-4" style="color: #4fc3f7; font-size: 2.5rem;">
+                    <h2 class="fw-bold mb-4" style="color: #2C3E50; font-size: 2.5rem;">
                         Want to learn more?
                     </h2>
                     <p class="text-secondary mb-4 fs-5">

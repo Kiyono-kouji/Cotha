@@ -56,18 +56,23 @@
         <div class="row g-4 justify-content-center">
             @foreach($levels as $index => $level)
                 <div class="col-12 col-sm-6 col-lg-3">
-                    <a href="{{ url('/levels/' . $level->slug) }}" class="text-decoration-none">
+                    <a href="{{ url('/levels/' . $level->id) }}" class="text-decoration-none">
                         <div class="card border-0 shadow-lg h-100" 
                              style="background: white; border-radius: 20px; overflow: hidden;">
                             {{-- Image Section --}}
-                            @if($level->image)
-                                <div class="d-flex justify-content-center align-items-center p-0" style="min-height: 200px; height: 200px;">
+                            <div class="d-flex justify-content-center pt-4">
+                                @if($level->image)
                                     <img src="{{ asset('storage/images/LevelResources/' . $level->image) }}"
-                                         class="img-fluid w-100 h-100"
-                                         style="object-fit: cover; border-radius: 0;"
+                                         style="width: 100%; height: 100%; object-fit: contain; background: #fff; display: block; border-radius: 32px"
+                                         class="p-4"
                                          alt="{{ $level->title }}">
-                                </div>
-                            @endif
+                                @else
+                                    <img src="{{ asset('images/default_project.png') }}"
+                                         style="width: 100%; height: 100%; object-fit: contain; background: #fff; display: block; border-radius: 32px"
+                                         class="p-4"
+                                         alt="Default Level Image">
+                                @endif
+                            </div>
                             
                             {{-- Content Section --}}
                             <div class="card-body d-flex flex-column p-4">

@@ -15,7 +15,6 @@ class Level extends Model
         'image',
         'age_range',
         'description',
-        'slug',
         'active',
         'isFeatured'
     ];

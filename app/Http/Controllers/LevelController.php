@@ -35,9 +35,8 @@ class LevelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show(Level $level)
     {
-        $level = Level::where('slug', $slug)->where('active', true)->firstOrFail();
         $classes = $level->classes()->get();
         return view('leveldetail', compact('level', 'classes'));
     }

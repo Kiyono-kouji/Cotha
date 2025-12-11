@@ -1,7 +1,6 @@
-{{-- filepath: resources/views/layouts/navigation.blade.php --}}
 <div class="container-fluid position-absolute top-0 start-0 w-100 mt-4" style="z-index: 1000;">
     <div class="container">
-        <nav class="navbar navbar-expand-lg" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 24px; padding: 12px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <nav class="navbar navbar-expand-xl" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 24px; padding: 12px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <img src="{{ asset('images/cotha_logo.PNG') }}" alt="COTHA Logo" style="height: 48px; width: auto;">
