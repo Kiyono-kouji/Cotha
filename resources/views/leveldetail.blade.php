@@ -193,12 +193,12 @@
     {{-- Back Button --}}
     <div class="container pb-5">
         <div class="text-center d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
-            <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow shake w-100 w-md-auto"
+            <a href="{{ url('/levels') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow w-100 w-md-auto"
                style="background-color: #4fc3f7; border: none; color: white;">
                 <i class="bi bi-arrow-left me-2"></i>
                 Back to Levels
             </a>
-            <a href="{{ route('registertrial') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow shake w-100 w-md-auto"
+            <a href="{{ route('registertrial') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow w-100 w-md-auto"
                style="background-color: #FF85A2; border: none; color: white;">
                 <i class="bi bi-pencil-square me-2"></i>Register & More Info
             </a>

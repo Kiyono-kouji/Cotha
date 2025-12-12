@@ -107,7 +107,7 @@
         
         {{-- Back to Home Button --}}
         <div class="text-center mt-5">
-            <a href="{{ url('/') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow shake" 
+            <a href="{{ url('/') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow" 
                style="background-color: #4fc3f7; border: none; color: white;">
                 <i class="bi bi-house-fill me-2"></i>
                 Back to Home

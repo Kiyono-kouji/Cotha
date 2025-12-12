@@ -130,7 +130,7 @@
                 </li>
             </ul>
             <div>
-                <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold rounded-pill shadow shake" style="background-color: #4fc3f7; border: none;">
+                <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold rounded-pill shadow" style="background-color: #4fc3f7; border: none;">
                     Explore Our Level <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>
