@@ -449,13 +449,13 @@
                     </p>
                     <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-3">
                         <a href="https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0ASaya+ingin+bertanya+tentang+kelas+dan+sistem+belajar&app_absent=0"
-                           class="btn btn-lg px-5 py-3 fw-semibold rounded-pill shadow"
+                           class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow"
                            style="background-color: #4fc3f7; border: none; color: white;">
                             <i class="bi bi-whatsapp me-2"></i>
                             Contact Us
                         </a>
-                        <a href="https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0ASaya+ingin+daftar+trial,+nama+saya&app_absent=0"
-                           class="btn btn-lg px-5 py-3 fw-semibold rounded-pill shadow"
+                        <a href="{{ route('registertrial') }}"
+                           class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow"
                            style="background-color: #FF85A2; border: none; color: white;">
                             Register Trial Class
                             <i class="bi bi-arrow-right ms-2"></i>

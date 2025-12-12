@@ -53,10 +53,10 @@
                 berbasis kurikulum Jerman dan India, diajarkan dengan metode Project Based Learning
                 yang menyenangkan dan relevan di era digital.
             </p>
-            <a href="https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0ASaya+ingin+bertanya+tentang+kelas+dan+sistem+belajar&app_absent=0"
+            <a href="{{ route('registertrial') }}"
                class="btn btn-lg px-5 py-3 fw-semibold rounded-4"
                style="background-color: #4fc3f7; border: none; color: white;">
-               Sign Up for Free
+               Register Trial Class
             </a>
         </div>
         <!-- Right: Image with decorative shapes -->
@@ -130,7 +130,7 @@
                 </li>
             </ul>
             <div>
-                <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold rounded-pill shadow" style="background-color: #4fc3f7; border: none;">
+                <a href="{{ url('/levels') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold rounded-4 shadow" style="background-color: #4fc3f7; border: none;">
                     Explore Our Level <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>

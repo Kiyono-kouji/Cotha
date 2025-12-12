@@ -49,7 +49,7 @@
         <div class="row g-4 justify-content-center">
             @foreach($albums as $album)
                 @php
-                    $cover = $album->media->first();
+                    $cover = $album->media->firstWhere('type', 'image');
                     $mediaCount = $album->media->count();
                 @endphp
                 <div class="col-12 col-sm-6 col-lg-4">
@@ -57,7 +57,7 @@
                         <div class="card border-0 shadow h-100" style="border-radius: 20px; overflow: hidden;">
                             {{-- Cover --}}
                             <div class="position-relative" style="height: 230px; overflow: hidden;">
-                                @if($cover && $cover->type === 'image')
+                                @if($cover)
                                     <img src="{{ asset('storage/' . $cover->file) }}"
                                          class="w-100 h-100" style="object-fit: cover;"
                                          alt="{{ $album->title }}">
