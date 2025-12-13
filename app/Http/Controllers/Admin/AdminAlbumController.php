@@ -36,9 +36,10 @@ class AdminAlbumController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'media.*.type' => 'required_with:media.*.file|in:image,video',
+            'media.*.type' => 'required_with:media.*.file|in:image,video,youtube',
             'media.*.file' => 'nullable|file|max:10240',
             'media.*.caption' => 'nullable|string|max:255',
+            'media.*.youtube_url' => 'nullable|string|max:255',
         ]);
 
         $album = Album::create([
@@ -48,8 +49,18 @@ class AdminAlbumController extends Controller
 
         if ($request->has('media')) {
             foreach ($request->media as $mediaInput) {
-                if (isset($mediaInput['file'])) {
-                    $path = $mediaInput['file']->store('Albums', 'public'); // changed to 'Albums'
+                if ($mediaInput['type'] === 'youtube') {
+                    // Extract YouTube video ID
+                    preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $mediaInput['youtube_url'], $match);
+                    $videoId = $match[1] ?? null;
+                    if (!$videoId) continue;
+                    $album->media()->create([
+                        'type' => 'youtube',
+                        'file' => $videoId,
+                        'caption' => $mediaInput['caption'] ?? null,
+                    ]);
+                } else if (isset($mediaInput['file'])) {
+                    $path = $mediaInput['file']->store('images/Albums', 'public');
                     $album->media()->create([
                         'type' => $mediaInput['type'],
                         'file' => $path,

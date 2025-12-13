@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Admin - Manage Albums')
+@section('title', 'Admin - Manage Gallery')
 
 @section('main_content')
 <section style="overflow: hidden; position: relative;">
@@ -37,10 +37,10 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-12 col-lg-6 text-white pt-5 mt-5 text-lg-start text-center ps-lg-5" style="margin-top: 6rem !important;">
                     <h1 class="fw-bold mb-3" style="font-size: 2.5rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.18); max-width: 520px;">
-                        Manage Albums
+                        Manage Gallery
                     </h1>
                     <p class="fs-5 mb-4" style="font-size: 1.1rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.12); max-width: 520px;">
-                        Create, edit, and organize all photo and video albums at COTHA.
+                        Create, edit, and organize all photo and video gallery at COTHA.
                     </p>
                 </div>
                 <div class="d-none d-lg-block col-lg-6"></div>
@@ -58,7 +58,7 @@
         <div class="mb-4 text-end text-md-end text-center">
             <a href="{{ route('admin.albums.create') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow mt-2 mt-md-0"
                style="background: #4fc3f7; border: none; color: white;">
-                <i class="bi bi-plus-lg me-2"></i> Add New Album
+                <i class="bi bi-plus-lg me-2"></i> Add New Gallery
             </a>
         </div>
         @if(session('success'))
@@ -91,7 +91,7 @@
                             </a>
                             <form action="{{ route('admin.albums.destroy', $album->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
-                                <button class="btn btn-sm btn-danger rounded-pill" onclick="return confirm('Delete this album?')">
+                                <button class="btn btn-sm btn-danger rounded-pill" onclick="return confirm('Delete this gallery?')">
                                     <i class="bi bi-trash"></i> Delete
                                 </button>
                             </form>
@@ -99,7 +99,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center text-muted">No albums found.</td>
+                        <td colspan="4" class="text-center text-muted">No galleries found.</td>
                     </tr>
                     @endforelse
                 </tbody>

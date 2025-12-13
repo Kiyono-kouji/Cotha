@@ -80,18 +80,24 @@
                         </div>
                         <hr>
                         <h5 class="fw-bold mb-3">Add Media</h5>
+                        {{-- Add Media --}}
                         <div id="media-fields">
                             <div class="media-group mb-3 border rounded p-3">
                                 <div class="mb-2">
                                     <label class="form-label">Type</label>
-                                    <select name="media[0][type]" class="form-select" required>
+                                    <select name="media[0][type]" class="form-select media-type-select" required>
                                         <option value="image">Image</option>
                                         <option value="video">Video</option>
+                                        <option value="youtube">YouTube Video</option>
                                     </select>
                                 </div>
-                                <div class="mb-2">
+                                <div class="mb-2 file-input">
                                     <label class="form-label">File</label>
-                                    <input type="file" name="media[0][file]" class="form-control" required>
+                                    <input type="file" name="media[0][file]" class="form-control">
+                                </div>
+                                <div class="mb-2 youtube-input" style="display: none;">
+                                    <label class="form-label">YouTube URL</label>
+                                    <input type="text" name="media[0][youtube_url]" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Caption</label>
@@ -132,36 +138,24 @@
 </section>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    let mediaIndex = 1;
-    document.getElementById('addMediaBtn').addEventListener('click', function () {
-        const mediaFields = document.getElementById('media-fields');
-        const newGroup = document.createElement('div');
-        newGroup.className = 'media-group mb-3 border rounded p-3';
-        newGroup.innerHTML = `
-            <div class="mb-2">
-                <label class="form-label">Type</label>
-                <select name="media[${mediaIndex}][type]" class="form-select" required>
-                    <option value="image">Image</option>
-                    <option value="video">Video</option>
-                </select>
-            </div>
-            <div class="mb-2">
-                <label class="form-label">File</label>
-                <input type="file" name="media[${mediaIndex}][file]" class="form-control" required>
-            </div>
-            <div class="mb-2">
-                <label class="form-label">Caption</label>
-                <input type="text" name="media[${mediaIndex}][caption]" class="form-control">
-            </div>
-            <button type="button" class="btn btn-danger btn-sm rounded-pill remove-media">Remove</button>
-        `;
-        mediaFields.appendChild(newGroup);
-        mediaIndex++;
-    });
+    function toggleMediaInputs(group) {
+        const typeSelect = group.querySelector('.media-type-select');
+        const fileInput = group.querySelector('.file-input');
+        const youtubeInput = group.querySelector('.youtube-input');
+        if (typeSelect.value === 'youtube') {
+            fileInput.style.display = 'none';
+            youtubeInput.style.display = 'block';
+        } else {
+            fileInput.style.display = 'block';
+            youtubeInput.style.display = 'none';
+        }
+    }
 
-    document.getElementById('media-fields').addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-media')) {
-            e.target.closest('.media-group').remove();
+    document.querySelectorAll('.media-group').forEach(toggleMediaInputs);
+
+    document.getElementById('media-fields').addEventListener('change', function (e) {
+        if (e.target.classList.contains('media-type-select')) {
+            toggleMediaInputs(e.target.closest('.media-group'));
         }
     });
 });

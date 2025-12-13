@@ -34,6 +34,8 @@ class DatabaseSeeder extends Seeder
             TestimonialSeeder::class,
             LevelSeeder::class,
             ClassSeeder::class,
+            PartnerSeeder::class,
+            AlbumSeeder::class,
         ]);
     }
 }
