@@ -25,8 +25,8 @@ Route::get('/projects', [ProjectController::class, 'getprojects']);
 Route::get('/projects/{project}', [ProjectController::class, 'show']);
 Route::get('/testimonials', [TestimonialController::class, 'index']);
 Route::view('/about', 'about')->name('about');
-Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
-Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
+Route::get('/gallery', [AlbumController::class, 'index'])->name('albums.index');
+Route::get('/gallery/{id}', [AlbumController::class, 'show'])->name('albums.show');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');

@@ -123,8 +123,8 @@
                              style="width: 64px; height: 64px; border-radius: 50%; background: #f48acb;">
                             <i class="bi bi-images fs-2 text-white"></i>
                         </div>
-                        <h5 class="fw-bold mb-2" style="color: #2C3E50;">Manage Albums</h5>
-                        <p class="text-secondary mb-0">Create, edit, and organize photo/video albums.</p>
+                        <h5 class="fw-bold mb-2" style="color: #2C3E50;">Manage Gallery</h5>
+                        <p class="text-secondary mb-0">Create, edit, and organize photo/video gallery.</p>
                     </div>
                 </a>
             </div>

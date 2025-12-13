@@ -35,21 +35,40 @@ class AdminMediaController extends Controller
     {
         $validated = $request->validate([
             'album_id' => 'required|exists:albums,id',
-            'type' => 'required|in:image,video',
-            'file' => 'required|file|max:10240',
+            'type' => 'required|in:image,video,youtube',
+            'file' => 'required_if:type,image,video|file|max:10240',
+            'youtube_url' => 'required_if:type,youtube|url',
             'caption' => 'nullable|string|max:255',
         ]);
 
-        $album_id = $validated['album_id']; // Store album_id first
+        $album_id = $validated['album_id'];
 
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('Albums', 'public');
-            $validated['file'] = $path;
+        if ($validated['type'] === 'youtube') {
+            // Extract YouTube video ID
+            $url = $validated['youtube_url'];
+            preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $url, $match);
+            $videoId = $match[1] ?? null;
+            
+            if (!$videoId) {
+                return redirect()->back()->with('error', 'Invalid YouTube URL!');
+            }
+            
+            $validated['file'] = $videoId; // Store video ID instead of file path
         } else {
-            return redirect()->route('admin.albums.show', $album_id)->with('error', 'File upload failed!');
+            if ($request->hasFile('file')) {
+                $path = $request->file('file')->store('Albums', 'public');
+                $validated['file'] = $path;
+            } else {
+                return redirect()->route('admin.albums.show', $album_id)->with('error', 'File upload failed!');
+            }
         }
 
-        Media::create($validated);
+        Media::create([
+            'album_id' => $album_id,
+            'type' => $validated['type'],
+            'file' => $validated['file'],
+            'caption' => $validated['caption'] ?? null,
+        ]);
 
         return redirect()->route('admin.albums.show', $album_id)->with('success', 'Media added!');
     }

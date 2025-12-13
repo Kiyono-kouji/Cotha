@@ -29,6 +29,14 @@
                                 <source src="{{ asset('storage/' . $media->file) }}">
                                 Your browser does not support the video tag.
                             </video>
+                        @elseif($media->type === 'youtube')
+                            <iframe 
+                                class="w-100 h-100" 
+                                src="https://www.youtube.com/embed/{{ $media->file }}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
                         @endif
                         <div class="position-absolute bottom-0 start-0 w-100" style="height: 60px; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%); pointer-events: none;"></div>
                     </div>

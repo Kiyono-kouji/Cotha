@@ -76,6 +76,15 @@
                                 <source src="{{ asset('storage/' . $media->file) }}">
                                 Your browser does not support the video tag.
                             </video>
+                        @elseif($media->type === 'youtube')
+                            <iframe 
+                                class="w-100 rounded-top" 
+                                style="height: 250px;"
+                                src="https://www.youtube.com/embed/{{ $media->file }}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
                         @endif
                         <div class="card-body d-flex flex-column">
                             <p class="card-text text-secondary mb-3">{{ $media->caption }}</p>

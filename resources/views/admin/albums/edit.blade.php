@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Album')
+@section('title', 'Edit Gallery')
 
 @section('main_content')
 <section style="overflow: hidden; position: relative;">
@@ -37,10 +37,10 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-12 col-lg-8 text-white pt-5 mt-5 text-center" style="margin-top: 6rem !important;">
                     <h1 class="fw-bold mb-3" style="font-size: 2.2rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.18); max-width: 700px; margin: 0 auto;">
-                        Edit Album
+                        Edit Gallery
                     </h1>
                     <p class="fs-5 mb-4" style="font-size: 1.1rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.12); max-width: 600px; margin: 0 auto;">
-                        Update the details for this album.
+                        Update the details for this gallery.
                     </p>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                         <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                             <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                     style="background: #4fc3f7; border: none; color: white;">
-                                <i class="bi bi-save me-2"></i>Update Album
+                                <i class="bi bi-save me-2"></i>Update Gallery
                             </button>
                             <a href="{{ route('admin.albums.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                style="background: #FF85A2; border: none; color: white;">

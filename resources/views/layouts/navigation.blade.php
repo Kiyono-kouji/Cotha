@@ -31,8 +31,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::is('albums*') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ url('/albums') }}">
-                                Albums
+                            <a class="nav-link {{ Request::is('gallery*') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ url('/gallery') }}">
+                                Gallery
                             </a>
                         </li>
                         <li class="nav-item">

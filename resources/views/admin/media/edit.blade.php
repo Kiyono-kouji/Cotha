@@ -63,14 +63,26 @@
                         <div class="row g-3">
                             <div class="col-12 col-md-6">
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">Type</label>
-                                <select name="type" class="form-select rounded-3 border-2 w-100" style="border-color: #4fc3f7;" required disabled>
+                                <select name="type" id="mediaType" class="form-select rounded-3 border-2 w-100" style="border-color: #4fc3f7;" required disabled>
                                     <option value="image" {{ $media->type === 'image' ? 'selected' : '' }}>Image</option>
                                     <option value="video" {{ $media->type === 'video' ? 'selected' : '' }}>Video</option>
+                                    <option value="youtube" {{ $media->type === 'youtube' ? 'selected' : '' }}>YouTube Video</option>
                                 </select>
                                 <small class="text-muted">Type cannot be changed.</small>
-                                <label class="form-label fw-semibold mt-4" style="color:#2C3E50;">Choose File</label>
-                                <input type="file" name="file" class="form-control rounded-3 border-2 w-100" style="border-color: #4fc3f7;">
-                                <small class="text-muted">Leave blank to keep current file.</small>
+                                
+                                @if($media->type !== 'youtube')
+                                    <div id="fileInput" class="mt-3">
+                                        <label class="form-label fw-semibold" style="color:#2C3E50;">Choose File</label>
+                                        <input type="file" name="file" class="form-control rounded-3 border-2 w-100" style="border-color: #4fc3f7;">
+                                        <small class="text-muted">Leave blank to keep current file.</small>
+                                    </div>
+                                @else
+                                    <div id="youtubeInput" class="mt-3">
+                                        <label class="form-label fw-semibold" style="color:#2C3E50;">YouTube URL</label>
+                                        <input type="text" name="youtube_url" class="form-control rounded-3 border-2 w-100" style="border-color: #4fc3f7;" placeholder="https://www.youtube.com/watch?v=...">
+                                        <small class="text-muted">Update YouTube URL or leave blank to keep current.</small>
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-12 col-md-6 d-flex flex-column align-items-center justify-content-start">
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">Current File</label>
@@ -80,6 +92,15 @@
                                     <video controls class="w-100 mb-2 rounded" style="max-width:320px; max-height:320px;">
                                         <source src="{{ asset('storage/' . $media->file) }}">
                                     </video>
+                                @elseif($media->type === 'youtube')
+                                    <iframe 
+                                        class="w-100 mb-2 rounded" 
+                                        style="max-width:320px; height:180px;"
+                                        src="https://www.youtube.com/embed/{{ $media->file }}" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                    </iframe>
                                 @endif
                             </div>
                             <div class="col-12">

@@ -63,14 +63,19 @@
                         <div class="row g-3">
                             <div class="col-12 col-md-6">
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">Type <span class="text-danger">*</span></label>
-                                <select name="type" class="form-select rounded-3 border-2" style="border-color: #4fc3f7;" required>
+                                <select name="type" id="mediaType" class="form-select rounded-3 border-2" style="border-color: #4fc3f7;" required>
                                     <option value="image">Image</option>
                                     <option value="video">Video</option>
+                                    <option value="youtube">YouTube Video</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6" id="fileInput">
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">File <span class="text-danger">*</span></label>
-                                <input type="file" name="file" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" required>
+                                <input type="file" name="file" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;">
+                            </div>
+                            <div class="col-12 col-md-6" id="youtubeInput" style="display: none;">
+                                <label class="form-label fw-semibold" style="color:#2C3E50;">YouTube URL <span class="text-danger">*</span></label>
+                                <input type="text" name="youtube_url" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" placeholder="https://www.youtube.com/watch?v=...">
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold" style="color:#2C3E50;">Caption</label>
@@ -104,4 +109,24 @@
         </div>
     </div>
 </section>
-@endsection
+
+<script>
+document.getElementById('mediaType').addEventListener('change', function() {
+    const fileInput = document.getElementById('fileInput');
+    const youtubeInput = document.getElementById('youtubeInput');
+    const fileField = fileInput.querySelector('input');
+    const youtubeField = youtubeInput.querySelector('input');
+    
+    if (this.value === 'youtube') {
+        fileInput.style.display = 'none';
+        youtubeInput.style.display = 'block';
+        fileField.removeAttribute('required');
+        youtubeField.setAttribute('required', 'required');
+    } else {
+        fileInput.style.display = 'block';
+        youtubeInput.style.display = 'none';
+        fileField.setAttribute('required', 'required');
+        youtubeField.removeAttribute('required');
+    }
+});
+</script>

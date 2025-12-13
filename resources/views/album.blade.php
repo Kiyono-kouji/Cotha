@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Albums - COTHA')
+@section('title', 'Gallery - COTHA')
 
 @section('main_content')
 {{-- Hero Section with Absolute Banner Image (match Levels/About) --}}
@@ -21,7 +21,7 @@
         <div class="row align-items-center">
             <div class="col-12 col-lg-6 text-white mb-4 pt-5 mt-5 text-lg-start text-center ms-lg-5 ps-lg-0" style="margin-top: 8rem !important;">
                 <h1 class="fw-bold mb-3" style="font-size: 3rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); max-width: 520px;">
-                    Albums
+                    Gallery
                 </h1>
                 <p class="fs-4 mb-4" style="color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.15); max-width: 520px;">
                     Browse photo and video collections from our activities and classes.
@@ -49,7 +49,9 @@
         <div class="row g-4 justify-content-center">
             @foreach($albums as $album)
                 @php
-                    $cover = $album->media->firstWhere('type', 'image');
+                    $cover = $album->media->firstWhere('type', 'image')
+                        ?? $album->media->firstWhere('type', 'video')
+                        ?? $album->media->firstWhere('type', 'youtube');
                     $mediaCount = $album->media->count();
                 @endphp
                 <div class="col-12 col-sm-6 col-lg-4">
@@ -57,10 +59,24 @@
                         <div class="card border-0 shadow h-100" style="border-radius: 20px; overflow: hidden;">
                             {{-- Cover --}}
                             <div class="position-relative" style="height: 230px; overflow: hidden;">
-                                @if($cover)
+                                @if($cover && $cover->type === 'image')
                                     <img src="{{ asset('storage/' . $cover->file) }}"
                                          class="w-100 h-100" style="object-fit: cover;"
                                          alt="{{ $album->title }}">
+                                @elseif($cover && $cover->type === 'video')
+                                    <video class="w-100 h-100" style="object-fit: cover;" muted loop playsinline>
+                                        <source src="{{ asset('storage/' . $cover->file) }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @elseif($cover && $cover->type === 'youtube')
+                                    <iframe 
+                                        class="w-100 h-100"
+                                        style="object-fit: cover; min-height: 100%;"
+                                        src="https://www.youtube.com/embed/{{ $cover->file }}?mute=1&loop=1&playlist={{ $cover->file }}"
+                                        frameborder="0"
+                                        allow="autoplay; encrypted-media"
+                                        allowfullscreen>
+                                    </iframe>
                                 @else
                                     <div class="w-100 h-100 d-flex align-items-center justify-content-center"
                                          style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%);">
