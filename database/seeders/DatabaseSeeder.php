@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             ClassSeeder::class,
             PartnerSeeder::class,
             AlbumSeeder::class,
+            EventSeeder::class,
         ]);
     }
 }
