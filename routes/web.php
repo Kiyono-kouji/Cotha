@@ -17,6 +17,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicRegistrationController;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/levels', [LevelController::class, 'index']);

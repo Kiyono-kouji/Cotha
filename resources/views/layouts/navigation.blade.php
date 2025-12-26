@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-xl" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 24px; padding: 12px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                    <img src="{{ asset('images/cotha_logo.PNG') }}" alt="COTHA Logo" style="height: 48px; width: auto;">
+                    <img src="{{ asset('images/cotha_logo.png') }}" alt="COTHA Logo" style="height: 48px; width: auto;">
                 </a>
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
