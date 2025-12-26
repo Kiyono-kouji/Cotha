@@ -25,8 +25,14 @@
             </select>
         </div>
         <div class="mb-3">
-            <label class="form-label">Date</label>
-            <input type="datetime-local" name="date" class="form-control" value="{{ old('date', \Carbon\Carbon::parse($event->date)->format('Y-m-d\TH:i')) }}" required>
+            <label class="form-label">Event Date & Time</label>
+            <input type="datetime-local" name="date" class="form-control"
+                   value="{{ old('date', isset($event->date) ? $event->date->format('Y-m-d\TH:i') : '') }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Registration Date & Time</label>
+            <input type="datetime-local" name="last_registration_at" class="form-control"
+                   value="{{ old('last_registration_at', isset($event->last_registration_at) ? $event->last_registration_at->format('Y-m-d\TH:i') : '') }}">
         </div>
         <div class="mb-3">
             <label class="form-label">Location</label>

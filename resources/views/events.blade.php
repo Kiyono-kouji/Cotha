@@ -89,10 +89,11 @@
                                     {{-- Event Image --}}
                                     <div class="position-relative" style="height: 200px; overflow: hidden;">
                                         @if($event->image)
-                                            <img src="{{ asset('storage/' . $event->image) }}" 
-                                                 alt="{{ $event->title }}" 
-                                                 class="w-100 h-100" 
-                                                 style="object-fit: cover;">
+                                            <img src="{{ $event->image ? asset('storage/' . $event->image) : asset('images/default_project.png') }}"
+                                                 alt="{{ $event->title }}"
+                                                 class="w-100 h-100"
+                                                 style="object-fit: cover;"
+                                                 onerror="this.onerror=null;this.src='{{ asset('images/default_project.png') }}';">
                                         @else
                                             <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%);">
                                                 <i class="bi bi-calendar-event" style="font-size: 4rem; color: white; opacity: 0.5;"></i>
@@ -149,6 +150,14 @@
                                                         {{ $event->isTeamBased() ? 'Team (Max ' . $event->max_team_members . ' members)' : 'Individual' }}
                                                     </span>
                                                 </div>
+                                                @if($event->last_registration_at)
+                                                    <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.9rem;">
+                                                        <i class="bi bi-calendar-check" style="color: #4fc3f7;"></i>
+                                                        <span>
+                                                            Registration Closes: {{ $event->last_registration_at->format('D, M j, Y') }}
+                                                        </span>
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <a href="{{ route('events.show', $event) }}" 

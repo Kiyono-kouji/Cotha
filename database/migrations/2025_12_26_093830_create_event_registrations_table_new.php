@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
             $table->string('guardian_name');
+            $table->string('guardian_email');
             $table->string('guardian_phone');
             $table->integer('total_teams')->default(1);
             $table->decimal('total_price', 10, 2);

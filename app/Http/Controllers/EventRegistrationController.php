@@ -18,7 +18,8 @@ class EventRegistrationController extends Controller
         // Validate the request
         $validated = $request->validate([
             'guardian_name' => 'required|string|max:255',
-            'guardian_phone' => 'required|string|max:20',
+            'guardian_email' => 'required|email|max:255',
+            'guardian_phone' => ['required', 'regex:/^\+?\d{9,15}$/'],
             'teams' => 'required|array|min:1',
             'teams.*.team_name' => 'required|string|max:255',
             'teams.*.participants' => 'required|array|min:1',
@@ -60,6 +61,7 @@ class EventRegistrationController extends Controller
             $registration = EventRegistration::create([
                 'event_id' => $event->id,
                 'guardian_name' => $validated['guardian_name'],
+                'guardian_email' => $validated['guardian_email'],
                 'guardian_phone' => $validated['guardian_phone'],
                 'total_teams' => count($validated['teams']),
                 'total_price' => $totalPrice,

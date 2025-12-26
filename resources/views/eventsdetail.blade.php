@@ -29,7 +29,7 @@
             <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
                  alt="Hero Banner"
                  style="width: 100%; height: 100%; object-fit: cover; object-position: center center;" />
-            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.1);"></div>
         </div>
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center justify-content-center pt-5 mt-5">
@@ -162,6 +162,13 @@
                             <p class="mb-0">{{ $event->result }}</p>
                         </div>
                     @endif
+
+                    @if($event->last_registration_at)
+                        <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.9rem;">
+                            <i class="bi bi-calendar-check" style="color: #4fc3f7;"></i>
+                            <span>Last Registration: {{ $event->last_registration_at->format('D, M j, Y H:i') }}</span>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -172,98 +179,128 @@
                         <i class="bi bi-pencil-square me-2" style="color: #4fc3f7;"></i>Register Now
                     </h3>
 
-                    <form action="{{ route('events.register', $event) }}" method="POST" id="registrationForm">
-                        @csrf
-                        
-                        {{-- Guardian Information --}}
-                        <div class="mb-4">
-                            <h5 class="fw-semibold mb-3" style="color: #2C3E50;">Guardian Information</h5>
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Guardian Name <span class="text-danger">*</span></label>
-                                <input type="text" name="guardian_name" class="form-control rounded-3" value="{{ old('guardian_name') }}" required>
+                    @if(!$event->last_registration_at || now()->lessThanOrEqualTo($event->last_registration_at))
+                        {{-- Registration Form --}}
+                        <form action="{{ route('events.register', $event) }}" method="POST" id="registrationForm">
+                            @csrf
+                            
+                            {{-- Guardian Information --}}
+                            <div class="mb-4">
+                                <h5 class="fw-semibold mb-3" style="color: #2C3E50;">Guardian Information</h5>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Guardian Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="guardian_name" class="form-control rounded-3" value="{{ old('guardian_name') }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Guardian Phone <span class="text-danger">*</span></label>
+                                    <input
+                                        type="tel"
+                                        name="guardian_phone"
+                                        class="form-control rounded-3"
+                                        value="{{ old('guardian_phone') }}"
+                                        required
+                                        placeholder="+6281234332110"
+                                        pattern="^\+?\d{9,15}$"
+                                        inputmode="tel"
+                                        title="Enter a valid phone number, e.g. +6281234332110">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Guardian Email <span class="text-danger">*</span></label>
+                                    <input
+                                        type="email"
+                                        name="guardian_email"
+                                        class="form-control rounded-3"
+                                        value="{{ old('guardian_email') }}"
+                                        required
+                                        placeholder="parent@email.com"
+                                        maxlength="255"
+                                    >
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Guardian Phone <span class="text-danger">*</span></label>
-                                <input type="tel" name="guardian_phone" class="form-control rounded-3" value="{{ old('guardian_phone') }}" required placeholder="08xxxxxxxxxx">
-                            </div>
-                        </div>
 
-                        <hr class="my-4">
+                            <hr class="my-4">
 
-                        {{-- Teams Container --}}
-                        <div id="teamsContainer">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="fw-semibold mb-0" style="color: #2C3E50;">
-                                    {{ $event->isTeamBased() ? 'Teams' : 'Participants' }}
-                                </h5>
-                                <button type="button" class="btn btn-sm rounded-pill" style="background: #4fc3f7; color: white;" onclick="addTeam()">
-                                    <i class="bi bi-plus-lg me-1"></i>Add {{ $event->isTeamBased() ? 'Team' : 'Another' }}
-                                </button>
-                            </div>
-
-                            {{-- Team Template (will be cloned) --}}
-                            <div class="team-item mb-4 p-3 rounded-3" style="background: #f8f9fa; border: 2px solid #e9ecef;">
+                            {{-- Teams Container --}}
+                            <div id="teamsContainer">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h6 class="fw-semibold mb-0" style="color: #2C3E50;">
-                                        <span class="team-number">{{ $event->isTeamBased() ? 'Team 1' : 'Participant 1' }}</span>
-                                    </h6>
-                                    <button type="button" class="btn btn-sm btn-danger rounded-pill remove-team" style="display: none;" onclick="removeTeam(this)">
-                                        <i class="bi bi-trash"></i>
+                                    <h5 class="fw-semibold mb-0" style="color: #2C3E50;">
+                                        Teams
+                                    </h5>
+                                    <button type="button" class="btn btn-sm rounded-pill" style="background: #4fc3f7; color: white;" onclick="addTeam()">
+                                        <i class="bi bi-plus-lg me-1"></i>Add Team
                                     </button>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">{{ $event->isTeamBased() ? 'Team Name' : 'Participant Name' }} <span class="text-danger">*</span></label>
-                                    <input type="text" name="teams[0][team_name]" class="form-control rounded-3" required>
-                                </div>
-
-                                {{-- Participants Container --}}
-                                <div class="participants-container">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <label class="form-label fw-semibold mb-0">Members</label>
-                                        @if($event->isTeamBased())
-                                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill add-participant">
-                                                <i class="bi bi-plus-lg me-1"></i>Add Member
-                                            </button>
-                                        @endif
+                                {{-- Team Template (will be cloned) --}}
+                                <div class="team-item mb-4 p-3 rounded-3" style="background: #f9f9fa; border: 2px solid #e9ecef;">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6 class="fw-semibold mb-0" style="color: #2C3E50;">
+                                            <span class="team-number">Team 1</span>
+                                        </h6>
+                                        <button type="button" class="btn btn-sm btn-danger rounded-pill remove-team" style="display: none;" onclick="removeTeam(this)">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </div>
 
-                                    <div class="participant-item mb-3 p-3 rounded-3" style="background: white; border: 1px solid #dee2e6;">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Team Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="teams[0][team_name]" class="form-control rounded-3" required>
+                                    </div>
+
+                                    {{-- Team Members Container --}}
+                                    <div class="participants-container">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <small class="fw-semibold text-muted participant-number">Member 1</small>
-                                            <button type="button" class="btn btn-sm btn-link text-danger remove-participant p-0" style="display: none;" onclick="removeParticipant(this)">
-                                                <i class="bi bi-x-lg"></i>
-                                            </button>
+                                            <label class="form-label fw-semibold mb-0">Team Members</label>
+                                            @if($event->isTeamBased())
+                                                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill add-participant">
+                                                    <i class="bi bi-plus-lg me-1"></i>Add Team Member
+                                                </button>
+                                            @endif
                                         </div>
-                                        <div class="mb-2">
-                                            <input type="text" name="teams[0][participants][0][name]" class="form-control form-control-sm rounded-3 mb-2" placeholder="Full Name *" required>
-                                        </div>
-                                        <div class="mb-2">
-                                            <input type="email" name="teams[0][participants][0][email]" class="form-control form-control-sm rounded-3 mb-2" placeholder="Email *" required>
-                                        </div>
-                                        <div>
-                                            <input type="text" name="teams[0][participants][0][school]" class="form-control form-control-sm rounded-3" placeholder="School *" required>
+
+                                        <div class="participant-item mb-3 p-3 rounded-3" style="background: white; border: 1px solid #dee2e6;">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <small class="fw-semibold text-muted participant-number">Member 1</small>
+                                                <button type="button" class="btn btn-sm btn-link text-danger remove-participant p-0" style="display: none;" onclick="removeParticipant(this)">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </div>
+                                            <div class="mb-2">
+                                                <input type="text" name="teams[0][participants][0][name]" class="form-control form-control-sm rounded-3 mb-2" placeholder="Full Name *" required>
+                                            </div>
+                                            <div class="mb-2">
+                                                <input type="email" name="teams[0][participants][0][email]" class="form-control form-control-sm rounded-3 mb-2" placeholder="Email *" required>
+                                            </div>
+                                            <div>
+                                                <input type="text" name="teams[0][participants][0][school]" class="form-control form-control-sm rounded-3" placeholder="School *" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {{-- Price Summary --}}
-                        <div class="alert rounded-4 mb-4" style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); color: white; border: none;">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1">Estimated Total</h6>
-                                    <small id="priceBreakdown">0 participants × Rp {{ number_format($event->price_per_participant, 0, ',', '.') }}</small>
+                            {{-- Price Summary --}}
+                            <div class="alert rounded-4 mb-4" style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); color: white; border: none;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Estimated Total</h6>
+                                        <small id="priceBreakdown">0 participants × Rp {{ number_format($event->price_per_participant, 0, ',', '.') }}</small>
+                                    </div>
+                                    <h4 class="mb-0 fw-bold" id="totalPrice">Rp 0</h4>
                                 </div>
-                                <h4 class="mb-0 fw-bold" id="totalPrice">Rp 0</h4>
                             </div>
-                        </div>
 
-                        <button type="submit" class="btn w-100 py-3 fw-semibold rounded-pill" style="background: linear-gradient(135deg, #FF85A2 0%, #FFA2B8 100%); border: none; color: white; font-size: 1.1rem;">
-                            <i class="bi bi-check-circle me-2"></i>Complete Registration
-                        </button>
-                    </form>
+                            <button type="submit" class="btn w-100 py-3 fw-semibold rounded-pill" style="background: linear-gradient(135deg, #FF85A2 0%, #FFA2B8 100%); border: none; color: white; font-size: 1.1rem;">
+                                <i class="bi bi-check-circle me-2"></i>Complete Registration
+                            </button>
+                        </form>
+                    @else
+                        <div class="alert alert-warning rounded-4 text-center py-4">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Registration for this event closed on
+                            <strong>{{ $event->last_registration_at->format('D, M j, Y H:i') }}</strong>.
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -280,33 +317,43 @@ function addTeam() {
     teamIndex++;
     const container = document.getElementById('teamsContainer');
     const template = container.querySelector('.team-item').cloneNode(true);
-    
-    // Update team number
-    template.querySelector('.team-number').textContent = isTeamBased ? `Team ${teamIndex + 1}` : `Participant ${teamIndex + 1}`;
-    
-    // Update input names
-    template.querySelector('input[name*="team_name"]').name = `teams[${teamIndex}][team_name]`;
-    template.querySelector('input[name*="team_name"]').value = '';
-    
-    // Clear and update participant inputs
+
+    // Update team number (will be corrected by updateTeamNumbers)
+    template.querySelector('.team-number').textContent = `Team ${teamIndex + 1}`;
+
+    // Update input names for team name
+    const teamNameInput = template.querySelector('input[name*="team_name"]');
+    teamNameInput.name = `teams[${teamIndex}][team_name]`;
+    teamNameInput.value = '';
+
+    // Clear and update participant inputs: keep only the first participant
     const participantInputs = template.querySelectorAll('.participant-item');
     participantInputs.forEach((item, idx) => {
-        if (idx > 0) item.remove(); // Remove extra participants
+        if (idx > 0) item.remove();
     });
-    
+
+    // Update the first participant's input names and values
     const firstParticipant = template.querySelector('.participant-item');
     firstParticipant.querySelectorAll('input').forEach((input, idx) => {
         const fieldName = idx === 0 ? 'name' : idx === 1 ? 'email' : 'school';
         input.name = `teams[${teamIndex}][participants][0][${fieldName}]`;
         input.value = '';
     });
-    
-    // Show remove button
+
+    // Reset member number label
+    firstParticipant.querySelector('.participant-number').textContent = 'Member 1';
+
+    // Hide remove button for the first participant
+    firstParticipant.querySelector('.remove-participant').style.display = 'none';
+
+    // Show remove team button
     template.querySelector('.remove-team').style.display = 'inline-block';
-    
+
     container.appendChild(template);
+    updateTeamNumbers();
     updatePriceCalculation();
     updateRemoveButtons();
+    updateAddMemberButtons();
 }
 
 function removeTeam(button) {
@@ -314,68 +361,28 @@ function removeTeam(button) {
     updateTeamNumbers();
     updatePriceCalculation();
     updateRemoveButtons();
+    updateAddMemberButtons();
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Add participant button handler
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('add-participant') || e.target.closest('.add-participant')) {
-            const button = e.target.closest('.add-participant');
-            const teamItem = button.closest('.team-item');
-            const participantsContainer = teamItem.querySelector('.participants-container');
-            const currentParticipants = participantsContainer.querySelectorAll('.participant-item').length;
-            
-            if (currentParticipants >= maxTeamMembers) {
-                alert(`Maximum ${maxTeamMembers} members per team`);
-                return;
-            }
-            
-            const teamIdx = Array.from(document.querySelectorAll('.team-item')).indexOf(teamItem);
-            const participantIdx = currentParticipants;
-            
-            const participantTemplate = participantsContainer.querySelector('.participant-item').cloneNode(true);
-            participantTemplate.querySelector('.participant-number').textContent = `Member ${participantIdx + 1}`;
-            
-            participantTemplate.querySelectorAll('input').forEach((input, idx) => {
-                const fieldName = idx === 0 ? 'name' : idx === 1 ? 'email' : 'school';
-                input.name = `teams[${teamIdx}][participants][${participantIdx}][${fieldName}]`;
-                input.value = '';
-            });
-            
-            participantTemplate.querySelector('.remove-participant').style.display = 'inline-block';
-            participantsContainer.appendChild(participantTemplate);
-            updatePriceCalculation();
-            updateRemoveButtons();
-        }
-    });
-
-    // Initial price calculation
-    updatePriceCalculation();
-    
-    // Update price when inputs change
-    document.getElementById('teamsContainer').addEventListener('input', function() {
-        updatePriceCalculation();
-    });
-});
 
 function removeParticipant(button) {
     const participantsContainer = button.closest('.participants-container');
     const participants = participantsContainer.querySelectorAll('.participant-item');
-    
+
     if (participants.length <= 1) {
-        alert('At least one participant is required');
+        alert('At least one team member is required');
         return;
     }
-    
+
     button.closest('.participant-item').remove();
     updateParticipantNumbers(participantsContainer);
     updatePriceCalculation();
     updateRemoveButtons();
+    updateAddMemberButtons();
 }
 
 function updateTeamNumbers() {
     document.querySelectorAll('.team-item').forEach((team, idx) => {
-        team.querySelector('.team-number').textContent = isTeamBased ? `Team ${idx + 1}` : `Participant ${idx + 1}`;
+        team.querySelector('.team-number').textContent = isTeamBased ? `Team ${idx + 1}` : `Team ${idx + 1}`;
     });
 }
 
@@ -386,22 +393,23 @@ function updateParticipantNumbers(container) {
 }
 
 function updatePriceCalculation() {
+    const teams = document.querySelectorAll('.team-item').length;
     const participants = document.querySelectorAll('.participant-item').length;
     const total = participants * pricePerParticipant;
     
-    document.getElementById('priceBreakdown').textContent = 
+    document.getElementById('priceBreakdown').textContent =
         `${participants} participant${participants !== 1 ? 's' : ''} × Rp ${pricePerParticipant.toLocaleString('id-ID')}`;
     document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString('id-ID')}`;
 }
 
 function updateRemoveButtons() {
     const teams = document.querySelectorAll('.team-item');
-    teams.forEach((team, idx) => {
+    teams.forEach((team) => {
         const removeBtn = team.querySelector('.remove-team');
         removeBtn.style.display = teams.length > 1 ? 'inline-block' : 'none';
         
         const participants = team.querySelectorAll('.participant-item');
-        participants.forEach((participant, pIdx) => {
+        participants.forEach((participant) => {
             const removeParticipantBtn = participant.querySelector('.remove-participant');
             if (removeParticipantBtn) {
                 removeParticipantBtn.style.display = participants.length > 1 ? 'inline-block' : 'none';
@@ -409,5 +417,67 @@ function updateRemoveButtons() {
         });
     });
 }
+
+function updateAddMemberButtons() {
+    document.querySelectorAll('.team-item').forEach((team) => {
+        const addBtn = team.querySelector('.add-participant');
+        if (!addBtn) return;
+        const members = team.querySelectorAll('.participant-item').length;
+        if (members >= maxTeamMembers) {
+            addBtn.disabled = true;
+            addBtn.classList.add('disabled');
+        } else {
+            addBtn.disabled = false;
+            addBtn.classList.remove('disabled');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Add participant button handler
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-participant') || e.target.closest('.add-participant')) {
+            const button = e.target.closest('.add-participant');
+            const teamItem = button.closest('.team-item');
+            const participantsContainer = teamItem.querySelector('.participants-container');
+            const currentParticipants = participantsContainer.querySelectorAll('.participant-item').length;
+
+            if (currentParticipants >= maxTeamMembers) {
+                alert(`Maximum ${maxTeamMembers} members per team`);
+                return;
+            }
+
+            const teamIdx = Array.from(document.querySelectorAll('.team-item')).indexOf(teamItem);
+            const participantIdx = currentParticipants;
+
+            // Always clone only the FIRST participant-item as a template
+            const participantTemplate = participantsContainer.querySelector('.participant-item').cloneNode(true);
+
+            // Clear input values and update names
+            participantTemplate.querySelector('.participant-number').textContent = `Member ${participantIdx + 1}`;
+            participantTemplate.querySelectorAll('input').forEach((input, idx) => {
+                const fieldName = idx === 0 ? 'name' : idx === 1 ? 'email' : 'school';
+                input.name = `teams[${teamIdx}][participants][${participantIdx}][${fieldName}]`;
+                input.value = '';
+            });
+
+            participantTemplate.querySelector('.remove-participant').style.display = 'inline-block';
+            participantsContainer.appendChild(participantTemplate);
+            updatePriceCalculation();
+            updateRemoveButtons();
+            updateAddMemberButtons();
+        }
+    });
+
+    // Initial setup
+    updatePriceCalculation();
+    updateAddMemberButtons();
+    updateRemoveButtons();
+
+    // Update price when inputs change
+    document.getElementById('teamsContainer').addEventListener('input', function() {
+        updatePriceCalculation();
+    });
+});
 </script>
 @endsection

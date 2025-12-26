@@ -16,12 +16,14 @@ class Event extends Model
         'max_team_members',
         'price_per_participant',
         'date',
+        'last_registration_at',
         'location',
         'result'
     ];
 
     protected $casts = [
         'date' => 'datetime',
+        'last_registration_at' => 'datetime',
         'price_per_participant' => 'decimal:2',
         'max_team_members' => 'integer'
     ];

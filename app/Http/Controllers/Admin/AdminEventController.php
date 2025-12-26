@@ -27,9 +27,11 @@ class AdminEventController extends Controller
             'image' => 'nullable|image|max:2048',
             'category' => 'required|string',
             'date' => 'required|date',
+            'last_registration_at' => 'nullable|date',
             'location' => 'nullable|string',
             'is_free' => 'nullable',
             'price' => 'nullable|required_if:is_free,off|string',
+            'guardian_phone' => ['required', 'regex:/^\+?\d{9,15}$/'],
         ]);
 
         $validated['price'] = $request->has('is_free') ? 'Free' : $request->price;
@@ -52,9 +54,11 @@ class AdminEventController extends Controller
             'image' => 'nullable|image|max:2048',
             'category' => 'required|string',
             'date' => 'required|date',
+            'last_registration_at' => 'nullable|date',
             'location' => 'nullable|string',
             'is_free' => 'nullable',
             'price' => 'nullable|required_if:is_free,off|string',
+            'guardian_phone' => ['required', 'regex:/^\+?\d{9,15}$/'],
         ]);
 
         $validated['price'] = $request->has('is_free') ? 'Free' : $request->price;

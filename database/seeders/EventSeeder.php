@@ -27,6 +27,7 @@ class EventSeeder extends Seeder
             'max_team_members' => null,
             'price_per_participant' => 0,
             'date' => now()->addDays(5),
+            'last_registration_at' => now()->addDays(-1),
             'location' => 'COTHA Center',
             'result' => null,
         ]);
@@ -40,6 +41,7 @@ class EventSeeder extends Seeder
             'max_team_members' => 3,
             'price_per_participant' => 50000,
             'date' => now()->addDays(10),
+            'last_registration_at' => now()->addDays(9),
             'location' => 'Zoom',
             'result' => null,
         ]);
