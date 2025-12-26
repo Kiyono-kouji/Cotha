@@ -8,10 +8,20 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminMethodController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $methods = Method::all();
-        return view('admin.methods.index', compact('methods'));
+        $search = $request->input('search');
+        $query = Method::query();
+
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('label', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+        }
+
+        $methods = $query->latest()->paginate(20)->withQueryString();
+
+        return view('admin.methods.index', compact('methods', 'search'));
     }
 
     public function create()

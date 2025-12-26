@@ -354,9 +354,13 @@
                                         <small class="text-secondary d-block" style="font-size: 0.95rem;">
                                             <strong>{{ $project->creator }}</strong>
                                         </small>
-                                        {{-- School --}}
                                         <small class="text-muted d-block" style="font-size: 0.85rem;">
                                             {{ $project->school ?? 'School not listed' }}
+                                            @if(!empty($project->age))
+                                                <span class="ms-2 badge rounded-pill" style="background: #e3f2fd; color: #1976D2;">
+                                                    Age: {{ $project->age }}
+                                                </span>
+                                            @endif
                                         </small>
                                     </div>
                                 </div>

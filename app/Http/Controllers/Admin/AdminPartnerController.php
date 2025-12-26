@@ -12,10 +12,18 @@ class AdminPartnerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $partners = Partner::latest()->get();
-        return view('admin.partners.index', compact('partners'));
+        $search = $request->input('search');
+        $query = Partner::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $partners = $query->latest()->paginate(20)->withQueryString();
+
+        return view('admin.partners.index', compact('partners', 'search'));
     }
 
     /**

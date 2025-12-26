@@ -52,6 +52,7 @@ class ProjectSyncService
                     'created_at' => now(),
                     'profile_picture' => $p['user']['profile_picture'] ?? ($p['profile_picture'] ?? null),
                     'school' => $p['user']['school'] ?? ($p['school'] ?? null),
+                    'age' => $p['user']['age'] ?? null,
                 ];
             }
 
@@ -59,7 +60,7 @@ class ProjectSyncService
                 Project::upsert(
                     $rows,
                     ['id'],
-                    ['title','creator','thumbnail','url','is_featured','active','project_date','updated_at', 'profile_picture', 'school']
+                    ['title','creator','thumbnail','url','is_featured','active','project_date','updated_at', 'profile_picture', 'school', 'age']
                 );
             }
         } catch (\Throwable $e) {

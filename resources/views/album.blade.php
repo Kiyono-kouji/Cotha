@@ -46,6 +46,7 @@
             <p class="text-muted">No albums available yet.</p>
         </div>
     @else
+        {{-- Album Grid --}}
         <div class="row g-4 justify-content-center">
             @foreach($albums as $album)
                 @php
@@ -110,6 +111,102 @@
                 </div>
             @endforeach
         </div>
+
+        @if ($albums->hasPages())
+            <div class="text-center mt-5">
+                <p class="text-muted mb-3">
+                    Page {{ $albums->currentPage() }} of {{ $albums->lastPage() }}
+                </p>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center" style="gap: 8px;">
+                        {{-- Previous Page Link --}}
+                        @if ($albums->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link border-0 shadow-sm" style="background: #e3f2fd; color: #b0bec5; border-radius: 12px;">
+                                    <i class="bi bi-chevron-left"></i>
+                                </span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link border-0 shadow-sm"
+                                   style="background: #FF85A2; color: #fff; border-radius: 12px;"
+                                   href="{{ $albums->previousPageUrl() }}" rel="prev">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        @endif
+
+                        {{-- Pagination Elements --}}
+                        @php
+                            $current = $albums->currentPage();
+                            $last = $albums->lastPage();
+                            $window = 2;
+                            $pages = [];
+                            $pages[] = 1;
+                            for ($i = $current - $window; $i <= $current + $window; $i++) {
+                                if ($i > 1 && $i < $last) {
+                                    $pages[] = $i;
+                                }
+                            }
+                            if ($last > 1) {
+                                $pages[] = $last;
+                            }
+                            $pages = array_values(array_unique($pages));
+                            sort($pages);
+                            $display = [];
+                            $prev = null;
+                            foreach ($pages as $p) {
+                                if ($prev !== null && $p > $prev + 1) {
+                                    $display[] = '...';
+                                }
+                                $display[] = $p;
+                                $prev = $p;
+                            }
+                        @endphp
+                        @foreach ($display as $item)
+                            @if ($item === '...')
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            @else
+                                @php $url = $albums->url($item); @endphp
+                                @if ($item == $current)
+                                    <li class="page-item active">
+                                        <span class="page-link border-0 shadow-sm"
+                                              style="background: #FF85A2; color: #fff; font-weight: bold; border-radius: 12px;">
+                                            {{ $item }}
+                                        </span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link border-0 shadow-sm"
+                                           style="background: #fff; color: #4fc3f7; border: 2px solid #4fc3f7; border-radius: 12px;"
+                                           href="{{ $url }}">
+                                            {{ $item }}
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
+                        @endforeach
+
+                        {{-- Next Page Link --}}
+                        @if ($albums->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link border-0 shadow-sm"
+                                   style="background: #FF85A2; color: #fff; border-radius: 12px;"
+                                   href="{{ $albums->nextPageUrl() }}" rel="next">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link border-0 shadow-sm" style="background: #e3f2fd; color: #b0bec5; border-radius: 12px;">
+                                    <i class="bi bi-chevron-right"></i>
+                                </span>
+                            </li>
+                        @endif
+                    </ul>
+                </nav>
+            </div>
+        @endif
     @endif
 </div>
 @endsection

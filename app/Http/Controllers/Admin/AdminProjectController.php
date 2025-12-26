@@ -12,13 +12,21 @@ class AdminProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::orderBy('project_date', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $search = $request->input('search');
+        $query = Project::query();
 
-        return view('admin.projects.index', compact('projects'));
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('creator', 'like', '%' . $search . '%')
+                  ->orWhere('school', 'like', '%' . $search . '%')
+                  ->orWhere('age', 'like', '%' . $search . '%');
+        }
+
+        $projects = $query->latest()->paginate(20)->withQueryString();
+
+        return view('admin.projects.index', compact('projects', 'search'));
     }
 
     /**

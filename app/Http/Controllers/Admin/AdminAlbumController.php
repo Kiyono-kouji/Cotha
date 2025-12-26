@@ -13,10 +13,19 @@ class AdminAlbumController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $albums = Album::latest()->get();
-        return view('admin.albums.index', compact('albums'));
+        $search = $request->input('search');
+        $query = Album::query();
+
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+        }
+
+        $albums = $query->latest()->paginate(12)->withQueryString();
+
+        return view('admin.albums.index', compact('albums', 'search'));
     }
 
     /**

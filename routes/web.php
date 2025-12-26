@@ -32,7 +32,9 @@ Route::get('/testimonials', [TestimonialController::class, 'index']);
 Route::view('/about', 'about')->name('about');
 Route::get('/gallery', [AlbumController::class, 'index'])->name('albums.index');
 Route::get('/gallery/{id}', [AlbumController::class, 'show'])->name('albums.show');
+
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])->name('events.register');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -51,17 +53,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
-    // Sync projects from API into DB
     Route::post('projects/sync', [ProjectController::class, 'syncFromApi'])->name('projects.sync');
     Route::patch('projects/{project}/toggle-featured', [AdminProjectController::class, 'toggleFeatured'])->name('projects.toggleFeatured');
     Route::patch('projects/{project}/toggle-active', [AdminProjectController::class, 'toggleActive'])->name('projects.toggleActive');
 });
 
 Route::get('/register-trial', [PublicRegistrationController::class, 'show'])->name('registertrial');
-
-Route::post('/register-class', [PublicRegistrationController::class, 'store'])
-    ->name('public.register-class');
-
+Route::post('/register-class', [PublicRegistrationController::class, 'store'])->name('public.register-class');
 Route::get('/payment', [PaymentController::class, 'payment']);
 Route::post('/midtrans/notification', [EventController::class, 'midtransNotification']);
     

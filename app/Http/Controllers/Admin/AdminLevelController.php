@@ -13,10 +13,20 @@ class AdminLevelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $levels = Level::all();
-        return view('admin.levels.index', compact('levels'));
+        $search = $request->input('search');
+        $query = Level::query();
+
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('subtitle', 'like', '%' . $search . '%')
+                  ->orWhere('age_range', 'like', '%' . $search . '%');
+        }
+
+        $levels = $query->latest()->paginate(20)->withQueryString();
+
+        return view('admin.levels.index', compact('levels', 'search'));
     }
 
     /**

@@ -8,27 +8,46 @@ use Illuminate\Database\Eloquent\Builder;
 class Event extends Model
 {
     protected $fillable = [
-        'title', 'image', 'category', 'date', 'location', 'price'
+        'event_category_id',
+        'title',
+        'description',
+        'image',
+        'registration_type',
+        'max_team_members',
+        'price_per_participant',
+        'date',
+        'location',
+        'result'
     ];
 
     protected $casts = [
         'date' => 'datetime',
+        'price_per_participant' => 'decimal:2',
+        'max_team_members' => 'integer'
     ];
 
-    // Scope for upcoming events
+    public function category()
+    {
+        return $this->belongsTo(EventCategory::class, 'event_category_id');
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
     public function scopeUpcoming(Builder $query)
     {
         return $query->where('date', '>=', now())->orderBy('date');
     }
 
-    // Scope for category filter
-    public function scopeCategory(Builder $query, $category)
+    public function isTeamBased()
     {
-        return $query->where('category', $category);
+        return $this->registration_type === 'team';
     }
 
     public function isFree()
     {
-        return strtolower(trim($this->price)) === 'free' || $this->price == '0' || $this->price == null;
+        return $this->price_per_participant == 0;
     }
 }

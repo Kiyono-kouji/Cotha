@@ -4,85 +4,96 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Models\EventTeam;
+use App\Models\EventParticipant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Midtrans\Snap;
 
 class EventRegistrationController extends Controller
 {
-    public function store(Request $request, $eventId)
+    public function store(Request $request, Event $event)
     {
-        $event = Event::findOrFail($eventId);
-
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'wa' => 'nullable|string|max:32',
+        // Validate the request
+        $validated = $request->validate([
+            'guardian_name' => 'required|string|max:255',
+            'guardian_phone' => 'required|string|max:20',
+            'teams' => 'required|array|min:1',
+            'teams.*.team_name' => 'required|string|max:255',
+            'teams.*.participants' => 'required|array|min:1',
+            'teams.*.participants.*.name' => 'required|string|max:255',
+            'teams.*.participants.*.email' => 'required|email|max:255',
+            'teams.*.participants.*.school' => 'required|string|max:255',
         ]);
 
-        $data['event_id'] = $event->id;
-        EventRegistration::create($data);
-
-        return redirect()->back()->with('success', 'Registration successful!');
-    }
-
-    public function register(Request $request, Event $event)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:32',
-            'note' => 'nullable|string',
-        ]);
-
-        // Check if event is free
-        if (strtolower($event->price) === 'free' || $event->price == '0' || $event->price == null) {
-            EventRegistration::create([
-                'event_id' => $event->id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'note' => $request->note,
-            ]);
-            return redirect()->back()->with('success', 'You have registered for this event!');
+        // Validate team size
+        if ($event->isTeamBased()) {
+            foreach ($validated['teams'] as $team) {
+                if (count($team['participants']) > $event->max_team_members) {
+                    return back()->withErrors([
+                        'teams' => "Each team can have a maximum of {$event->max_team_members} members."
+                    ])->withInput();
+                }
+            }
+        } else {
+            // For individual events, each "team" should have exactly 1 participant
+            foreach ($validated['teams'] as $team) {
+                if (count($team['participants']) > 1) {
+                    return back()->withErrors([
+                        'teams' => "Individual events can only have 1 participant per registration."
+                    ])->withInput();
+                }
+            }
         }
 
-        // Paid event: Prepare Midtrans payment
-        $orderId = 'EVT-' . $event->id . '-' . uniqid();
-        $amount = (int) preg_replace('/\D/', '', $event->price);
+        DB::beginTransaction();
+        try {
+            // Calculate total price
+            $totalParticipants = 0;
+            foreach ($validated['teams'] as $team) {
+                $totalParticipants += count($team['participants']);
+            }
+            $totalPrice = $totalParticipants * $event->price_per_participant;
 
-        // Save registration data temporarily in session (or DB if you prefer)
-        Session::put('event_registration_' . $orderId, [
-            'event_id' => $event->id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'note' => $request->note,
-        ]);
+            // Create the registration
+            $registration = EventRegistration::create([
+                'event_id' => $event->id,
+                'guardian_name' => $validated['guardian_name'],
+                'guardian_phone' => $validated['guardian_phone'],
+                'total_teams' => count($validated['teams']),
+                'total_price' => $totalPrice,
+                'payment_status' => 'pending',
+            ]);
 
-        $params = [
-            'transaction_details' => [
-                'order_id' => $orderId,
-                'gross_amount' => $amount,
-            ],
-            'item_details' => [
-                [
-                    'id' => $event->id,
-                    'price' => $amount,
-                    'quantity' => 1,
-                    'name' => $event->title,
-                ]
-            ],
-            'customer_details' => [
-                'first_name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-            ],
-        ];
+            // Create teams and participants
+            foreach ($validated['teams'] as $teamData) {
+                $team = EventTeam::create([
+                    'event_registration_id' => $registration->id,
+                    'team_name' => $teamData['team_name'],
+                ]);
 
-        $snapToken = Snap::getSnapToken($params);
+                foreach ($teamData['participants'] as $participantData) {
+                    EventParticipant::create([
+                        'event_team_id' => $team->id,
+                        'name' => $participantData['name'],
+                        'email' => $participantData['email'],
+                        'school' => $participantData['school'],
+                    ]);
+                }
+            }
 
-        // Redirect to Midtrans payment page
-        return redirect()->away("https://app.midtrans.com/snap/v2/vtweb/{$snapToken}");
+            DB::commit();
+
+            // For now, redirect with success message
+            // Later you can integrate Midtrans payment here
+            return redirect()
+                ->route('events.show', $event)
+                ->with('success', 'Registration successful! Total: Rp ' . number_format($totalPrice, 0, ',', '.'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Registration failed. Please try again.'])->withInput();
+        }
     }
 }

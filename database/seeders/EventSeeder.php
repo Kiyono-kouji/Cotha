@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Event;
+use App\Models\EventCategory;
 
 class EventSeeder extends Seeder
 {
@@ -12,45 +13,74 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
+        // Get categories
+        $competitive = EventCategory::where('name', 'Competitive Programming')->first();
+        $workshop = EventCategory::where('name', 'Game Development')->first();
+        $computational = EventCategory::where('name', 'Computational Thinking')->first();
+
         Event::create([
+            'event_category_id' => $workshop->id,
             'title' => 'Coding Workshop for Kids',
-            'image' => 'https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80',
-            'category' => 'workshop',
+            'description' => 'An interactive workshop to introduce kids to the world of coding through fun games and activities.',
+            'image' => 'workshop.jpg',
+            'registration_type' => 'individual',
+            'max_team_members' => null,
+            'price_per_participant' => 0,
             'date' => now()->addDays(5),
             'location' => 'COTHA Center',
-            'price' => 'Free',
+            'result' => null,
         ]);
+
         Event::create([
+            'event_category_id' => $competitive->id,
             'title' => 'Online Python Competition',
-            'image' => 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80',
-            'category' => 'competition',
+            'description' => 'Compete with other students in solving algorithmic challenges using Python programming.',
+            'image' => 'python-comp.jpg',
+            'registration_type' => 'team',
+            'max_team_members' => 3,
+            'price_per_participant' => 50000,
             'date' => now()->addDays(10),
             'location' => 'Zoom',
-            'price' => 'Rp 50.000',
+            'result' => null,
         ]);
+
         Event::create([
-            'title' => 'Tech Seminar: AI for Beginners',
-            'image' => 'https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80',
-            'category' => 'seminar',
+            'event_category_id' => $computational->id,
+            'title' => 'Scratch Game Building Contest',
+            'description' => 'Build creative games using Scratch and showcase your computational thinking skills.',
+            'image' => 'scratch-contest.jpg',
+            'registration_type' => 'individual',
+            'max_team_members' => null,
+            'price_per_participant' => 25000,
             'date' => now()->addDays(15),
             'location' => 'COTHA Center',
-            'price' => 'Rp 25.000',
+            'result' => null,
         ]);
+
         Event::create([
-            'title' => 'Offline Coding Meetup',
-            'image' => 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-            'category' => 'offline',
+            'event_category_id' => $workshop->id,
+            'title' => 'Unity Game Dev Bootcamp',
+            'description' => 'A comprehensive bootcamp covering Unity game development from basics to advanced topics.',
+            'image' => 'unity-bootcamp.jpg',
+            'registration_type' => 'individual',
+            'max_team_members' => null,
+            'price_per_participant' => 150000,
             'date' => now()->addDays(20),
-            'location' => 'COTHA Center',
-            'price' => 'Free',
+            'location' => 'Online',
+            'result' => null,
         ]);
+
         Event::create([
-            'title' => 'Online Web Development Bootcamp',
-            'image' => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80',
-            'category' => 'online',
+            'event_category_id' => $competitive->id,
+            'title' => 'Web Dev Hackathon',
+            'description' => 'Build a complete web application in 48 hours with your team. Best project wins prizes!',
+            'image' => 'hackathon.jpg',
+            'registration_type' => 'team',
+            'max_team_members' => 4,
+            'price_per_participant' => 100000,
             'date' => now()->addDays(25),
-            'location' => 'Zoom',
-            'price' => 'Rp 100.000',
+            'location' => 'Hybrid (Online & Offline)',
+            'result' => null,
         ]);
     }
 }

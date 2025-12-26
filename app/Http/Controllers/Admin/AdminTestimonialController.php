@@ -8,10 +8,21 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminTestimonialController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $testimonials = Testimonial::all();
-        return view('admin.testimonials.index', compact('testimonials'));
+        $search = $request->input('search');
+        $query = Testimonial::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('school', 'like', '%' . $search . '%')
+                  ->orWhere('city', 'like', '%' . $search . '%')
+                  ->orWhere('text', 'like', '%' . $search . '%');
+        }
+
+        $testimonials = $query->latest()->paginate(12)->withQueryString();
+
+        return view('admin.testimonials.index', compact('testimonials', 'search'));
     }
 
     public function create()
