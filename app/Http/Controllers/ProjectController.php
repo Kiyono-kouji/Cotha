@@ -35,10 +35,12 @@ class ProjectController extends Controller
                     'name' => $p->creator,
                     'profile_picture' => $p->profile_picture,
                     'school' => $p->school,
+                    'age' => $p->age,
                 ],
                 'thumbnail' => $p->thumbnail,
                 'url' => $p->url,
-                'created_at' => optional($p->project_date)->toIso8601String(),
+                'is_featured' => $p->is_featured,
+                'created_at' => $p->project_date,
             ]);
 
         return view('projects', ['projects' => $projects]);

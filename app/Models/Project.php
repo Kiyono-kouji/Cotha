@@ -13,7 +13,7 @@ class Project extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'id','title','creator','thumbnail','url','is_featured','active','project_date', 'profile_picture', 'school'
+        'id','title','creator','thumbnail','url','is_featured','active','project_date', 'profile_picture', 'school', 'age'
     ];
 
     protected $casts = [

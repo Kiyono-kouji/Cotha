@@ -45,6 +45,7 @@ class WelcomeController extends Controller
                 'project_date' => $p->project_date,
                 'profile_picture' => $p->profile_picture,
                 'school' => $p->school,
+                'age' => $p->age,
             ]);
 
         return view('welcome', [

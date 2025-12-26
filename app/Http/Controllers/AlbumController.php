@@ -12,8 +12,8 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        // Eager-load media to show covers and counts without N+1 queries
-        $albums = \App\Models\Album::with('media')->latest()->get();
+        // Paginate albums, 9 per page (adjust as needed)
+        $albums = Album::with('media')->latest()->paginate(9);
         return view('album', compact('albums'));
     }
 

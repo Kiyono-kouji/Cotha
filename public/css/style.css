@@ -241,5 +241,22 @@ body {
     font-weight: 500;
 }
 .nav-tabs {
-    border-bottom: 2px solid #E3F2FD !important;
+    border-bottom: 2px solid #e3f2fd !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+    scrollbar-width: thin;
+    scrollbar-color: #4fc3f7 #e3f2fd;
+}
+.nav-tabs::-webkit-scrollbar {
+    height: 6px;
+}
+.nav-tabs::-webkit-scrollbar-thumb {
+    background: #4fc3f7;
+    border-radius: 4px;
+}
+.nav-tabs::-webkit-scrollbar-track {
+    background: #e3f2fd;
+    border-radius: 4px;
 }

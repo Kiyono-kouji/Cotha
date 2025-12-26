@@ -95,6 +95,11 @@
                                     </small>
                                     <small class="text-muted d-block" style="font-size: 0.85rem;">
                                         {{ $project['user']['school'] ?? 'School not listed' }}
+                                        @if(!empty($project['user']['age']))
+                                            <span class="ms-2 badge rounded-pill" style="background: #e3f2fd; color: #1976D2;">
+                                                Age: {{ $project['user']['age'] }}
+                                            </span>
+                                        @endif
                                     </small>
                                 </div>
                             </div>

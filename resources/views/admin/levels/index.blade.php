@@ -53,20 +53,46 @@
         </div>
     </div>
 
-    {{-- Levels Table Section --}}
+    {{-- Search and Add New Level Row --}}
     <div class="container py-5 position-relative" style="z-index: 2;">
-        <div class="mb-4 text-end text-md-end text-center">
-            <a href="{{ route('admin.levels.create') }}"
-               class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow mt-2 mt-md-0"
-               style="background: #4fc3f7; border: none; color: white;">
-                <i class="bi bi-plus-lg me-2"></i> Add New Level
-            </a>
+        <div class="row align-items-center mb-4">
+            <div class="col-12 col-md-7">
+                <form method="GET" action="{{ route('admin.levels.index') }}" class="d-flex gap-2 align-items-center">
+                    <input type="text"
+                           name="search"
+                           class="form-control rounded-pill px-4 py-2 shadow-sm"
+                           style="border: 2px solid #4fc3f7; background: #f8f9fa; color: #1976D2; font-size: 1rem;"
+                           placeholder="Search levels..."
+                           value="{{ $search ?? '' }}">
+                    <button type="submit"
+                            class="btn rounded-pill px-4 fw-semibold d-flex align-items-center"
+                            style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); color: white; border: none;">
+                        <i class="bi bi-search me-1"></i> Search
+                    </button>
+                    @if(request('search'))
+                        <a href="{{ route('admin.levels.index') }}"
+                           class="btn btn-secondary rounded-pill px-4 fw-semibold d-flex align-items-center"
+                           style="background: #e3f2fd; color: #1976D2; border: none;">
+                            Reset
+                        </a>
+                    @endif
+                </form>
+            </div>
+            <div class="col-12 col-md-5 text-end mt-3 mt-md-0">
+                <a href="{{ route('admin.levels.create') }}"
+                   class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow"
+                   style="background: #4fc3f7; border: none; color: white;">
+                    <i class="bi bi-plus-lg me-2"></i> Add New Level
+                </a>
+            </div>
         </div>
+
         @if(session('success'))
             <div class="alert alert-success rounded-pill text-center mb-3">
                 {{ session('success') }}
             </div>
         @endif
+        {{-- Levels Table --}}
         <div class="table-responsive bg-white rounded-4 shadow p-4">
             <table class="table table-bordered table-striped align-middle mb-0">
                 <thead class="table-light">
@@ -124,6 +150,103 @@
                 </tbody>
             </table>
         </div>
+
+        {{-- Pagination --}}
+        @if ($levels->hasPages())
+            <div class="text-center mt-5">
+                <p class="text-muted mb-3">
+                    Page {{ $levels->currentPage() }} of {{ $levels->lastPage() }}
+                </p>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center" style="gap: 8px;">
+                        {{-- Previous Page Link --}}
+                        @if ($levels->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link border-0 shadow-sm" style="background: #e3f2fd; color: #b0bec5; border-radius: 12px;">
+                                    <i class="bi bi-chevron-left"></i>
+                                </span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link border-0 shadow-sm"
+                                   style="background: #FF85A2; color: #fff; border-radius: 12px;"
+                                   href="{{ $levels->previousPageUrl() }}" rel="prev">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        @endif
+
+                        {{-- Pagination Elements --}}
+                        @php
+                            $current = $levels->currentPage();
+                            $last = $levels->lastPage();
+                            $window = 2;
+                            $pages = [];
+                            $pages[] = 1;
+                            for ($i = $current - $window; $i <= $current + $window; $i++) {
+                                if ($i > 1 && $i < $last) {
+                                    $pages[] = $i;
+                                }
+                            }
+                            if ($last > 1) {
+                                $pages[] = $last;
+                            }
+                            $pages = array_values(array_unique($pages));
+                            sort($pages);
+                            $display = [];
+                            $prev = null;
+                            foreach ($pages as $p) {
+                                if ($prev !== null && $p > $prev + 1) {
+                                    $display[] = '...';
+                                }
+                                $display[] = $p;
+                                $prev = $p;
+                            }
+                        @endphp
+                        @foreach ($display as $item)
+                            @if ($item === '...')
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            @else
+                                @php $url = $levels->url($item); @endphp
+                                @if ($item == $current)
+                                    <li class="page-item active">
+                                        <span class="page-link border-0 shadow-sm"
+                                              style="background: #FF85A2; color: #fff; font-weight: bold; border-radius: 12px;">
+                                            {{ $item }}
+                                        </span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link border-0 shadow-sm"
+                                           style="background: #fff; color: #4fc3f7; border: 2px solid #4fc3f7; border-radius: 12px;"
+                                           href="{{ $url }}">
+                                            {{ $item }}
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
+                        @endforeach
+
+                        {{-- Next Page Link --}}
+                        @if ($levels->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link border-0 shadow-sm"
+                                   style="background: #FF85A2; color: #fff; border-radius: 12px;"
+                                   href="{{ $levels->nextPageUrl() }}" rel="next">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link border-0 shadow-sm" style="background: #e3f2fd; color: #b0bec5; border-radius: 12px;">
+                                    <i class="bi bi-chevron-right"></i>
+                                </span>
+                            </li>
+                        @endif
+                    </ul>
+                </nav>
+            </div>
+        @endif
     </div>
 </section>
 @endsection

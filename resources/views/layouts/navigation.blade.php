@@ -40,12 +40,17 @@
                                 About
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('events.index') }}" class="nav-link">Events</a>
+                        </li>
                         @auth
                             @if(auth()->user()->isAdmin ?? false)
                                 <li class="nav-item">
                                     <a class="nav-link {{ Request::is('admin/dashboard') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ url('/admin/dashboard') }}">
                                         Admin Dashboard
                                     </a>
+                                </li>
+                                <li class="nav-item">
                                 </li>
                             @endif
                             <li class="nav-item">

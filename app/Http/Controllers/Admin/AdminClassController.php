@@ -12,10 +12,20 @@ class AdminClassController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $classes = ClassModel::all();
-        return view('admin.classes.index', compact('classes'));
+        $search = $request->input('search');
+        $query = ClassModel::query();
+
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('level', 'like', '%' . $search . '%')
+                  ->orWhere('meeting_info', 'like', '%' . $search . '%');
+        }
+
+        $classes = $query->latest()->paginate(20)->withQueryString();
+
+        return view('admin.classes.index', compact('classes', 'search'));
     }
 
     /**
