@@ -8,8 +8,7 @@ use App\Models\EventTeam;
 use App\Models\EventParticipant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
-use Midtrans\Snap;
+use Illuminate\Support\Facades\Log;
 
 class EventRegistrationController extends Controller
 {
@@ -28,34 +27,87 @@ class EventRegistrationController extends Controller
             'teams.*.participants.*.school' => 'required|string|max:255',
         ]);
 
-        // Validate team size
-        if ($event->isTeamBased()) {
-            foreach ($validated['teams'] as $team) {
-                if (count($team['participants']) > $event->max_team_members) {
-                    return back()->withErrors([
-                        'teams' => "Each team can have a maximum of {$event->max_team_members} members."
-                    ])->withInput();
-                }
-            }
-        } else {
-            // For individual events, each "team" should have exactly 1 participant
-            foreach ($validated['teams'] as $team) {
-                if (count($team['participants']) > 1) {
-                    return back()->withErrors([
-                        'teams' => "Individual events can only have 1 participant per registration."
-                    ])->withInput();
-                }
-            }
-        }
-
-        DB::beginTransaction();
         try {
-            // Calculate total price
+            // Calculate total participants and price
             $totalParticipants = 0;
-            foreach ($validated['teams'] as $team) {
-                $totalParticipants += count($team['participants']);
+            foreach ($validated['teams'] as $teamData) {
+                $totalParticipants += count($teamData['participants']);
             }
             $totalPrice = $totalParticipants * $event->price_per_participant;
+
+            // Prepare data for Midtrans payment
+            $nameParts = explode(' ', $validated['guardian_name'], 2);
+            $firstName = $nameParts[0];
+            $lastName = $nameParts[1] ?? '';
+
+            // Generate temporary invoice number (we'll update it after saving)
+            $tempInvoiceNumber = 'TEMP-' . now()->format('YmdHis') . '-' . rand(1000, 9999);
+
+            $transaction_details = [
+                'order_id' => $tempInvoiceNumber,
+                'gross_amount' => (int) $totalPrice,
+            ];
+
+            $customer_details = [
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $validated['guardian_email'],
+                'phone' => $validated['guardian_phone'],
+            ];
+
+            $params = [
+                'transaction_details' => $transaction_details,
+                'customer_details' => $customer_details,
+            ];
+
+            // Try to get Snap token from Midtrans FIRST (before saving to database)
+            $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+            $serverKey = config('midtrans.server_key');
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Basic ' . base64_encode($serverKey . ':')
+            ]);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            
+            $result = json_decode($response, true);
+            
+            // Log the response
+            Log::info('Midtrans API Response (Pre-Registration)', [
+                'http_code' => $httpCode,
+                'response' => $result,
+            ]);
+            
+            // If payment initialization failed, don't save anything
+            if ($httpCode !== 201 && $httpCode !== 200) {
+                $errorMessage = $result['error_messages'][0] ?? $result['status_message'] ?? 'Unknown error from payment gateway';
+
+                if (str_contains(strtolower($errorMessage), 'email format is invalid')) {
+                    $errorMessage = 'There was an error registering. Please input valid data and try again, or contact us if the problem persists.';
+                }
+
+                Log::error('Midtrans API Error (Registration Aborted)', [
+                    'http_code' => $httpCode,
+                    'error' => $errorMessage,
+                    'params' => $params,
+                ]);
+                
+                return back()->withErrors(['error' => $errorMessage])->withInput();
+            }
+
+            // Payment initialization successful! Now save to database
+            DB::beginTransaction();
 
             // Create the registration
             $registration = EventRegistration::create([
@@ -68,7 +120,8 @@ class EventRegistrationController extends Controller
                 'payment_status' => 'pending',
             ]);
 
-            $registration->invoice_number = 'EVREG-' . now()->format('Ymd') . '-' . str_pad($registration->id, 4, '0', STR_PAD_LEFT);
+            // Generate proper invoice number with registration ID
+            $registration->invoice_number = 'EVREG-' . now()->setTimezone('Asia/Jakarta')->format('Ymd') . '-' . str_pad($registration->id, 4, '0', STR_PAD_LEFT);
             $registration->save();
 
             // Create teams and participants
@@ -90,10 +143,20 @@ class EventRegistrationController extends Controller
 
             DB::commit();
 
+            Log::info('Registration Created After Payment Init', [
+                'registration_id' => $registration->id,
+                'invoice' => $registration->invoice_number,
+            ]);
+
+            // Redirect to payment page with the Snap token and registration ID
             return redirect()->route('payment.show', $registration->id);
 
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Registration Error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return back()->withErrors([
                 'error' => 'There was an error registering. Please input valid data and try again, or contact us if the problem persists.'
             ])->withInput();

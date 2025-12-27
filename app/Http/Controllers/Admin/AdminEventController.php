@@ -9,10 +9,24 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminEventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::orderBy('date', 'desc')->paginate(10);
-        return view('admin.event.index', compact('events'));
+        $search = $request->input('search');
+        $query = Event::with('category')->orderBy('date', 'desc');
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhereHas('category', function($catQ) use ($search) {
+                      $catQ->where('name', 'like', '%' . $search . '%');
+                  })
+                  ->orWhere('location', 'like', '%' . $search . '%');
+            });
+        }
+
+        $events = $query->paginate(20)->withQueryString();
+
+        return view('admin.event.index', compact('events', 'search'));
     }
 
     public function create()
@@ -23,20 +37,24 @@ class AdminEventController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'event_category_id' => 'required|exists:event_categories,id',
             'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
-            'category' => 'required|string',
+            'registration_type' => 'required|in:individual,team',
+            'max_team_members' => 'nullable|integer|min:2',
+            'price_per_participant' => 'required|numeric|min:0',
             'date' => 'required|date',
             'last_registration_at' => 'nullable|date',
-            'location' => 'nullable|string',
-            'is_free' => 'nullable',
-            'price' => 'nullable|required_if:is_free,off|string',
-            'guardian_phone' => ['required', 'regex:/^\+?\d{9,15}$/'],
+            'location' => 'nullable|string|max:255',
+            'result' => 'nullable|string',
         ]);
 
-        $validated['price'] = $request->has('is_free') ? 'Free' : $request->price;
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images/EventResources', 'public');
+            $validated['image'] = $path;
+        }
 
-        // ... handle image upload, etc ...
         Event::create($validated);
 
         return redirect()->route('admin.events.index')->with('success', 'Event created!');
@@ -50,20 +68,27 @@ class AdminEventController extends Controller
     public function update(Request $request, Event $event)
     {
         $validated = $request->validate([
+            'event_category_id' => 'required|exists:event_categories,id',
             'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
-            'category' => 'required|string',
+            'registration_type' => 'required|in:individual,team',
+            'max_team_members' => 'nullable|integer|min:2',
+            'price_per_participant' => 'required|numeric|min:0',
             'date' => 'required|date',
             'last_registration_at' => 'nullable|date',
-            'location' => 'nullable|string',
-            'is_free' => 'nullable',
-            'price' => 'nullable|required_if:is_free,off|string',
-            'guardian_phone' => ['required', 'regex:/^\+?\d{9,15}$/'],
+            'location' => 'nullable|string|max:255',
+            'result' => 'nullable|string',
         ]);
 
-        $validated['price'] = $request->has('is_free') ? 'Free' : $request->price;
+        if ($request->hasFile('image')) {
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $path = $request->file('image')->store('images/EventResources', 'public');
+            $validated['image'] = $path;
+        }
 
-        // ... handle image upload, etc ...
         $event->update($validated);
 
         return redirect()->route('admin.events.index')->with('success', 'Event updated!');

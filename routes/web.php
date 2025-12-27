@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAlbumController;
 use App\Http\Controllers\Admin\AdminClassController;
+use App\Http\Controllers\Admin\AdminEventCategoryController;
 use App\Http\Controllers\Admin\AdminEventController;
 use App\Http\Controllers\Admin\AdminEventRegistrationController;
 use App\Http\Controllers\Admin\AdminLevelController;
@@ -51,6 +52,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('registrations', AdminRegistrationController::class)->only(['index', 'show', 'destroy']);
     Route::resource('events', AdminEventController::class);
     Route::resource('event_registrations', AdminEventRegistrationController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('event_categories', AdminEventCategoryController::class);
 });
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {

@@ -18,7 +18,7 @@ class PaymentController extends Controller
         $lastName = $nameParts[1] ?? '';
 
         $transaction_details = [
-            'order_id' => $registration->invoice_number,
+            'order_id' => $registration->invoice_number, // Now we have the proper invoice number
             'gross_amount' => (int) $registration->total_price,
         ];
 
@@ -34,7 +34,7 @@ class PaymentController extends Controller
             'customer_details' => $customer_details,
         ];
 
-        // Use direct cURL API call (bypasses buggy Midtrans SDK)
+        // Get Snap token with the proper invoice number
         try {
             $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
             $serverKey = config('midtrans.server_key');
@@ -58,8 +58,7 @@ class PaymentController extends Controller
             
             $result = json_decode($response, true);
             
-            // Log the response for debugging
-            Log::info('Midtrans API Response', [
+            Log::info('Midtrans API Response (Payment Page)', [
                 'http_code' => $httpCode,
                 'response' => $result,
             ]);
@@ -67,30 +66,30 @@ class PaymentController extends Controller
             if ($httpCode !== 201 && $httpCode !== 200) {
                 $errorMessage = $result['error_messages'][0] ?? $result['status_message'] ?? 'Unknown error from payment gateway';
 
-                // If the error is about email format, show a generic message
                 if (str_contains(strtolower($errorMessage), 'email format is invalid')) {
-                    $errorMessage = 'There was an error registering. Please input valid data and try again, or contact us if the problem persists.';
+                    $errorMessage = 'There was an error with your payment. Please contact support with invoice: ' . $registration->invoice_number;
                 }
 
-                Log::error('Midtrans API Error', [
+                Log::error('Midtrans API Error (Payment Page)', [
                     'http_code' => $httpCode,
                     'error' => $errorMessage,
-                    'params' => $params,
+                    'registration_id' => $registration->id,
                 ]);
-                return back()->withErrors(['error' => $errorMessage])->withInput();
+                
+                return back()->withErrors(['error' => $errorMessage]);
             }
             
             $snapToken = $result['token'];
             return view('payment', compact('snapToken', 'registration'));
             
         } catch (\Exception $e) {
-            Log::error('Payment Exception', [
+            Log::error('Payment Page Exception', [
                 'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
+                'registration_id' => $registration->id,
             ]);
             return back()->withErrors([
-                'error' => 'There was an error registering. Please input valid data and try again, or contact us if the problem persists.'
-            ])->withInput();
+                'error' => 'There was an error loading the payment page. Please contact support with invoice: ' . $registration->invoice_number
+            ]);
         }
     }
 

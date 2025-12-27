@@ -161,7 +161,7 @@
                     @if($event->result)
                         <div class="alert alert-info rounded-4" role="alert">
                             <h5 class="alert-heading"><i class="bi bi-trophy me-2"></i>Results</h5>
-                            <p class="mb-0">{{ $event->result }}</p>
+                            <p class="mb-0">{!! nl2br(e($event->result)) !!}</p>
                         </div>
                     @endif
 
@@ -305,6 +305,24 @@
                     @endif
                 </div>
             </div>
+        </div>
+    </div>
+
+    {{-- Contact Us Section --}}
+    <div class="container py-5 mt-5">
+        <div class="rounded-4 shadow-lg p-5 text-center" style="border: none;">
+            <h2 class="fw-bold mb-4" style="color: #2C3E50; font-size: 2rem;">
+                Need help or have questions?
+            </h2>
+            <p class="text-secondary mb-4 fs-5">
+                Contact our team via WhatsApp for assistance or more information about this event.
+            </p>
+            <a href="https://api.whatsapp.com/send/?phone=%2B6281234332110&text=Hi+COTHA%2C%0A%0AI have a question about the event: {{ $event->title }}&app_absent=0"
+               class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow"
+               style="background-color: #4fc3f7; border: none; color: white;">
+                <i class="bi bi-whatsapp me-2"></i>
+                Contact Us on WhatsApp
+            </a>
         </div>
     </div>
 </section>
