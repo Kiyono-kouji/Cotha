@@ -81,7 +81,7 @@
                         <dt class="col-sm-4 fw-semibold text-secondary">Coding Experience</dt>
                         <dd class="col-sm-8">{{ $registration->coding_experience }}</dd>
                         <dt class="col-sm-4 fw-semibold text-secondary">Submitted At</dt>
-                        <dd class="col-sm-8">{{ $registration->created_at->format('Y-m-d H:i') }}</dd>
+                        <dd class="col-sm-8">{{ $registration->created_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i') }}</dd>
                         <dt class="col-sm-4 fw-semibold text-secondary">Note</dt>
                         <dd class="col-sm-8">{{ $registration->note }}</dd>
                     </dl>

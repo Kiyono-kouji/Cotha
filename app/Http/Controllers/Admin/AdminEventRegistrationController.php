@@ -15,7 +15,8 @@ class AdminEventRegistrationController extends Controller
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function($q) use ($search) {
-                $q->where('guardian_name', 'like', "%$search%")
+                $q->where('invoice_number', 'like', "%$search%")
+                  ->orWhere('guardian_name', 'like', "%$search%")
                   ->orWhere('guardian_email', 'like', "%$search%")
                   ->orWhere('guardian_phone', 'like', "%$search%")
                   ->orWhereHas('event', function($q2) use ($search) {

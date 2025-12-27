@@ -36,12 +36,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::is('about') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ url('/about') }}">
-                                About
+                            <a class="nav-link {{ Request::is('events') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ route('events.index') }}">
+                                Events
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('events.index') }}" class="nav-link">Events</a>
+                            <a class="nav-link {{ Request::is('about') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ url('/about') }}">
+                                About
+                            </a>
                         </li>
                         @auth
                             @if(auth()->user()->isAdmin ?? false)

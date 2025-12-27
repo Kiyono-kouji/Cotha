@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('event_registrations', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_number')->unique()->nullable();
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
             $table->string('guardian_name');
             $table->string('guardian_email');

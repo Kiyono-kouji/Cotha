@@ -35,6 +35,8 @@
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <div class="card shadow border-0 rounded-4 p-4">
                     <dl class="row mb-0">
+                        <dt class="col-sm-4 fw-semibold text-secondary">Invoice Number</dt>
+                        <dd class="col-sm-8">{{ $registration->invoice_number }}</dd>
                         <dt class="col-sm-4 fw-semibold text-secondary">Guardian Name</dt>
                         <dd class="col-sm-8">{{ $registration->guardian_name }}</dd>
                         <dt class="col-sm-4 fw-semibold text-secondary">Guardian Phone</dt>
@@ -58,7 +60,7 @@
                             @endif
                         </dd>
                         <dt class="col-sm-4 fw-semibold text-secondary">Registered At</dt>
-                        <dd class="col-sm-8">{{ $registration->created_at->format('Y-m-d H:i') }}</dd>
+                        <dd class="col-sm-8">{{ $registration->created_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i') }}</dd>
                     </dl>
                     <hr>
                     <h5 class="fw-bold mb-3">Teams & Members</h5>

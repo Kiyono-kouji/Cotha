@@ -68,6 +68,9 @@ class EventRegistrationController extends Controller
                 'payment_status' => 'pending',
             ]);
 
+            $registration->invoice_number = 'EVREG-' . now()->format('Ymd') . '-' . str_pad($registration->id, 4, '0', STR_PAD_LEFT);
+            $registration->save();
+
             // Create teams and participants
             foreach ($validated['teams'] as $teamData) {
                 $team = EventTeam::create([
@@ -87,15 +90,13 @@ class EventRegistrationController extends Controller
 
             DB::commit();
 
-            // For now, redirect with success message
-            // Later you can integrate Midtrans payment here
-            return redirect()
-                ->route('events.show', $event)
-                ->with('success', 'Registration successful! Total: Rp ' . number_format($totalPrice, 0, ',', '.'));
+            return redirect()->route('payment.show', $registration->id);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Registration failed. Please try again.'])->withInput();
+            return back()->withErrors([
+                'error' => 'There was an error registering. Please input valid data and try again, or contact us if the problem persists.'
+            ])->withInput();
         }
     }
 }

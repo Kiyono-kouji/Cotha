@@ -61,7 +61,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
 Route::get('/register-trial', [PublicRegistrationController::class, 'show'])->name('registertrial');
 Route::post('/register-class', [PublicRegistrationController::class, 'store'])->name('public.register-class');
-Route::get('/payment', [PaymentController::class, 'payment']);
-Route::post('/midtrans/notification', [EventController::class, 'midtransNotification']);
+// Route::get('/payment', [PaymentController::class, 'payment']);
+Route::post('/midtrans/notification', [PaymentController::class, 'notification'])->name('midtrans.notification');
+Route::get('/payment/{registration}', [PaymentController::class, 'show'])->name('payment.show');
     
 require __DIR__.'/auth.php';

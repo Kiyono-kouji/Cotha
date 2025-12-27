@@ -66,14 +66,16 @@
         @endif
 
         @if($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show rounded-4 shadow" role="alert">
-                <i class="bi bi-exclamation-triangle me-2"></i>
-                <ul class="mb-0">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div class="alert alert-danger alert-dismissible fade show rounded-4 shadow d-flex align-items-center" role="alert">
+                <i class="bi bi-exclamation-triangle me-3 fs-3 flex-shrink-0"></i>
+                <div>
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
             </div>
         @endif
 

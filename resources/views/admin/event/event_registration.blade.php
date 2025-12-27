@@ -81,6 +81,7 @@
             <table class="table table-bordered table-striped align-middle mb-0">
                 <thead class="table-light">
                     <tr>
+                        <th>Invoice Number</th>
                         <th>Guardian Name</th>
                         <th>Event</th>
                         <th>Teams</th>
@@ -93,6 +94,7 @@
                 <tbody>
                     @forelse($registrations as $reg)
                     <tr>
+                        <td>{{ $reg->invoice_number }}</td>
                         <td>{{ $reg->guardian_name }}</td>
                         <td>{{ $reg->event ? $reg->event->title : '-' }}</td>
                         <td>{{ $reg->total_teams }}</td>
@@ -106,7 +108,7 @@
                                 <span class="badge bg-warning text-dark">Pending</span>
                             @endif
                         </td>
-                        <td>{{ $reg->created_at->format('Y-m-d H:i') }}</td>
+                        <td>{{ $reg->created_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i') }}</td>
                         <td>
                             <a href="{{ route('admin.event_registrations.show', $reg->id) }}" class="btn btn-sm rounded-pill" style="background: #17c7e0; color: white;">
                                 <i class="bi bi-eye"></i> View
@@ -121,7 +123,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="text-center text-muted">No event registrations found.</td>
+                        <td colspan="8" class="text-center text-muted">No event registrations found.</td>
                     </tr>
                     @endforelse
                 </tbody>
