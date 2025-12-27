@@ -39,6 +39,12 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])->name('events.register');
 
+Route::get('/register-trial', [PublicRegistrationController::class, 'show'])->name('registertrial');
+Route::post('/register-class', [PublicRegistrationController::class, 'store'])->name('public.register-class');
+// Route::get('/payment', [PaymentController::class, 'payment']);
+Route::post('/midtrans/notification', [PaymentController::class, 'notification'])->name('midtrans.notification');
+Route::get('/payment/{registration}', [PaymentController::class, 'show'])->name('payment.show');
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('levels', AdminLevelController::class);
@@ -61,10 +67,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::patch('projects/{project}/toggle-active', [AdminProjectController::class, 'toggleActive'])->name('projects.toggleActive');
 });
 
-Route::get('/register-trial', [PublicRegistrationController::class, 'show'])->name('registertrial');
-Route::post('/register-class', [PublicRegistrationController::class, 'store'])->name('public.register-class');
-// Route::get('/payment', [PaymentController::class, 'payment']);
-Route::post('/midtrans/notification', [PaymentController::class, 'notification'])->name('midtrans.notification');
-Route::get('/payment/{registration}', [PaymentController::class, 'show'])->name('payment.show');
+
     
 require __DIR__.'/auth.php';

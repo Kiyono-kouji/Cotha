@@ -84,14 +84,13 @@
             <div class="col-12 col-lg-7">
                 <div class="card border-0 shadow-lg rounded-4 p-4 mb-4">
                     {{-- Event Image --}}
-                    @if($event->image)
-                        <div class="mb-4 rounded-4 overflow-hidden">
-                            <img src="{{ asset('storage/' . $event->image) }}" 
-                                 alt="{{ $event->title }}" 
-                                 class="w-100"
-                                 style="max-height: 400px; object-fit: cover;">
-                        </div>
-                    @endif
+                    <div class="mb-4 rounded-4 overflow-hidden">
+                        <img src="{{ $event->image ? asset('storage/' . $event->image) : asset('images/default_project.png') }}"
+                             alt="{{ $event->title }}"
+                             class="w-100"
+                             style="max-height: 400px; object-fit: cover;"
+                             onerror="this.onerror=null;this.src='{{ asset('images/default_project.png') }}';">
+                    </div>
 
                     <h3 class="fw-bold mb-3" style="color: #2C3E50;">
                         <i class="bi bi-info-circle me-2" style="color: #4fc3f7;"></i>Event Details
