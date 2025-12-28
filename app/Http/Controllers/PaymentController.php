@@ -11,86 +11,11 @@ class PaymentController extends Controller
     public function show($registrationId)
     {
         $registration = EventRegistration::with('event')->findOrFail($registrationId);
-
-        // Split guardian name into first and last name
-        $nameParts = explode(' ', $registration->guardian_name, 2);
-        $firstName = $nameParts[0];
-        $lastName = $nameParts[1] ?? '';
-
-        $transaction_details = [
-            'order_id' => $registration->invoice_number, // Now we have the proper invoice number
-            'gross_amount' => (int) $registration->total_price,
-        ];
-
-        $customer_details = [
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $registration->guardian_email,
-            'phone' => $registration->guardian_phone,
-        ];
-
-        $params = [
-            'transaction_details' => $transaction_details,
-            'customer_details' => $customer_details,
-        ];
-
-        // Get Snap token with the proper invoice number
-        try {
-            $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
-            $serverKey = config('midtrans.server_key');
-            
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json',
-                'Accept: application/json',
-                'Authorization: Basic ' . base64_encode($serverKey . ':')
-            ]);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-            
-            $result = json_decode($response, true);
-            
-            Log::info('Midtrans API Response (Payment Page)', [
-                'http_code' => $httpCode,
-                'response' => $result,
-            ]);
-            
-            if ($httpCode !== 201 && $httpCode !== 200) {
-                $errorMessage = $result['error_messages'][0] ?? $result['status_message'] ?? 'Unknown error from payment gateway';
-
-                if (str_contains(strtolower($errorMessage), 'email format is invalid')) {
-                    $errorMessage = 'There was an error with your payment. Please contact support with invoice: ' . $registration->invoice_number;
-                }
-
-                Log::error('Midtrans API Error (Payment Page)', [
-                    'http_code' => $httpCode,
-                    'error' => $errorMessage,
-                    'registration_id' => $registration->id,
-                ]);
-                
-                return back()->withErrors(['error' => $errorMessage]);
-            }
-            
-            $snapToken = $result['token'];
-            return view('payment', compact('snapToken', 'registration'));
-            
-        } catch (\Exception $e) {
-            Log::error('Payment Page Exception', [
-                'message' => $e->getMessage(),
-                'registration_id' => $registration->id,
-            ]);
-            return back()->withErrors([
-                'error' => 'There was an error loading the payment page. Please contact support with invoice: ' . $registration->invoice_number
-            ]);
-        }
+        
+        // Use the stored token
+        $snapToken = $registration->payment_token;
+        
+        return view('payment', compact('snapToken', 'registration'));
     }
 
     /**

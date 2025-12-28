@@ -163,10 +163,6 @@
             onError: function(result){
                 console.log('Payment error:', result);
                 alert("Payment failed. Please try again or contact support.");
-            },
-            onClose: function(){
-                console.log('Payment popup closed');
-                alert('You closed the payment window. Your registration is saved with invoice: {{ $registration->invoice_number }}');
             }
         });
     };

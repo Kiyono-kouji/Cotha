@@ -141,6 +141,11 @@ class EventRegistrationController extends Controller
                 }
             }
 
+            // Get the Snap token from the result
+            $snapToken = $result['token'];
+            $registration->payment_token = $snapToken;
+            $registration->save();
+
             DB::commit();
 
             Log::info('Registration Created After Payment Init', [
