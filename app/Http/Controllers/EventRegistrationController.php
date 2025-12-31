@@ -27,15 +27,6 @@ class EventRegistrationController extends Controller
 
         try {
             DB::beginTransaction();
-
-            // Generate the FINAL invoice number FIRST
-            $lastRegistration = EventRegistration::whereDate('created_at', today())
-                ->orderBy('id', 'desc')
-                ->first();
-            
-            $sequenceNumber = $lastRegistration 
-                ? (intval(substr($lastRegistration->invoice_number, -4)) + 1) 
-                : 1;
             
             // Generate truly unique invoice with microseconds
             $invoiceNumber = 'EVREG-' . now()->format('YmdHis') . '-' . substr(uniqid(), -4);
@@ -52,7 +43,7 @@ class EventRegistrationController extends Controller
 
             // Prepare Midtrans params with FINAL invoice number
             $transaction_details = [
-                'order_id' => $invoiceNumber,  // USE FINAL INVOICE, NOT TEMP
+                'order_id' => $invoiceNumber,
                 'gross_amount' => (int) $totalPrice,
             ];
 
