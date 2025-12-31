@@ -98,8 +98,8 @@
                     <input type="number" name="max_team_members" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" min="2" max="20" value="{{ old('max_team_members', $event->max_team_members) }}">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Price per Participant (Rp) <span class="text-danger">*</span></label>
-                    <input type="number" name="price_per_participant" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" min="0" value="{{ old('price_per_participant', $event->price_per_participant) }}" required>
+                    <label class="form-label fw-semibold">Price per Team (Rp) <span class="text-danger">*</span></label>
+                    <input type="number" name="price_per_team" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" min="0" value="{{ old('price_per_team', $event->price_per_team) }}" required>
                     <small class="text-muted">Enter 0 for free events.</small>
                 </div>
                 <div class="mb-3">

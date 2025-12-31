@@ -148,10 +148,10 @@
                             <div class="p-3 rounded-3" style="background: #f8f9fa;">
                                 <div class="d-flex align-items-center gap-2 mb-1">
                                     <i class="bi bi-cash-coin" style="color: #4fc3f7; font-size: 1.2rem;"></i>
-                                    <span class="fw-semibold" style="color: #2C3E50;">Price per Participant</span>
+                                    <span class="fw-semibold" style="color: #2C3E50;">Price per Team</span>
                                 </div>
                                 <p class="mb-0 fw-bold" style="color: {{ $event->isFree() ? '#4caf50' : '#FF85A2' }}; font-size: 1.1rem;">
-                                    {{ $event->isFree() ? 'FREE' : 'Rp ' . number_format($event->price_per_participant, 0, ',', '.') }}
+                                    {{ $event->isFree() ? 'FREE' : 'Rp ' . number_format($event->price_per_team, 0, ',', '.') }}
                                 </p>
                             </div>
                         </div>
@@ -285,7 +285,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="mb-1">Estimated Total</h6>
-                                        <small id="priceBreakdown">0 participants × Rp {{ number_format($event->price_per_participant, 0, ',', '.') }}</small>
+                                        <small id="priceBreakdown">0 teams × Rp {{ number_format($event->price_per_team, 0, ',', '.') }}</small>
                                     </div>
                                     <h4 class="mb-0 fw-bold" id="totalPrice">Rp 0</h4>
                                 </div>
@@ -330,7 +330,7 @@
 let teamIndex = 0;
 const maxTeamMembers = {{ $event->max_team_members ?? 1 }};
 const isTeamBased = {{ $event->isTeamBased() ? 'true' : 'false' }};
-const pricePerParticipant = {{ $event->price_per_participant }};
+const pricePerTeam = {{ $event->price_per_team }};
 
 function addTeam() {
     teamIndex++;
@@ -413,11 +413,10 @@ function updateParticipantNumbers(container) {
 
 function updatePriceCalculation() {
     const teams = document.querySelectorAll('.team-item').length;
-    const participants = document.querySelectorAll('.participant-item').length;
-    const total = participants * pricePerParticipant;
+    const total = teams * pricePerTeam;
     
     document.getElementById('priceBreakdown').textContent =
-        `${participants} participant${participants !== 1 ? 's' : ''} × Rp ${pricePerParticipant.toLocaleString('id-ID')}`;
+        `${teams} team${teams !== 1 ? 's' : ''} × Rp ${pricePerTeam.toLocaleString('id-ID')}`;
     document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString('id-ID')}`;
 }
 

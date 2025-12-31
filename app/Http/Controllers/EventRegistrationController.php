@@ -14,37 +14,45 @@ class EventRegistrationController extends Controller
 {
     public function store(Request $request, Event $event)
     {
-        // Validate the request
         $validated = $request->validate([
             'guardian_name' => 'required|string|max:255',
-            'guardian_email' => 'required|email|max:255',
-            'guardian_phone' => ['required', 'regex:/^\+?\d{9,15}$/'],
+            'guardian_email' => 'required|email',
+            'guardian_phone' => 'required|string',
             'teams' => 'required|array|min:1',
-            'teams.*.team_name' => 'required|string|max:255',
             'teams.*.participants' => 'required|array|min:1',
             'teams.*.participants.*.name' => 'required|string|max:255',
-            'teams.*.participants.*.email' => 'required|email|max:255',
-            'teams.*.participants.*.school' => 'required|string|max:255',
+            'teams.*.participants.*.email' => 'nullable|email',
+            'teams.*.participants.*.school' => 'nullable|string|max:255',
         ]);
 
         try {
-            // Calculate total participants and price
-            $totalParticipants = 0;
-            foreach ($validated['teams'] as $teamData) {
-                $totalParticipants += count($teamData['participants']);
-            }
-            $totalPrice = $totalParticipants * $event->price_per_participant;
+            DB::beginTransaction();
 
-            // Prepare data for Midtrans payment
-            $nameParts = explode(' ', $validated['guardian_name'], 2);
+            // Generate the FINAL invoice number FIRST
+            $lastRegistration = EventRegistration::whereDate('created_at', today())
+                ->orderBy('id', 'desc')
+                ->first();
+            
+            $sequenceNumber = $lastRegistration 
+                ? (intval(substr($lastRegistration->invoice_number, -4)) + 1) 
+                : 1;
+            
+            // Generate truly unique invoice with microseconds
+            $invoiceNumber = 'EVREG-' . now()->format('YmdHis') . '-' . substr(uniqid(), -4);
+            // Example: EVREG-20251231142530-a3f2
+
+            // Calculate price
+            $totalTeams = count($validated['teams']);
+            $totalPrice = $totalTeams * $event->price_per_team;
+
+            // Split guardian name
+            $nameParts = explode(' ', trim($validated['guardian_name']), 2);
             $firstName = $nameParts[0];
             $lastName = $nameParts[1] ?? '';
 
-            // Generate temporary invoice number (we'll update it after saving)
-            $tempInvoiceNumber = 'TEMP-' . now()->format('YmdHis') . '-' . rand(1000, 9999);
-
+            // Prepare Midtrans params with FINAL invoice number
             $transaction_details = [
-                'order_id' => $tempInvoiceNumber,
+                'order_id' => $invoiceNumber,  // USE FINAL INVOICE, NOT TEMP
                 'gross_amount' => (int) $totalPrice,
             ];
 
@@ -60,7 +68,7 @@ class EventRegistrationController extends Controller
                 'customer_details' => $customer_details,
             ];
 
-            // Try to get Snap token from Midtrans FIRST (before saving to database)
+            // Get Snap token from Midtrans
             $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
             $serverKey = config('midtrans.server_key');
             
@@ -83,7 +91,6 @@ class EventRegistrationController extends Controller
             
             $result = json_decode($response, true);
             
-            // Log the response
             Log::info('Midtrans API Response (Pre-Registration)', [
                 'http_code' => $httpCode,
                 'response' => $result,
@@ -102,58 +109,33 @@ class EventRegistrationController extends Controller
                     'error' => $errorMessage,
                     'params' => $params,
                 ]);
-                
-                return back()->withErrors(['error' => $errorMessage])->withInput();
+
+                DB::rollBack();
+                return redirect()->back()->withErrors(['error' => $errorMessage])->withInput();
             }
 
-            // Payment initialization successful! Now save to database
-            DB::beginTransaction();
+            $snapToken = $result['token'];
 
-            // Create the registration
+            // Now save the registration with the FINAL invoice number
             $registration = EventRegistration::create([
                 'event_id' => $event->id,
+                'invoice_number' => $invoiceNumber,  // Make sure this line exists
                 'guardian_name' => $validated['guardian_name'],
                 'guardian_email' => $validated['guardian_email'],
                 'guardian_phone' => $validated['guardian_phone'],
-                'total_teams' => count($validated['teams']),
+                'total_teams' => $totalTeams,
                 'total_price' => $totalPrice,
                 'payment_status' => 'pending',
+                'payment_token' => $snapToken,
             ]);
-
-            // Generate proper invoice number with registration ID
-            $registration->invoice_number = 'EVREG-' . now()->setTimezone('Asia/Jakarta')->format('Ymd') . '-' . str_pad($registration->id, 4, '0', STR_PAD_LEFT);
-            $registration->save();
-
-            // Create teams and participants
-            foreach ($validated['teams'] as $teamData) {
-                $team = EventTeam::create([
-                    'event_registration_id' => $registration->id,
-                    'team_name' => $teamData['team_name'],
-                ]);
-
-                foreach ($teamData['participants'] as $participantData) {
-                    EventParticipant::create([
-                        'event_team_id' => $team->id,
-                        'name' => $participantData['name'],
-                        'email' => $participantData['email'],
-                        'school' => $participantData['school'],
-                    ]);
-                }
-            }
-
-            // Get the Snap token from the result
-            $snapToken = $result['token'];
-            $registration->payment_token = $snapToken;
-            $registration->save();
-
-            DB::commit();
 
             Log::info('Registration Created After Payment Init', [
                 'registration_id' => $registration->id,
                 'invoice' => $registration->invoice_number,
             ]);
 
-            // Redirect to payment page with the Snap token and registration ID
+            DB::commit();
+
             return redirect()->route('payment.show', $registration->id);
 
         } catch (\Exception $e) {
@@ -162,9 +144,7 @@ class EventRegistrationController extends Controller
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            return back()->withErrors([
-                'error' => 'There was an error registering. Please input valid data and try again, or contact us if the problem persists.'
-            ])->withInput();
+            return redirect()->back()->withErrors(['error' => 'An error occurred during registration. Please try again.'])->withInput();
         }
     }
 }

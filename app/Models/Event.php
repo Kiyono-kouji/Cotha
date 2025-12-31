@@ -14,7 +14,7 @@ class Event extends Model
         'image',
         'registration_type',
         'max_team_members',
-        'price_per_participant',
+        'price_per_team',
         'date',
         'last_registration_at',
         'location',
@@ -24,7 +24,7 @@ class Event extends Model
     protected $casts = [
         'date' => 'datetime',
         'last_registration_at' => 'datetime',
-        'price_per_participant' => 'decimal:2',
+        'price_per_team' => 'decimal:2',
         'max_team_members' => 'integer'
     ];
 
@@ -50,6 +50,6 @@ class Event extends Model
 
     public function isFree()
     {
-        return $this->price_per_participant == 0;
+        return $this->price_per_team == 0;
     }
 }

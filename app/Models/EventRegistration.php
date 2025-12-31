@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EventRegistration extends Model
 {
     protected $fillable = [
+        'invoice_number',
         'event_id',
         'guardian_name',
         'guardian_email',
@@ -14,7 +15,7 @@ class EventRegistration extends Model
         'total_teams',
         'total_price',
         'payment_status',
-        'payment_token'
+        'payment_token',
     ];
 
     protected $casts = [

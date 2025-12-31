@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->enum('registration_type', ['individual', 'team'])->default('individual');
             $table->integer('max_team_members')->nullable();
-            $table->decimal('price_per_participant', 10, 2)->default(0);
+            $table->decimal('price_per_team', 10, 2)->default(0);
             $table->dateTime('date');
             $table->dateTime('last_registration_at')->nullable();
             $table->string('location')->nullable();

@@ -88,6 +88,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Active</th>
+                        <th>Price/Team</th> <!-- Changed header -->
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -101,6 +102,13 @@
                                 <span class="badge bg-success">Active</span>
                             @else
                                 <span class="badge bg-secondary">Inactive</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($event->price_per_team == 0)
+                                <span class="badge rounded-pill px-3 py-2" style="background: #4caf50; color: white;">FREE</span>
+                            @else
+                                Rp {{ number_format($event->price_per_team, 0, ',', '.') }}
                             @endif
                         </td>
                         <td>
@@ -118,7 +126,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center text-muted">No categories found.</td>
+                        <td colspan="5" class="text-center text-muted">No categories found.</td>
                     </tr>
                     @endforelse
                 </tbody>
