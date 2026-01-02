@@ -59,6 +59,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('events', AdminEventController::class);
     Route::resource('event_registrations', AdminEventRegistrationController::class)->only(['index', 'show', 'destroy']);
     Route::resource('event_categories', AdminEventCategoryController::class);
+    Route::resource('articles', \App\Http\Controllers\Admin\AdminArticleController::class, [
+        'as' => 'admin'
+    ]);
 });
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -67,6 +70,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::patch('projects/{project}/toggle-active', [AdminProjectController::class, 'toggleActive'])->name('projects.toggleActive');
 });
 
+Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
 
-    
 require __DIR__.'/auth.php';

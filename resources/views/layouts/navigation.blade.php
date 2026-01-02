@@ -45,6 +45,11 @@
                                 About
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('articles*') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ route('articles.index') }}">
+                                Articles
+                            </a>
+                        </li>
                         @auth
                             @if(auth()->user()->isAdmin ?? false)
                                 <li class="nav-item">
