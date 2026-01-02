@@ -113,13 +113,22 @@
                     <textarea name="result" class="form-control rounded-3 border-2" rows="2" style="border-color: #4fc3f7;">{{ old('result') }}</textarea>
                     <small class="text-muted">Fill this after the event if you want to display winners/results.</small>
                 </div>
-                <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
-                    <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow"
-                            style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); border: none; color: white;">
-                        <i class="bi bi-check-circle me-2"></i>Create Event
+                <div class="mb-3 form-check">
+                    <input type="checkbox" name="active" class="form-check-input" id="activeCheck" checked>
+                    <label class="form-check-label fw-semibold" for="activeCheck" style="color:#2C3E50;">Active</label>
+                </div>
+                {{-- Add extra padding at the bottom of the card --}}
+                <div class="pb-5"></div>
+
+                {{-- Action Buttons --}}
+                <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3"
+                     style="padding-bottom: 40px;">
+                    <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
+                            style="background: #4fc3f7; border: none; color: white;">
+                        <i class="bi bi-save me-2"></i>Save Article
                     </button>
-                    <a href="{{ route('admin.events.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-4 shadow"
-                       style="background: #e3f2fd; color: #1976D2; border: none;">
+                    <a href="{{ route('admin.articles.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
+                       style="background: #FF85A2; border: none; color: white;">
                         Cancel
                     </a>
                 </div>

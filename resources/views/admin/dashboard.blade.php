@@ -188,6 +188,18 @@
                     </div>
                 </a>
             </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="{{ route('admin.articles.index') }}" class="card border-0 shadow h-100 text-decoration-none" style="border-radius: 20px; background: white;">
+                    <div class="card-body text-center py-5 d-flex flex-column align-items-center justify-content-center h-100">
+                        <div class="mb-3 d-flex align-items-center justify-content-center mx-auto"
+                             style="width: 64px; height: 64px; border-radius: 50%; background: #ffb74d;">
+                            <i class="bi bi-journal-text fs-2 text-white"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2" style="color: #2C3E50;">Manage Articles</h5>
+                        <p class="text-secondary mb-0">Create, edit, and organize articles or blog posts.</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </section>

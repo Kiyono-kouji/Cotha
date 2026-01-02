@@ -8,10 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::latest()->paginate(15);
-        return view('admin.articles.index', compact('articles'));
+        $search = $request->input('search');
+        $query = Article::query()->orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where('headline', 'like', '%' . $search . '%')
+                  ->orWhere('body', 'like', '%' . $search . '%');
+        }
+
+        $articles = $query->paginate(10)->withQueryString();
+
+        return view('admin.articles.index', compact('articles', 'search'));
     }
 
     public function create()
@@ -23,23 +32,36 @@ class AdminArticleController extends Controller
     {
         $validated = $request->validate([
             'headline' => 'required|string|max:255',
-            'body' => 'required|string',
             'image1' => 'nullable|image|max:2048',
             'image2' => 'nullable|image|max:2048',
+            'thumbnail' => 'nullable|image|max:2048',
+            'body' => 'required|string',
             'active' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('image1')) {
-            $validated['image1'] = $request->file('image1')->store('images/Articles', 'public');
+            $path = $request->file('image1')->store('images/Articles', 'public');
+            $validated['image1'] = basename($path);
         }
+
         if ($request->hasFile('image2')) {
-            $validated['image2'] = $request->file('image2')->store('images/Articles', 'public');
+            $path = $request->file('image2')->store('images/Articles', 'public');
+            $validated['image2'] = basename($path);
         }
+
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('images/Articles', 'public');
+            $validated['thumbnail'] = basename($path);
+        } elseif (!empty($validated['image1'])) {
+            // fallback to Image 1 if no thumbnail provided
+            $validated['thumbnail'] = $validated['image1'];
+        }
+
         $validated['active'] = $request->boolean('active');
 
         Article::create($validated);
 
-        return redirect()->route('admin.articles.index')->with('success', 'Article created!');
+        return redirect()->route('admin.articles.index')->with('success', 'Article created successfully.');
     }
 
     public function edit($id)
@@ -54,33 +76,61 @@ class AdminArticleController extends Controller
 
         $validated = $request->validate([
             'headline' => 'required|string|max:255',
-            'body' => 'required|string',
             'image1' => 'nullable|image|max:2048',
             'image2' => 'nullable|image|max:2048',
+            'thumbnail' => 'nullable|image|max:2048',
+            'body' => 'required|string',
             'active' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('image1')) {
-            if ($article->image1) Storage::disk('public')->delete($article->image1);
-            $validated['image1'] = $request->file('image1')->store('images/Articles', 'public');
+            if ($article->image1) {
+                Storage::disk('public')->delete('images/Articles/' . $article->image1);
+            }
+            $path = $request->file('image1')->store('images/Articles', 'public');
+            $validated['image1'] = basename($path);
         }
+
         if ($request->hasFile('image2')) {
-            if ($article->image2) Storage::disk('public')->delete($article->image2);
-            $validated['image2'] = $request->file('image2')->store('images/Articles', 'public');
+            if ($article->image2) {
+                Storage::disk('public')->delete('images/Articles/' . $article->image2);
+            }
+            $path = $request->file('image2')->store('images/Articles', 'public');
+            $validated['image2'] = basename($path);
         }
+
+        if ($request->hasFile('thumbnail')) {
+            if ($article->thumbnail) {
+                Storage::disk('public')->delete('images/Articles/' . $article->thumbnail);
+            }
+            $path = $request->file('thumbnail')->store('images/Articles', 'public');
+            $validated['thumbnail'] = basename($path);
+        } elseif (!$article->thumbnail) {
+            // ensure fallback if no thumbnail yet
+            $validated['thumbnail'] = $validated['image1'] ?? $article->image1;
+        }
+
         $validated['active'] = $request->boolean('active');
 
         $article->update($validated);
 
-        return redirect()->route('admin.articles.index')->with('success', 'Article updated!');
+        return redirect()->route('admin.articles.index')->with('success', 'Article updated successfully.');
     }
 
     public function destroy($id)
     {
         $article = Article::findOrFail($id);
-        if ($article->image1) Storage::disk('public')->delete($article->image1);
-        if ($article->image2) Storage::disk('public')->delete($article->image2);
+
+        if ($article->image1) {
+            Storage::disk('public')->delete('images/Articles/' . $article->image1);
+        }
+
+        if ($article->image2) {
+            Storage::disk('public')->delete('images/Articles/' . $article->image2);
+        }
+
         $article->delete();
-        return redirect()->route('admin.articles.index')->with('success', 'Article deleted!');
+
+        return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully.');
     }
 }

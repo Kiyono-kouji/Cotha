@@ -55,13 +55,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('albums', AdminAlbumController::class);
     Route::resource('media', AdminMediaController::class);
     Route::resource('partners', AdminPartnerController::class);
+    Route::resource('articles', \App\Http\Controllers\Admin\AdminArticleController::class);
     Route::resource('registrations', AdminRegistrationController::class)->only(['index', 'show', 'destroy']);
     Route::resource('events', AdminEventController::class);
     Route::resource('event_registrations', AdminEventRegistrationController::class)->only(['index', 'show', 'destroy']);
     Route::resource('event_categories', AdminEventCategoryController::class);
-    Route::resource('articles', \App\Http\Controllers\Admin\AdminArticleController::class, [
-        'as' => 'admin'
-    ]);
 });
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {

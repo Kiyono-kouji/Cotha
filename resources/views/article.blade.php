@@ -42,21 +42,40 @@
         @forelse($articles as $article)
         <div class="col-12 col-md-6 col-lg-4">
             <div class="card shadow rounded-4 h-100 tilt-card fade-in-up" style="background: white; border-radius: 20px;">
-                @if($article->image1 || $article->image2)
-                <div class="d-flex flex-column align-items-center pt-3">
-                    @if($article->image1)
-                        <img src="{{ asset('storage/' . $article->image1) }}" alt="Image 1" class="mb-2" style="max-width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px;">
-                    @endif
-                    @if($article->image2)
-                        <img src="{{ asset('storage/' . $article->image2) }}" alt="Image 2" class="mb-2" style="max-width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px;">
-                    @endif
+                {{-- Thumbnail with fallback to Image 1 and default image; fixed height to avoid burying content --}}
+                @php
+                    $thumb = $article->thumbnail ?: $article->image1;
+                @endphp
+                <div class="position-relative rounded-4 overflow-hidden" style="height: 220px;">
+                    <img
+                        src="{{ $thumb ? asset('storage/images/Articles/' . $thumb) : asset('images/default_project.png') }}"
+                        alt="{{ $article->headline }}"
+                        class="w-100 h-100"
+                        style="object-fit: cover; display:block;"
+                        loading="lazy"
+                        onerror="this.onerror=null;this.src='{{ asset('images/default_project.png') }}';">
+
+                    <!-- created date badge -->
+                    <div class="position-absolute top-0 start-0 m-2">
+                        <span class="badge rounded-pill px-3 py-2" style="background: rgba(0,0,0,0.6); color:#fff;">
+                            {{ \Carbon\Carbon::parse($article->created_at)->format('M j, Y') }}
+                        </span>
+                    </div>
                 </div>
-                @endif
+
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title fw-bold" style="color: #2C3E50;">{{ $article->headline }}</h5>
-                    <div class="card-text mb-2" style="white-space: pre-line; color: #555;">{{ \Illuminate\Support\Str::limit($article->body, 120) }}</div>
-                    <div class="mt-auto">
-                        <a href="{{ route('articles.show', $article->id) }}" class="btn btn-sm rounded-pill shake" style="background: #4fc3f7; color: white;">Read More</a>
+                    <div class="card-text mb-3" style="white-space: pre-line; color: #555;">
+                        {{ \Illuminate\Support\Str::limit($article->body, 120) }}
+                    </div>
+
+                    <!-- keep the button visible at the bottom -->
+                    <div class="mt-auto d-flex justify-content-end">
+                        <a href="{{ route('articles.show', $article->id) }}"
+                           class="btn btn-sm rounded-pill"
+                           style="background: #4fc3f7; color: white;">
+                           Read More
+                        </a>
                     </div>
                 </div>
             </div>
