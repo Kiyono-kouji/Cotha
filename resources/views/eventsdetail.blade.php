@@ -158,9 +158,28 @@
                     </div>
 
                     @if($event->result)
-                        <div class="alert alert-info rounded-4" role="alert">
-                            <h5 class="alert-heading"><i class="bi bi-trophy me-2"></i>Results</h5>
-                            <p class="mb-0">{!! nl2br(e($event->result)) !!}</p>
+                        <div class="mb-4 p-4 rounded-4 shadow" style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%);">
+                            {{-- Results header --}}
+                            <div class="text-center mb-4">
+                                <i class="bi bi-trophy-fill text-white mb-3" style="font-size: 3rem;"></i>
+                                <h4 class="text-white fw-bold mb-2" style="font-size: 1.6rem;">
+                                    Results
+                                </h4>
+                            </div>
+                            
+                            {{-- Results content --}}
+                            <div class="bg-white rounded-3 p-4">
+                                <div style="color: #2C3E50; line-height: 1.8; font-size: 1rem;">
+                                    {!! nl2br(e($event->result)) !!}
+                                </div>
+                            </div>
+                            
+                            {{-- Congratulations message --}}
+                            <div class="text-center mt-3">
+                                <p class="text-white mb-0 fw-semibold">
+                                    <i class="bi bi-award me-2"></i>Congratulations to all participants!
+                                </p>
+                            </div>
                         </div>
                     @endif
 
