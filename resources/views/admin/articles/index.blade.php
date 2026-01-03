@@ -15,7 +15,7 @@
     </div>
 
     {{-- Hero Section with Banner Image Background --}}
-    <div class="container-fluid py-5 position-relative" style="min-height: 320px;">
+    <div class="container-fluid py-5 position-relative" style="min-height: 420px;">
         <div style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;">
             <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
                  alt="Admin Banner"
