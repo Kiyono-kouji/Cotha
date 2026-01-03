@@ -129,8 +129,53 @@ class AdminArticleController extends Controller
             Storage::disk('public')->delete('images/Articles/' . $article->image2);
         }
 
+        if ($article->thumbnail && $article->thumbnail !== $article->image1) {
+            Storage::disk('public')->delete('images/Articles/' . $article->thumbnail);
+        }
+
         $article->delete();
 
         return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully.');
+    }
+
+    public function destroyImage($articleId, $imageField)
+    {
+        $article = Article::findOrFail($articleId);
+        
+        if (!in_array($imageField, ['image1', 'image2', 'thumbnail'])) {
+            return back()->with('error', 'Invalid image field.');
+        }
+
+        if ($article->$imageField) {
+            Storage::disk('public')->delete('images/Articles/' . $article->$imageField);
+            $article->$imageField = null;
+            $article->save();
+        }
+
+        return back()->with('success', 'Image deleted successfully.');
+    }
+
+    public function destroyAllImages($articleId)
+    {
+        $article = Article::findOrFail($articleId);
+        
+        if ($article->image1) {
+            Storage::disk('public')->delete('images/Articles/' . $article->image1);
+            $article->image1 = null;
+        }
+
+        if ($article->image2) {
+            Storage::disk('public')->delete('images/Articles/' . $article->image2);
+            $article->image2 = null;
+        }
+
+        if ($article->thumbnail && $article->thumbnail !== $article->image1) {
+            Storage::disk('public')->delete('images/Articles/' . $article->thumbnail);
+            $article->thumbnail = null;
+        }
+
+        $article->save();
+
+        return back()->with('success', 'All images deleted successfully.');
     }
 }

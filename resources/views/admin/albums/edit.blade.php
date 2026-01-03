@@ -96,5 +96,29 @@
             </div>
         </div>
     </div>
+
+    {{-- Images Management --}}
+    @if($album->images && count($album->images))
+        <div class="mb-4">
+            <h5 class="fw-bold mb-3">Gallery Images</h5>
+            <div class="d-flex flex-wrap gap-3">
+                @foreach($album->images as $image)
+                    <div class="border rounded-3 p-2 text-center" style="width: 160px;">
+                        <img src="{{ asset('storage/' . $image->path) }}" alt="Image" class="img-fluid mb-2" style="max-height: 100px;">
+                        <form action="{{ route('admin.albums.images.destroy', [$album->id, $image->id]) }}" method="POST" onsubmit="return confirm('Delete this image?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger w-100">Delete</button>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+            <form action="{{ route('admin.albums.images.destroyAll', $album->id) }}" method="POST" class="mt-3" onsubmit="return confirm('Delete ALL images?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Delete All Images</button>
+            </form>
+        </div>
+    @endif
 </section>
 @endsection

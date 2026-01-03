@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAlbumController;
+use App\Http\Controllers\Admin\AdminArticleController;
 use App\Http\Controllers\Admin\AdminClassController;
 use App\Http\Controllers\Admin\AdminEventCategoryController;
 use App\Http\Controllers\Admin\AdminEventController;
@@ -56,6 +57,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('media', AdminMediaController::class);
     Route::resource('partners', AdminPartnerController::class);
     Route::resource('articles', \App\Http\Controllers\Admin\AdminArticleController::class);
+    Route::delete('articles/{article}/images/{imageField}', [AdminArticleController::class, 'destroyImage'])->name('articles.images.destroy');
+    Route::delete('articles/{article}/images', [AdminArticleController::class, 'destroyAllImages'])->name('articles.images.destroyAll');
     Route::resource('registrations', AdminRegistrationController::class)->only(['index', 'show', 'destroy']);
     Route::resource('events', AdminEventController::class);
     Route::resource('event_registrations', AdminEventRegistrationController::class)->only(['index', 'show', 'destroy']);
