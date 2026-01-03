@@ -12,9 +12,9 @@ class ArticleController extends Controller
     {
         $articles = Article::where('active', true)
             ->latest()
-            ->paginate(9);
+            ->paginate(12);
 
-        return view('article', compact('articles')); // <-- fix here
+        return view('article', compact('articles'));
     }
 
     public function show(Article $article)
@@ -23,11 +23,7 @@ class ArticleController extends Controller
             abort(404);
         }
 
-        // Render the flat Blade file: resources/views/article.details.blade.php
-        return view()->file(
-            resource_path('views/article.details.blade.php'),
-            ['article' => $article]
-        );
+        return view('articledetail', compact('article'));
     }
 
     public function store(Request $request)
