@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Add New Level')
+@section('title', 'Add New Article')
 
 @section('main_content')
 <section style="overflow: hidden; position: relative;">
-    {{-- Decorative Animated Wave on Left Side --}}
+    {{-- Decorative Animated Waves --}}
     <div style="position: fixed; left: 0; top: 10%; height: 80%; width: 100px; z-index: 0; pointer-events: none;">
         <svg viewBox="0 0 100 1000" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
             <circle cx="30" cy="0" r="8" fill="#4fc3f7" opacity="0.3">
@@ -13,7 +13,6 @@
             </circle>
         </svg>
     </div>
-    {{-- Decorative Animated Wave on Right Side --}}
     <div style="position: fixed; right: 0; top: 10%; height: 80%; width: 100px; z-index: 0; pointer-events: none;">
         <svg viewBox="0 0 100 1000" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
             <circle cx="70" cy="0" r="8" fill="#FF85A2" opacity="0.3">
@@ -23,8 +22,8 @@
         </svg>
     </div>
 
-    {{-- Hero Section with Banner Image Background --}}
-    <div class="container-fluid py-5 position-relative" style="min-height: 420px;">
+    {{-- Hero Section --}}
+    <div class="container-fluid py-5 position-relative" style="min-height: 320px;">
         <div style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;">
             <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
                  alt="Admin Banner"
@@ -35,14 +34,15 @@
         </div>
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center justify-content-center">
-                <div class="col-12 col-lg-8 text-white pt-5 mt-5 text-center" style="margin-top: 6rem !important;">
-                    <h1 class="fw-bold mb-3" style="font-size: 2.2rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.18); max-width: 700px; margin: 0 auto;">
-                        Add New Level
+                <div class="col-12 col-lg-6 text-white pt-5 mt-5 text-lg-start text-center ps-lg-5" style="margin-top: 6rem !important;">
+                    <h1 class="fw-bold mb-3" style="font-size: 2.5rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.18); max-width: 520px;">
+                        Add New Article
                     </h1>
                     <p class="fs-5 mb-4" style="font-size: 1.1rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.12); max-width: 600px; margin: 0 auto;">
-                        Fill in the details below to create a new learning level for COTHA.
+                        Fill in the details below to create a new article for COTHA.
                     </p>
                 </div>
+                <div class="d-none d-lg-block col-lg-6"></div>
             </div>
         </div>
         <div style="position: absolute; bottom: -1px; left: 0; width: 100%;">
@@ -55,73 +55,53 @@
     {{-- Form Card Overlay --}}
     <div class="container position-relative" style="z-index: 2; margin-top: -100px; margin-bottom: 80px;">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <div class="card shadow-lg border-0 rounded-4 p-4" style="background: rgba(255,255,255,0.98);">
-                    <form method="POST" action="{{ route('admin.levels.store') }}" enctype="multipart/form-data">
+            <div class="col-12 col-lg-8">
+                <div class="card rounded-4 border-0 shadow-lg p-4" style="background: #fff; border-radius: 32px;">
+                    <form method="POST" action="{{ route('admin.articles.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="row g-3">
-                            <div class="col-12 col-md-6">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Title <span class="text-danger">*</span></label>
-                                <input type="text" name="title" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" required value="{{ old('title') }}">
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Subtitle</label>
-                                <input type="text" name="subtitle" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" value="{{ old('subtitle') }}">
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Age Range</label>
-                                <input type="text" name="age_range" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" value="{{ old('age_range') }}">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Description</label>
-                                <textarea name="description" class="form-control rounded-3 border-2" rows="3" style="border-color: #4fc3f7;">{{ old('description') }}</textarea>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Image</label>
-                                <input type="file" name="image" class="form-control rounded-3 border-2 mb-3" style="border-color: #4fc3f7;" accept="image/*">
-                                <div class="d-flex align-items-center gap-4 mt-2">
-                                    <div class="form-check">
-                                        <input type="checkbox" name="active" class="form-check-input mt-0" id="active" {{ old('active', true) ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-semibold ms-2" for="active">Active</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" name="isFeatured" class="form-check-input mt-0" id="isFeatured" {{ old('isFeatured', true) ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-semibold ms-2" for="isFeatured">Featured</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Link Classes</label>
-                                <select name="classes[]" class="form-select rounded-3 border-2" multiple style="border-color: #4fc3f7;">
-                                    @foreach($allClasses as $class)
-                                        <option value="{{ $class->id }}">{{ $class->title }} ({{ $class->level }})</option>
-                                    @endforeach
-                                </select>
-                                <small class="text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple classes.</small>
-                            </div>
-                            <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
-                                <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
-                                        style="background: linear-gradient(135deg, #4fc3f7 0%, #80c7e4 100%); border: none; color: white;">
-                                    <i class="bi bi-save me-2"></i>Save Level
-                                </button>
-                                <a href="{{ route('admin.levels.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
-                                   style="background: #FF85A2; border: none; color: white;">
-                                    Cancel
-                                </a>
-                            </div>
+
+                        {{-- Headline --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" style="color:#2C3E50;">Headline <span class="text-danger">*</span></label>
+                            <input type="text" name="headline" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" required>
+                        </div>
+
+                        {{-- Image 1 --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" style="color:#2C3E50;">Image 1</label>
+                            <input type="file" name="image1" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;">
+                        </div>
+
+                        {{-- Image 2 --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" style="color:#2C3E50;">Image 2</label>
+                            <input type="file" name="image2" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;">
+                        </div>
+
+                        {{-- Body --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" style="color:#2C3E50;">Body <span class="text-danger">*</span></label>
+                            <textarea name="body" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" rows="6" required></textarea>
+                        </div>
+
+                        {{-- Active --}}
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="active" class="form-check-input" id="activeCheck" checked>
+                            <label class="form-check-label fw-semibold" for="activeCheck" style="color:#2C3E50;">Active</label>
+                        </div>
+
+                        {{-- Action Buttons --}}
+                        <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
+                            <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
+                                    style="background: #4fc3f7; border: none; color: white;">
+                                <i class="bi bi-save me-2"></i>Save Article
+                            </button>
+                            <a href="{{ route('admin.articles.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
+                               style="background: #FF85A2; border: none; color: white;">
+                                Cancel
+                            </a>
                         </div>
                     </form>
-                    @if ($errors->any())
-                        <div class="alert alert-danger mt-4 rounded-3">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <div style="position: absolute; top: -30px; right: -30px; width: 60px; height: 60px; border-radius: 50%; background: #FF85A2; opacity: 0.12; z-index: 0;"></div>
-                    <div style="position: absolute; bottom: -30px; left: -30px; width: 60px; height: 60px; border-radius: 50%; background: #4fc3f7; opacity: 0.12; z-index: 0;"></div>
                 </div>
             </div>
         </div>

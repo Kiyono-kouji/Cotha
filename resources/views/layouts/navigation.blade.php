@@ -41,6 +41,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ Request::is('articles') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ url('/articles') }}">
+                                Articles
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ Request::is('about') ? 'fw-bold' : 'fw-normal' }}" style="color: #0052a4;" href="{{ url('/about') }}">
                                 About
                             </a>

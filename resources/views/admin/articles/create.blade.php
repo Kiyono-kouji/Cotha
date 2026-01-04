@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Gallery')
+@section('title', 'Add New Article')
 
 @section('main_content')
 <section style="overflow: hidden; position: relative;">
-    {{-- Decorative Animated Wave on Left Side --}}
+    {{-- Decorative Animated Waves --}}
     <div style="position: fixed; left: 0; top: 10%; height: 80%; width: 100px; z-index: 0; pointer-events: none;">
         <svg viewBox="0 0 100 1000" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
             <circle cx="30" cy="0" r="8" fill="#4fc3f7" opacity="0.3">
@@ -13,7 +13,7 @@
             </circle>
         </svg>
     </div>
-    {{-- Decorative Animated Wave on Right Side --}}
+
     <div style="position: fixed; right: 0; top: 10%; height: 80%; width: 100px; z-index: 0; pointer-events: none;">
         <svg viewBox="0 0 100 1000" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
             <circle cx="70" cy="0" r="8" fill="#FF85A2" opacity="0.3">
@@ -24,7 +24,7 @@
     </div>
 
     {{-- Hero Section --}}
-    <div class="container-fluid py-5 position-relative" style="min-height: 420px;">
+    <div class="container-fluid py-5 position-relative" style="min-height: 320px;">
         <div style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;">
             <img src="{{ asset('images/WelcomePage/MainBanner.jpg') }}"
                  alt="Admin Banner"
@@ -37,10 +37,10 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-12 col-lg-8 text-white pt-5 mt-5 text-center" style="margin-top: 6rem !important;">
                     <h1 class="fw-bold mb-3" style="font-size: 2.2rem; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.18); max-width: 700px; margin: 0 auto;">
-                        Edit Gallery
+                        Add New Article
                     </h1>
                     <p class="fs-5 mb-4" style="font-size: 1.1rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.12); max-width: 600px; margin: 0 auto;">
-                        Update the details for this gallery.
+                        Fill in the details below to create a new article for COTHA.
                     </p>
                 </div>
             </div>
@@ -57,25 +57,50 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <div class="card shadow-lg border-0 rounded-4 p-4" style="background: rgba(255,255,255,0.98);">
-                    <form method="POST" action="{{ route('admin.albums.update', $album->id) }}">
+                    <form method="POST" action="{{ route('admin.articles.store') }}" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
                         <div class="row g-3">
                             <div class="col-12">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Title <span class="text-danger">*</span></label>
-                                <input type="text" name="title" class="form-control rounded-3 border-2 w-100" style="border-color: #4fc3f7;" required value="{{ old('title', $album->title) }}">
+                                <label class="form-label fw-semibold" style="color:#2C3E50;">Headline <span class="text-danger">*</span></label>
+                                <input type="text" name="headline" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" required value="{{ old('headline') }}">
                             </div>
                             <div class="col-12">
-                                <label class="form-label fw-semibold" style="color:#2C3E50;">Description</label>
-                                <textarea name="description" class="form-control rounded-3 border-2 w-100" rows="3" style="border-color: #4fc3f7;">{{ old('description', $album->description) }}</textarea>
+                                <label class="form-label fw-semibold" style="color:#2C3E50;">Image 1</label>
+                                <input type="file" name="image1" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" accept="image/*">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold" style="color:#2C3E50;">Image 2</label>
+                                <input type="file" name="image2" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" accept="image/*">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold" style="color:#2C3E50;">Thumbnail (optional)</label>
+                                <input type="file" name="thumbnail" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" accept="image/*">
+                                <small class="text-muted">If not provided, Image 1 will be used as the thumbnail.</small>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold" style="color:#2C3E50;">Body <span class="text-danger">*</span></label>
+                                <textarea name="body" class="form-control rounded-3 border-2" style="border-color: #4fc3f7;" rows="6" required>{{ old('body') }}</textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check d-flex align-items-center" style="min-height: 48px;">
+                                    <!-- ensure boolean 0/1 -->
+                                    <input type="hidden" name="active" value="0">
+                                    <input type="checkbox"
+                                           name="active"
+                                           value="1"
+                                           class="form-check-input mt-0"
+                                           id="activeCheck"
+                                           {{ old('active', true) ? 'checked' : '' }}>
+                                    <label class="form-check-label fw-semibold ms-2" for="activeCheck" style="color:#2C3E50;">Active</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-center mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
+                        <div class="text-center mt-4">
                             <button type="submit" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
                                     style="background: #4fc3f7; border: none; color: white;">
-                                <i class="bi bi-save me-2"></i>Update Gallery
+                                <i class="bi bi-save me-2"></i>Save Article
                             </button>
-                            <a href="{{ route('admin.albums.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow"
+                            <a href="{{ route('admin.articles.index') }}" class="btn btn-lg px-5 py-3 fw-semibold rounded-3 shadow ms-2"
                                style="background: #FF85A2; border: none; color: white;">
                                 Cancel
                             </a>
@@ -96,29 +121,5 @@
             </div>
         </div>
     </div>
-
-    {{-- Images Management --}}
-    @if($album->images && count($album->images))
-        <div class="mb-4">
-            <h5 class="fw-bold mb-3">Gallery Images</h5>
-            <div class="d-flex flex-wrap gap-3">
-                @foreach($album->images as $image)
-                    <div class="border rounded-3 p-2 text-center" style="width: 160px;">
-                        <img src="{{ asset('storage/' . $image->path) }}" alt="Image" class="img-fluid mb-2" style="max-height: 100px;">
-                        <form action="{{ route('admin.albums.images.destroy', [$album->id, $image->id]) }}" method="POST" onsubmit="return confirm('Delete this image?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger w-100">Delete</button>
-                        </form>
-                    </div>
-                @endforeach
-            </div>
-            <form action="{{ route('admin.albums.images.destroyAll', $album->id) }}" method="POST" class="mt-3" onsubmit="return confirm('Delete ALL images?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete All Images</button>
-            </form>
-        </div>
-    @endif
 </section>
 @endsection
