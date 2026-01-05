@@ -24,7 +24,10 @@ class EventController extends Controller
         
         $events = $query->paginate(9)->withQueryString();
         
-        return view('events', compact('events', 'categories', 'categoryId'));
+        // Get the selected category for description
+        $selectedCategory = $categoryId ? EventCategory::find($categoryId) : null;
+        
+        return view('events', compact('events', 'categories', 'categoryId', 'selectedCategory'));
     }
 
     public function show(Event $event)

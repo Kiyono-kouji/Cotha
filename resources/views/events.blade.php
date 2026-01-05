@@ -79,6 +79,21 @@
                 </ul>
             </div>
 
+            {{-- Category Description --}}
+            @if($selectedCategory && $selectedCategory->description)
+                <div class="px-4 pt-3">
+                    <div class="alert rounded-4 mb-0" style="background: linear-gradient(135deg, #E3F2FD 0%, #E1F5FE 100%); border: none;">
+                        <div class="d-flex align-items-start gap-3">
+                            <i class="bi bi-info-circle-fill" style="color: #1976D2; font-size: 1.5rem; flex-shrink: 0;"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1" style="color: #1976D2;">{{ $selectedCategory->name }}</h6>
+                                <p class="mb-0 text-muted" style="line-height: 1.6;">{{ $selectedCategory->description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             {{-- Events Grid --}}
             <div class="p-4">
                 @if($events->count() > 0)

@@ -62,24 +62,42 @@
                         <dt class="col-sm-4 fw-semibold text-secondary">Registered At</dt>
                         <dd class="col-sm-8">{{ $registration->created_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i') }}</dd>
                     </dl>
-                    <hr>
-                    <h5 class="fw-bold mb-3">Teams & Members</h5>
-                    @foreach($registration->teams as $team)
-                        <div class="mb-3">
-                            <div class="fw-semibold mb-1" style="color: #1976D2;">{{ $team->team_name }}</div>
-                            <ul class="list-group">
-                                @foreach($team->participants as $member)
-                                    <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-                                        <span>
-                                            <strong>{{ $member->name }}</strong>
-                                            <span class="text-muted ms-2">{{ $member->email }}</span>
-                                        </span>
-                                        <span class="text-muted">{{ $member->school }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
+                    
+                    @if($registration->teams && $registration->teams->count() > 0)
+                        <hr>
+                        <h5 class="fw-bold mb-3">Teams & Members</h5>
+                        @foreach($registration->teams as $team)
+                            <div class="mb-3">
+                                <div class="fw-semibold mb-2 px-3 py-2 rounded-3" style="background: #E3F2FD; color: #1976D2;">
+                                    <i class="bi bi-people-fill me-2"></i>{{ $team->team_name }}
+                                </div>
+                                @if($team->participants && $team->participants->count() > 0)
+                                    <ul class="list-group">
+                                        @foreach($team->participants as $member)
+                                            <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-md-start align-items-md-center">
+                                                <div>
+                                                    <strong>{{ $member->name }}</strong>
+                                                    @if($member->email)
+                                                        <br><span class="text-muted small">{{ $member->email }}</span>
+                                                    @endif
+                                                </div>
+                                                @if($member->school)
+                                                    <span class="badge bg-light text-dark mt-2 mt-md-0">{{ $member->school }}</span>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p class="text-muted ps-3">No participants found for this team.</p>
+                                @endif
+                            </div>
+                        @endforeach
+                    @else
+                        <hr>
+                        <div class="alert alert-info rounded-4">
+                            <i class="bi bi-info-circle me-2"></i>No teams found for this registration.
                         </div>
-                    @endforeach
+                    @endif
                 </div>
             </div>
         </div>

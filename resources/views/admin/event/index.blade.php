@@ -134,10 +134,10 @@
                         </td>
                         <td>{{ $event->location ?? '-' }}</td>
                         <td>
-                            @if($event->price_per_participant == 0)
+                            @if($event->price_per_team == 0)
                                 <span class="badge rounded-pill px-3 py-2" style="background: #4caf50; color: white;">FREE</span>
                             @else
-                                Rp {{ number_format($event->price_per_participant, 0, ',', '.') }}
+                                Rp {{ number_format($event->price_per_team, 0, ',', '.') }}
                             @endif
                         </td>
                         <td class="text-center">

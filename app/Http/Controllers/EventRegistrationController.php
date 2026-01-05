@@ -16,12 +16,13 @@ class EventRegistrationController extends Controller
     {
         $validated = $request->validate([
             'guardian_name' => 'required|string|max:255',
-            'guardian_email' => 'required|email',
-            'guardian_phone' => 'required|string',
+            'guardian_email' => 'required|email|max:255',
+            'guardian_phone' => 'required|string|max:20',
             'teams' => 'required|array|min:1',
+            'teams.*.team_name' => 'required|string|max:255',
             'teams.*.participants' => 'required|array|min:1',
             'teams.*.participants.*.name' => 'required|string|max:255',
-            'teams.*.participants.*.email' => 'nullable|email',
+            'teams.*.participants.*.email' => 'nullable|email|max:255',
             'teams.*.participants.*.school' => 'nullable|string|max:255',
         ]);
 
@@ -110,7 +111,7 @@ class EventRegistrationController extends Controller
             // Now save the registration with the FINAL invoice number
             $registration = EventRegistration::create([
                 'event_id' => $event->id,
-                'invoice_number' => $invoiceNumber,  // Make sure this line exists
+                'invoice_number' => $invoiceNumber,
                 'guardian_name' => $validated['guardian_name'],
                 'guardian_email' => $validated['guardian_email'],
                 'guardian_phone' => $validated['guardian_phone'],
@@ -124,6 +125,23 @@ class EventRegistrationController extends Controller
                 'registration_id' => $registration->id,
                 'invoice' => $registration->invoice_number,
             ]);
+
+            // Save teams and participants
+            foreach ($validated['teams'] as $index => $teamData) {
+                $team = EventTeam::create([
+                    'event_registration_id' => $registration->id,
+                    'team_name' => $teamData['team_name'] ?? 'Team ' . ($index + 1),
+                ]);
+
+                foreach ($teamData['participants'] as $participantData) {
+                    EventParticipant::create([
+                        'event_team_id' => $team->id,
+                        'name' => $participantData['name'],
+                        'email' => $participantData['email'] ?? null,
+                        'school' => $participantData['school'] ?? null,
+                    ]);
+                }
+            }
 
             DB::commit();
 
